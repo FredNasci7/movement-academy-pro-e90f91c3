@@ -34,30 +34,42 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         isScrolled
-          ? "bg-card/95 backdrop-blur-lg shadow-md py-2"
-          : "bg-transparent py-4"
+          ? "bg-card/95 backdrop-blur-lg shadow-md"
+          : "bg-cover bg-center bg-no-repeat"
       )}
+      style={!isScrolled ? {
+        backgroundImage: `url('https://images.unsplash.com/photo-1599586120429-48281b6f0ece?q=80&w=2070')`,
+      } : undefined}
     >
-      <div className="section-container">
-        <nav className="flex items-center justify-between gap-4">
+      {/* Overlay for non-scrolled state */}
+      {!isScrolled && (
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/80 to-foreground/70" />
+      )}
+      
+      <div className={cn(
+        "section-container relative z-10 transition-all duration-300",
+        isScrolled ? "py-3" : "py-5"
+      )}>
+        <nav className="flex items-center justify-between gap-6">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 flex-shrink-0">
-            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-sm">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-md border-2 border-accent/50">
               <span className="text-primary-foreground font-heading font-bold text-xl">M</span>
             </div>
             <div className="flex flex-col">
               <span className={cn(
                 "font-heading font-bold text-lg leading-tight transition-colors",
-                isScrolled ? "text-foreground" : "text-primary-foreground"
+                isScrolled ? "text-foreground" : "text-white"
               )}>
                 Movement Academy
               </span>
               <span className={cn(
-                "text-xs font-medium transition-colors",
-                isScrolled ? "text-muted-foreground" : "text-primary-foreground/70"
+                "text-xs font-medium transition-colors flex items-center gap-1",
+                isScrolled ? "text-muted-foreground" : "text-accent"
               )}>
+                <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>
                 Ginástica Acrobática
               </span>
             </div>
@@ -70,14 +82,14 @@ export function Navbar() {
                 key={link.href}
                 to={link.href}
                 className={cn(
-                  "font-medium text-sm transition-colors hover:text-primary relative py-1",
+                  "font-medium text-sm transition-colors relative py-1",
                   location.pathname === link.href
-                    ? "text-primary"
+                    ? isScrolled ? "text-primary" : "text-accent"
                     : isScrolled
-                    ? "text-foreground/80"
-                    : "text-primary-foreground/90",
+                    ? "text-foreground/80 hover:text-primary"
+                    : "text-white/90 hover:text-accent",
                   location.pathname === link.href &&
-                    "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:rounded-full"
+                    "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-accent after:rounded-full"
                 )}
               >
                 {link.label}
@@ -87,7 +99,7 @@ export function Navbar() {
 
           {/* CTA Button */}
           <div className="hidden lg:block flex-shrink-0">
-            <Button asChild size="default" className="font-semibold shadow-md hover:shadow-lg transition-shadow px-5">
+            <Button asChild size="default" className="font-semibold shadow-md hover:shadow-lg transition-shadow px-6 bg-accent text-accent-foreground hover:bg-accent/90">
               <Link to="/contacto">Aula Experimental</Link>
             </Button>
           </div>
@@ -99,9 +111,9 @@ export function Navbar() {
             aria-label="Toggle menu"
           >
             {isOpen ? (
-              <X className={cn("w-6 h-6", isScrolled ? "text-foreground" : "text-primary-foreground")} />
+              <X className={cn("w-6 h-6", isScrolled ? "text-foreground" : "text-white")} />
             ) : (
-              <Menu className={cn("w-6 h-6", isScrolled ? "text-foreground" : "text-primary-foreground")} />
+              <Menu className={cn("w-6 h-6", isScrolled ? "text-foreground" : "text-white")} />
             )}
           </button>
         </nav>
