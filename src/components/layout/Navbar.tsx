@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import navbarBg from "@/assets/navbar-acrobatics.jpg";
 
 const navLinks = [
   { href: "/", label: "Início" },
@@ -38,16 +37,9 @@ export function Navbar() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         isScrolled
           ? "bg-card/95 backdrop-blur-lg shadow-md"
-          : "bg-cover bg-center bg-no-repeat"
+          : "bg-gradient-to-r from-[#247BA0] via-[#1d6a8c] to-[#165a78]"
       )}
-      style={!isScrolled ? {
-        backgroundImage: `url(${navbarBg})`,
-      } : undefined}
     >
-      {/* Overlay for non-scrolled state */}
-      {!isScrolled && (
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/80 to-foreground/70" />
-      )}
       
       <div className={cn(
         "section-container relative z-10 transition-all duration-300",
