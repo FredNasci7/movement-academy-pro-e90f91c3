@@ -48,8 +48,15 @@ export function Navbar() {
         <nav className="flex items-center justify-between gap-6">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 flex-shrink-0">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-md border-2 border-accent/50">
-              <span className="text-primary-foreground font-heading font-bold text-xl">IMA</span>
+            <div className="relative">
+              <img 
+                src="/assets/logo-ima.png" 
+                alt="IMA - Intuitive Movement Academy" 
+                className="w-14 h-14 object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)] transform hover:scale-105 transition-transform duration-300"
+                style={{
+                  filter: 'drop-shadow(2px 2px 0px rgba(0,0,0,0.2)) drop-shadow(4px 4px 6px rgba(0,0,0,0.25))'
+                }}
+              />
             </div>
             <div className="flex flex-col">
               <span className={cn(
