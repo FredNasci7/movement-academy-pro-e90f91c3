@@ -40,7 +40,7 @@ export function Navbar() {
           : "bg-cover bg-center bg-no-repeat"
       )}
       style={!isScrolled ? {
-        backgroundImage: `url('https://images.unsplash.com/photo-1599586120429-48281b6f0ece?q=80&w=2070')`,
+        backgroundImage: `url('https://images.unsplash.com/photo-1566577739112-5180d4bf9390?q=80&w=2070')`,
       } : undefined}
     >
       {/* Overlay for non-scrolled state */}
