@@ -27,11 +27,11 @@ export function Footer() {
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-                <span className="text-primary-foreground font-heading font-bold text-xl">M</span>
+                <span className="text-primary-foreground font-heading font-bold text-lg">IMA</span>
               </div>
               <div>
-                <span className="font-heading font-bold text-lg block">Movement Academy</span>
-                <span className="text-primary-foreground/70 text-xs">Ginástica Acrobática</span>
+                <span className="font-heading font-bold text-lg block">Intuitive Movement Academy</span>
+                <span className="text-primary-foreground/70 text-xs">Associação Desportiva</span>
               </div>
             </div>
             <p className="text-primary-foreground/70 leading-relaxed">
@@ -135,7 +135,7 @@ export function Footer() {
         <div className="section-container py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-primary-foreground/60 text-sm">
-              © {new Date().getFullYear()} Movement Academy. Todos os direitos reservados.
+              © {new Date().getFullYear()} IMA - Intuitive Movement Academy. Todos os direitos reservados.
             </p>
             <div className="flex items-center gap-6 text-sm">
               <Link to="/privacidade" className="text-primary-foreground/60 hover:text-primary-foreground">

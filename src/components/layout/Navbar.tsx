@@ -57,21 +57,21 @@ export function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 flex-shrink-0">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-md border-2 border-accent/50">
-              <span className="text-primary-foreground font-heading font-bold text-xl">M</span>
+              <span className="text-primary-foreground font-heading font-bold text-xl">IMA</span>
             </div>
             <div className="flex flex-col">
               <span className={cn(
                 "font-heading font-bold text-lg leading-tight transition-colors",
                 isScrolled ? "text-foreground" : "text-white"
               )}>
-                Movement Academy
+                Intuitive Movement Academy
               </span>
               <span className={cn(
                 "text-xs font-medium transition-colors flex items-center gap-1",
                 isScrolled ? "text-muted-foreground" : "text-accent"
               )}>
                 <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>
-                Ginástica Acrobática
+                Associação Desportiva
               </span>
             </div>
           </Link>

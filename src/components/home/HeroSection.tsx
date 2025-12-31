@@ -28,7 +28,7 @@ export function HeroSection() {
       <div className="section-container relative z-10 py-32">
         <div className="max-w-3xl">
           <span className="inline-block px-4 py-2 rounded-full bg-accent/20 text-accent font-medium text-sm mb-6 animate-fade-in border border-accent/30">
-            🏆 Clube de Ginástica Acrobática • Sintra, Colares
+            🏆 IMA - Intuitive Movement Academy • Sintra, Colares
           </span>
           
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-heading font-bold text-primary-foreground mb-6 leading-tight animate-fade-in stagger-1">
