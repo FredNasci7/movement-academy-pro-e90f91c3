@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import navbarBg from "@/assets/navbar-acrobatics.jpg";
 
 const navLinks = [
   { href: "/", label: "Início" },
@@ -40,7 +41,7 @@ export function Navbar() {
           : "bg-cover bg-center bg-no-repeat"
       )}
       style={!isScrolled ? {
-        backgroundImage: `url('https://images.unsplash.com/photo-1599586120429-48281b6f0ece?q=80&w=2070')`,
+        backgroundImage: `url(${navbarBg})`,
       } : undefined}
     >
       {/* Overlay for non-scrolled state */}

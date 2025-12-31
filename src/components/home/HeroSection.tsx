@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import heroBg from "@/assets/hero-acrobatics.jpg";
 
 export function HeroSection() {
   const scrollToServices = () => {
@@ -13,7 +14,7 @@ export function HeroSection() {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1599586120429-48281b6f0ece?q=80&w=2070')`,
+          backgroundImage: `url(${heroBg})`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/95 via-foreground/85 to-foreground/70" />
