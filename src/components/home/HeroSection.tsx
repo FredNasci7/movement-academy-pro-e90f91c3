@@ -60,11 +60,11 @@ export function HeroSection() {
               <p className="text-primary-foreground/70 text-sm mt-1">Atletas Ativos</p>
             </div>
             <div>
-              <p className="text-3xl sm:text-4xl font-heading font-bold text-accent">15+</p>
+              <p className="text-3xl sm:text-4xl font-heading font-bold text-accent">4+</p>
               <p className="text-primary-foreground/70 text-sm mt-1">Anos de Experiência</p>
             </div>
             <div>
-              <p className="text-3xl sm:text-4xl font-heading font-bold text-accent">10+</p>
+              <p className="text-3xl sm:text-4xl font-heading font-bold text-accent">4+</p>
               <p className="text-primary-foreground/70 text-sm mt-1">Treinadores Certificados</p>
             </div>
           </div>
