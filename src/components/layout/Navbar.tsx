@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import logoIma from "@/assets/logo-ima.png";
 
 const navLinks = [
   { href: "/", label: "Início" },
@@ -48,9 +49,11 @@ export function Navbar() {
         <nav className="flex items-center justify-between gap-6">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 flex-shrink-0">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-md border-2 border-accent/50">
-              <span className="text-primary-foreground font-heading font-bold text-xl">IMA</span>
-            </div>
+            <img 
+              src={logoIma} 
+              alt="IMA - Intuitive Movement Academy" 
+              className="w-12 h-12 object-contain"
+            />
             <div className="flex flex-col">
               <span className={cn(
                 "font-heading font-bold text-lg leading-tight transition-colors",
