@@ -61,8 +61,8 @@ const AulaExperimental = () => {
       return;
     }
 
-    // Validação dos campos adicionais quando interesse está selecionado
-    if (formData.interesse && (!formData.nomeEncarregado.trim() || !formData.nomeAtleta.trim() || !formData.idadeAtleta.trim())) {
+    // Validação dos campos adicionais quando ginástica está selecionada
+    if (formData.interesse === "ginastica" && (!formData.nomeEncarregado.trim() || !formData.nomeAtleta.trim() || !formData.idadeAtleta.trim())) {
       toast({
         title: "Erro",
         description: "Por favor, preenche os dados do encarregado de educação e da atleta.",
@@ -226,8 +226,8 @@ const AulaExperimental = () => {
                 </Select>
               </div>
 
-              {/* Campos condicionais - aparecem quando interesse está selecionado */}
-              {formData.interesse && (
+              {/* Campos condicionais - aparecem apenas quando ginástica está selecionada */}
+              {formData.interesse === "ginastica" && (
                 <div className="space-y-6 pt-4 border-t border-border/50 animate-fade-in">
                   <div className="flex items-center gap-2 text-primary">
                     <Users className="w-5 h-5" />
