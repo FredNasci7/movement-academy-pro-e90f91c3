@@ -2,27 +2,25 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/hero-acrobatics.jpg";
-
 export function HeroSection() {
   const scrollToServices = () => {
-    document.getElementById("services")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("services")?.scrollIntoView({
+      behavior: "smooth"
+    });
   };
-
-  return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with gradient overlay - Acrobatics image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url(${heroBg})`,
-        }}
-      >
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
+      backgroundImage: `url(${heroBg})`
+    }}>
         <div className="absolute inset-0 bg-gradient-to-r from-foreground/95 via-foreground/85 to-foreground/70" />
       </div>
 
       {/* Decorative elements with blue and gold tones */}
       <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-primary/20 rounded-full blur-3xl animate-float" />
-      <div className="absolute bottom-1/4 left-1/4 w-48 h-48 bg-accent/30 rounded-full blur-3xl animate-float" style={{ animationDelay: "1.5s" }} />
+      <div className="absolute bottom-1/4 left-1/4 w-48 h-48 bg-accent/30 rounded-full blur-3xl animate-float" style={{
+      animationDelay: "1.5s"
+    }} />
 
       {/* Content */}
       <div className="section-container relative z-10 py-32">
@@ -33,7 +31,7 @@ export function HeroSection() {
           
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-heading font-bold text-primary-foreground mb-6 leading-tight animate-fade-in stagger-1">
             Descobre o Poder da{" "}
-            <span className="text-accent">Ginástica Acrobática</span>
+            <span className="text-accent">Movimento</span>
           </h1>
           
           <p className="text-lg sm:text-xl text-primary-foreground/80 mb-10 max-w-xl leading-relaxed animate-fade-in stagger-2">
@@ -72,13 +70,8 @@ export function HeroSection() {
       </div>
 
       {/* Scroll indicator */}
-      <button
-        onClick={scrollToServices}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-primary-foreground/60 hover:text-primary-foreground transition-colors animate-bounce"
-        aria-label="Scroll to services"
-      >
+      <button onClick={scrollToServices} className="absolute bottom-8 left-1/2 -translate-x-1/2 text-primary-foreground/60 hover:text-primary-foreground transition-colors animate-bounce" aria-label="Scroll to services">
         <ChevronDown className="w-8 h-8" />
       </button>
-    </section>
-  );
+    </section>;
 }
