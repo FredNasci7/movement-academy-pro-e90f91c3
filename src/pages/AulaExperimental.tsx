@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Sparkles, Send, Phone, Mail, User, Users, Baby } from "lucide-react";
+import { Sparkles, Send, Phone, Mail, User, Users } from "lucide-react";
 
 const countryCodes = [
   { code: "+351", country: "Portugal", flag: "🇵🇹" },
@@ -30,29 +30,37 @@ const interestOptions = [
   { value: "treino-personalizado", label: "Treino personalizado" },
 ];
 
+const ageOptions = [
+  { value: "menos-10", label: "Menos de 10 anos" },
+  { value: "10-14", label: "10 a 14 anos" },
+  { value: "15-17", label: "15 a 17 anos" },
+  { value: "18-mais", label: "18 anos ou mais" },
+];
+
 const AulaExperimental = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
-    nome: "",
+    nomeAtleta: "",
+    idadeAtleta: "",
     email: "",
     countryCode: "+351",
     telefone: "",
     interesse: "",
     nomeEncarregado: "",
-    nomeAtleta: "",
-    idadeAtleta: "",
   });
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const isMinor = formData.idadeAtleta && formData.idadeAtleta !== "18-mais";
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Validação básica
-    if (!formData.nome.trim() || !formData.email.trim() || !formData.interesse) {
+    if (!formData.nomeAtleta.trim() || !formData.idadeAtleta || !formData.email.trim() || !formData.interesse) {
       toast({
         title: "Erro",
         description: "Por favor, preenche todos os campos obrigatórios antes de enviar.",
@@ -61,11 +69,11 @@ const AulaExperimental = () => {
       return;
     }
 
-    // Validação dos campos adicionais quando ginástica está selecionada
-    if (formData.interesse === "ginastica" && (!formData.nomeEncarregado.trim() || !formData.nomeAtleta.trim() || !formData.idadeAtleta.trim())) {
+    // Validação do campo de encarregado quando é menor de idade
+    if (isMinor && !formData.nomeEncarregado.trim()) {
       toast({
         title: "Erro",
-        description: "Por favor, preenche os dados do encarregado de educação e da atleta.",
+        description: "Por favor, preenche o nome do encarregado de educação.",
         variant: "destructive",
       });
       return;
@@ -94,14 +102,13 @@ const AulaExperimental = () => {
 
     // Reset form
     setFormData({
-      nome: "",
+      nomeAtleta: "",
+      idadeAtleta: "",
       email: "",
       countryCode: "+351",
       telefone: "",
       interesse: "",
       nomeEncarregado: "",
-      nomeAtleta: "",
-      idadeAtleta: "",
     });
 
     setIsSubmitting(false);
@@ -135,21 +142,62 @@ const AulaExperimental = () => {
               onSubmit={handleSubmit}
               className="bg-card rounded-2xl shadow-lg border border-border/50 p-8 md:p-12 space-y-8 animate-slide-up"
             >
-              {/* Nome Completo */}
+              {/* Nome Completo do/a Atleta */}
               <div className="space-y-3">
-                <Label htmlFor="nome" className="text-base font-semibold flex items-center gap-2">
+                <Label htmlFor="nomeAtleta" className="text-base font-semibold flex items-center gap-2">
                   <User className="w-4 h-4 text-primary" />
-                  Nome Completo <span className="text-destructive">*</span>
+                  Nome Completo do/a Atleta <span className="text-destructive">*</span>
                 </Label>
                 <Input
-                  id="nome"
+                  id="nomeAtleta"
                   type="text"
-                  placeholder="O teu nome completo"
-                  value={formData.nome}
-                  onChange={(e) => handleInputChange("nome", e.target.value)}
+                  placeholder="Nome completo do/a atleta"
+                  value={formData.nomeAtleta}
+                  onChange={(e) => handleInputChange("nomeAtleta", e.target.value)}
                   className="h-12 text-base rounded-xl border-border/60 focus:border-primary focus:ring-primary/20 bg-background"
                 />
               </div>
+
+              {/* Idade do/a Atleta */}
+              <div className="space-y-3">
+                <Label htmlFor="idadeAtleta" className="text-base font-semibold flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-primary" />
+                  Idade do/a Atleta <span className="text-destructive">*</span>
+                </Label>
+                <Select
+                  value={formData.idadeAtleta}
+                  onValueChange={(value) => handleInputChange("idadeAtleta", value)}
+                >
+                  <SelectTrigger className="h-12 text-base rounded-xl border-border/60 bg-background">
+                    <SelectValue placeholder="Seleciona a faixa etária" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-popover border border-border z-50">
+                    {ageOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Campo condicional - Nome do Encarregado de Educação (aparece para menores de 18) */}
+              {isMinor && (
+                <div className="space-y-3 animate-fade-in">
+                  <Label htmlFor="nomeEncarregado" className="text-base font-semibold flex items-center gap-2">
+                    <Users className="w-4 h-4 text-primary" />
+                    Nome do Encarregado de Educação <span className="text-destructive">*</span>
+                  </Label>
+                  <Input
+                    id="nomeEncarregado"
+                    type="text"
+                    placeholder="Nome completo do encarregado de educação"
+                    value={formData.nomeEncarregado}
+                    onChange={(e) => handleInputChange("nomeEncarregado", e.target.value)}
+                    className="h-12 text-base rounded-xl border-border/60 focus:border-primary focus:ring-primary/20 bg-background"
+                  />
+                </div>
+              )}
 
               {/* Email */}
               <div className="space-y-3">
@@ -225,66 +273,6 @@ const AulaExperimental = () => {
                   </SelectContent>
                 </Select>
               </div>
-
-              {/* Campos condicionais - aparecem apenas quando ginástica está selecionada */}
-              {formData.interesse === "ginastica" && (
-                <div className="space-y-6 pt-4 border-t border-border/50 animate-fade-in">
-                  <div className="flex items-center gap-2 text-primary">
-                    <Users className="w-5 h-5" />
-                    <span className="font-semibold">Dados do Encarregado de Educação e Atleta</span>
-                  </div>
-
-                  {/* Nome do Encarregado de Educação */}
-                  <div className="space-y-3">
-                    <Label htmlFor="nomeEncarregado" className="text-base font-semibold flex items-center gap-2">
-                      <Users className="w-4 h-4 text-primary" />
-                      Nome do Encarregado de Educação <span className="text-destructive">*</span>
-                    </Label>
-                    <Input
-                      id="nomeEncarregado"
-                      type="text"
-                      placeholder="Nome completo do encarregado de educação"
-                      value={formData.nomeEncarregado}
-                      onChange={(e) => handleInputChange("nomeEncarregado", e.target.value)}
-                      className="h-12 text-base rounded-xl border-border/60 focus:border-primary focus:ring-primary/20 bg-background"
-                    />
-                  </div>
-
-                  {/* Nome da Atleta */}
-                  <div className="space-y-3">
-                    <Label htmlFor="nomeAtleta" className="text-base font-semibold flex items-center gap-2">
-                      <Baby className="w-4 h-4 text-primary" />
-                      Nome da Atleta <span className="text-destructive">*</span>
-                    </Label>
-                    <Input
-                      id="nomeAtleta"
-                      type="text"
-                      placeholder="Nome completo da atleta"
-                      value={formData.nomeAtleta}
-                      onChange={(e) => handleInputChange("nomeAtleta", e.target.value)}
-                      className="h-12 text-base rounded-xl border-border/60 focus:border-primary focus:ring-primary/20 bg-background"
-                    />
-                  </div>
-
-                  {/* Idade da Atleta */}
-                  <div className="space-y-3">
-                    <Label htmlFor="idadeAtleta" className="text-base font-semibold flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-primary" />
-                      Idade da Atleta <span className="text-destructive">*</span>
-                    </Label>
-                    <Input
-                      id="idadeAtleta"
-                      type="number"
-                      min="2"
-                      max="25"
-                      placeholder="Idade"
-                      value={formData.idadeAtleta}
-                      onChange={(e) => handleInputChange("idadeAtleta", e.target.value)}
-                      className="h-12 text-base rounded-xl border-border/60 focus:border-primary focus:ring-primary/20 bg-background w-32"
-                    />
-                  </div>
-                </div>
-              )}
 
               {/* Submit Button */}
               <Button
