@@ -30,7 +30,7 @@ export function HeroSection() {
           </span>
           
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-heading font-bold text-primary-foreground mb-6 leading-tight animate-fade-in stagger-1">
-            Descobre o Poder da{" "}
+            Descobre o Poder do{" "}
             <span className="text-accent">Movimento</span>
           </h1>
           
