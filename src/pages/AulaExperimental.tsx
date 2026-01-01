@@ -30,12 +30,6 @@ const interestOptions = [
   { value: "treino-personalizado", label: "Treino personalizado" },
 ];
 
-const ageOptions = [
-  { value: "menos-10", label: "Menos de 10 anos" },
-  { value: "10-14", label: "10 a 14 anos" },
-  { value: "15-17", label: "15 a 17 anos" },
-  { value: "18-mais", label: "18 anos ou mais" },
-];
 
 const AulaExperimental = () => {
   const { toast } = useToast();
@@ -54,7 +48,8 @@ const AulaExperimental = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const isMinor = formData.idadeAtleta && formData.idadeAtleta !== "18-mais";
+  const age = parseInt(formData.idadeAtleta, 10);
+  const isMinor = !isNaN(age) && age < 18;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -164,21 +159,16 @@ const AulaExperimental = () => {
                   <Sparkles className="w-4 h-4 text-primary" />
                   Idade do/a Atleta <span className="text-destructive">*</span>
                 </Label>
-                <Select
+                <Input
+                  id="idadeAtleta"
+                  type="number"
+                  min="1"
+                  max="99"
+                  placeholder="Idade"
                   value={formData.idadeAtleta}
-                  onValueChange={(value) => handleInputChange("idadeAtleta", value)}
-                >
-                  <SelectTrigger className="h-12 text-base rounded-xl border-border/60 bg-background">
-                    <SelectValue placeholder="Seleciona a faixa etária" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-popover border border-border z-50">
-                    {ageOptions.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  onChange={(e) => handleInputChange("idadeAtleta", e.target.value)}
+                  className="h-12 text-base rounded-xl border-border/60 focus:border-primary focus:ring-primary/20 bg-background"
+                />
               </div>
 
               {/* Campo condicional - Nome do Encarregado de Educação (aparece para menores de 18) */}
