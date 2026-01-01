@@ -40,7 +40,7 @@ export function HeroSection() {
           </p>
           
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 animate-fade-in stagger-3">
-            <Button asChild size="lg" className="text-lg px-8 py-6 shadow-lg hover:shadow-glow transition-shadow">
+            <Button asChild variant="gold" size="lg" className="text-lg px-8 py-6 shadow-lg hover:shadow-glow transition-shadow">
               <Link to="/contacto">
                 Aula Experimental Grátis
                 <ArrowRight className="ml-2 w-5 h-5" />
