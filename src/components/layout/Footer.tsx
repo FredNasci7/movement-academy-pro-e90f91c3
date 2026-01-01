@@ -1,26 +1,28 @@
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Clock, Instagram, Facebook, Youtube } from "lucide-react";
 import logoIma from "@/assets/logo-ima.png";
-
-const quickLinks = [
-  { href: "/sobre", label: "Sobre Nós" },
-  { href: "/servicos", label: "Modalidades" },
-  { href: "/equipa", label: "Equipa" },
-  { href: "/galeria", label: "Galeria" },
-  { href: "/precos", label: "Preços" },
-  { href: "/contacto", label: "Contacto" },
-];
-
-const services = [
-  "Ginástica Acrobática",
-  "Iniciação (4-6 anos)",
-  "Formação de Base",
-  "Competição",
-];
-
+const quickLinks = [{
+  href: "/sobre",
+  label: "Sobre Nós"
+}, {
+  href: "/servicos",
+  label: "Modalidades"
+}, {
+  href: "/equipa",
+  label: "Equipa"
+}, {
+  href: "/galeria",
+  label: "Galeria"
+}, {
+  href: "/precos",
+  label: "Preços"
+}, {
+  href: "/contacto",
+  label: "Contacto"
+}];
+const services = ["Ginástica Acrobática", "Iniciação (4-6 anos)", "Formação de Base", "Competição"];
 export function Footer() {
-  return (
-    <footer className="bg-foreground text-primary-foreground">
+  return <footer className="bg-foreground text-primary-foreground">
       {/* Main Footer */}
       <div className="section-container py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -28,14 +30,9 @@ export function Footer() {
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <div className="relative">
-                <img 
-                  src={logoIma} 
-                  alt="IMA - Intuitive Movement Academy" 
-                  className="h-14 w-auto drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)] [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.3))_drop-shadow(2px_4px_6px_rgba(0,0,0,0.2))]"
-                  style={{
-                    transform: 'perspective(500px) rotateY(-2deg)',
-                  }}
-                />
+                <img src={logoIma} alt="IMA - Intuitive Movement Academy" style={{
+                transform: 'perspective(500px) rotateY(-2deg)'
+              }} className="h-14 w-auto drop-shadow-[0_4px_8px_rgba(0,0,0,0.4)] [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.3))_drop-shadow(2px_4px_6px_rgba(0,0,0,0.2))] object-contain" />
               </div>
               <div>
                 <span className="font-heading font-bold text-lg block">Intuitive Movement Academy</span>
@@ -47,28 +44,13 @@ export function Footer() {
               com paixão pelo movimento e excelência desportiva.
             </p>
             <div className="flex items-center gap-4">
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary transition-colors"
-              >
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary transition-colors"
-              >
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary transition-colors"
-              >
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary transition-colors">
                 <Youtube className="w-5 h-5" />
               </a>
             </div>
@@ -78,16 +60,11 @@ export function Footer() {
           <div>
             <h3 className="font-heading font-bold text-lg mb-6">Links Rápidos</h3>
             <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="text-primary-foreground/70 hover:text-primary-foreground transition-colors"
-                  >
+              {quickLinks.map(link => <li key={link.href}>
+                  <Link to={link.href} className="text-primary-foreground/70 hover:text-primary-foreground transition-colors">
                     {link.label}
                   </Link>
-                </li>
-              ))}
+                </li>)}
             </ul>
           </div>
 
@@ -95,11 +72,9 @@ export function Footer() {
           <div>
             <h3 className="font-heading font-bold text-lg mb-6">Modalidades</h3>
             <ul className="space-y-3">
-              {services.map((service) => (
-                <li key={service}>
+              {services.map(service => <li key={service}>
                   <span className="text-primary-foreground/70">{service}</span>
-                </li>
-              ))}
+                </li>)}
             </ul>
           </div>
 
@@ -156,6 +131,5 @@ export function Footer() {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 }
