@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Sparkles, Send, Phone, Mail, User } from "lucide-react";
+import { Sparkles, Send, Phone, Mail, User, Users, Baby } from "lucide-react";
 
 const countryCodes = [
   { code: "+351", country: "Portugal", flag: "🇵🇹" },
@@ -39,6 +39,9 @@ const AulaExperimental = () => {
     countryCode: "+351",
     telefone: "",
     interesse: "",
+    nomeEncarregado: "",
+    nomeAtleta: "",
+    idadeAtleta: "",
   });
 
   const handleInputChange = (field: string, value: string) => {
@@ -48,11 +51,21 @@ const AulaExperimental = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validação
+    // Validação básica
     if (!formData.nome.trim() || !formData.email.trim() || !formData.interesse) {
       toast({
         title: "Erro",
         description: "Por favor, preenche todos os campos obrigatórios antes de enviar.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validação dos campos adicionais quando interesse está selecionado
+    if (formData.interesse && (!formData.nomeEncarregado.trim() || !formData.nomeAtleta.trim() || !formData.idadeAtleta.trim())) {
+      toast({
+        title: "Erro",
+        description: "Por favor, preenche os dados do encarregado de educação e da atleta.",
         variant: "destructive",
       });
       return;
@@ -86,6 +99,9 @@ const AulaExperimental = () => {
       countryCode: "+351",
       telefone: "",
       interesse: "",
+      nomeEncarregado: "",
+      nomeAtleta: "",
+      idadeAtleta: "",
     });
 
     setIsSubmitting(false);
@@ -209,6 +225,66 @@ const AulaExperimental = () => {
                   </SelectContent>
                 </Select>
               </div>
+
+              {/* Campos condicionais - aparecem quando interesse está selecionado */}
+              {formData.interesse && (
+                <div className="space-y-6 pt-4 border-t border-border/50 animate-fade-in">
+                  <div className="flex items-center gap-2 text-primary">
+                    <Users className="w-5 h-5" />
+                    <span className="font-semibold">Dados do Encarregado de Educação e Atleta</span>
+                  </div>
+
+                  {/* Nome do Encarregado de Educação */}
+                  <div className="space-y-3">
+                    <Label htmlFor="nomeEncarregado" className="text-base font-semibold flex items-center gap-2">
+                      <Users className="w-4 h-4 text-primary" />
+                      Nome do Encarregado de Educação <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="nomeEncarregado"
+                      type="text"
+                      placeholder="Nome completo do encarregado de educação"
+                      value={formData.nomeEncarregado}
+                      onChange={(e) => handleInputChange("nomeEncarregado", e.target.value)}
+                      className="h-12 text-base rounded-xl border-border/60 focus:border-primary focus:ring-primary/20 bg-background"
+                    />
+                  </div>
+
+                  {/* Nome da Atleta */}
+                  <div className="space-y-3">
+                    <Label htmlFor="nomeAtleta" className="text-base font-semibold flex items-center gap-2">
+                      <Baby className="w-4 h-4 text-primary" />
+                      Nome da Atleta <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="nomeAtleta"
+                      type="text"
+                      placeholder="Nome completo da atleta"
+                      value={formData.nomeAtleta}
+                      onChange={(e) => handleInputChange("nomeAtleta", e.target.value)}
+                      className="h-12 text-base rounded-xl border-border/60 focus:border-primary focus:ring-primary/20 bg-background"
+                    />
+                  </div>
+
+                  {/* Idade da Atleta */}
+                  <div className="space-y-3">
+                    <Label htmlFor="idadeAtleta" className="text-base font-semibold flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-primary" />
+                      Idade da Atleta <span className="text-destructive">*</span>
+                    </Label>
+                    <Input
+                      id="idadeAtleta"
+                      type="number"
+                      min="2"
+                      max="25"
+                      placeholder="Idade"
+                      value={formData.idadeAtleta}
+                      onChange={(e) => handleInputChange("idadeAtleta", e.target.value)}
+                      className="h-12 text-base rounded-xl border-border/60 focus:border-primary focus:ring-primary/20 bg-background w-32"
+                    />
+                  </div>
+                </div>
+              )}
 
               {/* Submit Button */}
               <Button
