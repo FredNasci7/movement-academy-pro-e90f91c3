@@ -1,28 +1,27 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Award, Users, Dumbbell } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
-import { cn } from "@/lib/utils";
+import ginasticaImg from "@/assets/modalidade-ginastica.jpg";
+import aulasGrupoImg from "@/assets/modalidade-aulas-grupo.jpg";
+import treinoImg from "@/assets/modalidade-treino.jpg";
 
 const modalidades = [
   {
-    icon: Award,
     title: "Ginástica",
     description: "Treino de ginástica acrobática com foco em técnica, força e flexibilidade para todas as idades.",
-    color: "from-primary to-accent",
+    image: ginasticaImg,
     href: "/servicos",
   },
   {
-    icon: Users,
     title: "Aulas de Grupo",
     description: "Sessões dinâmicas em grupo para desenvolver coordenação, espírito de equipa e diversão.",
-    color: "from-accent to-primary",
+    image: aulasGrupoImg,
     href: "/servicos",
   },
   {
-    icon: Dumbbell,
     title: "Treino Personalizado",
     description: "Acompanhamento individual adaptado aos teus objetivos e nível de experiência.",
-    color: "from-primary to-accent",
+    image: treinoImg,
     href: "/servicos",
   },
 ];
@@ -36,13 +35,9 @@ export function ServicesSection() {
             As Nossas Modalidades
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-foreground mb-4">
-            Descobre a Tua{" "}
-            <span className="text-primary">Modalidade</span>
+            Para{" "}
+            <span className="text-primary">Todas as Idades</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Oferecemos diferentes modalidades para te ajudar a alcançar os teus objetivos, 
-            seja em grupo ou com acompanhamento personalizado.
-          </p>
         </AnimatedSection>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -52,27 +47,31 @@ export function ServicesSection() {
                 to={modalidade.href}
                 className="group block h-full"
               >
-                <div className="h-full bg-card rounded-2xl p-6 shadow-sm border border-border/50 card-hover">
-                  {/* Icon */}
-                  <div className={cn(
-                    "w-14 h-14 rounded-xl flex items-center justify-center mb-5 transition-transform group-hover:scale-110",
-                    `bg-gradient-to-br ${modalidade.color}`
-                  )}>
-                    <modalidade.icon className="w-7 h-7 text-primary-foreground" />
-                  </div>
+                <div 
+                  className="h-64 md:h-80 rounded-2xl p-6 shadow-sm border border-border/50 card-hover relative overflow-hidden flex flex-col justify-end"
+                  style={{
+                    backgroundImage: `url(${modalidade.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
+                >
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/50 to-transparent" />
                   
                   {/* Content */}
-                  <h3 className="text-xl font-heading font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
-                    {modalidade.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                    {modalidade.description}
-                  </p>
-                  
-                  {/* Link */}
-                  <div className="flex items-center text-primary font-medium text-sm">
-                    Saber mais
-                    <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                  <div className="relative z-10">
+                    <h3 className="text-xl font-heading font-bold text-primary-foreground mb-2 group-hover:text-accent transition-colors">
+                      {modalidade.title}
+                    </h3>
+                    <p className="text-primary-foreground/80 text-sm leading-relaxed mb-3">
+                      {modalidade.description}
+                    </p>
+                    
+                    {/* Link */}
+                    <div className="flex items-center text-accent font-medium text-sm">
+                      Saber mais
+                      <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                    </div>
                   </div>
                 </div>
               </Link>
