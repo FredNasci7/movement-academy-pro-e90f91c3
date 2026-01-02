@@ -8,7 +8,6 @@ const Home = () => {
     <Layout>
       <HeroSection />
       <ServicesSection />
-      <div className="h-16 bg-primary" />
       <TestimonialsSection />
     </Layout>
   );
