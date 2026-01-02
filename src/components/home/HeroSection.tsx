@@ -55,7 +55,7 @@ export function HeroSection() {
           <div className="grid grid-cols-3 gap-8 mt-16 pt-8 border-t border-primary-foreground/20 animate-fade-in stagger-4">
             <div>
               <p className="text-3xl sm:text-4xl font-heading font-bold text-accent">200+</p>
-              <p className="text-primary-foreground/70 text-sm mt-1">Atletas Ativos</p>
+              <p className="text-primary-foreground/70 text-sm mt-1">Sócios</p>
             </div>
             <div>
               <p className="text-3xl sm:text-4xl font-heading font-bold text-accent">4+</p>
