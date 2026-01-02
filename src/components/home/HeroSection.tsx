@@ -46,7 +46,7 @@ export function HeroSection() {
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6 bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
+            <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6 bg-gold/30 border-gold/50 text-primary-foreground hover:bg-white hover:text-foreground hover:border-white transition-colors duration-200">
               <Link to="/servicos">Ver Modalidades</Link>
             </Button>
           </div>
