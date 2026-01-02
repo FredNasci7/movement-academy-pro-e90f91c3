@@ -1,14 +1,14 @@
 import { Layout } from "@/components/layout/Layout";
 import { HeroSection } from "@/components/home/HeroSection";
 import { ServicesSection } from "@/components/home/ServicesSection";
-import { CTASection } from "@/components/home/CTASection";
+import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 
 const Home = () => {
   return (
     <Layout>
       <HeroSection />
       <ServicesSection />
-      <CTASection />
+      <TestimonialsSection />
     </Layout>
   );
 };
