@@ -41,7 +41,7 @@ const services = [
     title: "Aulas de Grupo",
     description: "Modalidade de ginástica em equipa que combina elementos de solo, mini-trampolim e tumbling. Ideal para quem gosta de trabalhar em grupo.",
     features: [
-      "Trabalho em equipa (6-16 atletas)",
+      "Pilates",
       "Três disciplinas: solo, trampolim, tumbling",
       "Coreografias sincronizadas",
       "Competições regionais e nacionais",
