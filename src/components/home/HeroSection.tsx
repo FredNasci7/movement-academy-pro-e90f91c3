@@ -36,7 +36,7 @@ export function HeroSection() {
           
           <p className="text-lg sm:text-xl text-primary-foreground/80 mb-10 max-w-xl leading-relaxed animate-fade-in stagger-2">
             Na Movement Academy acreditamos que o movimento transforma vidas.
-            <br /><br />
+            <br />
             Formamos atletas de todas as idades, promovendo saúde e bem-estar, num ambiente motivador e inclusivo.
           </p>
           
