@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 const services = [
   {
     icon: Sparkles,
-    title: "Ginástica Acrobática",
+    title: "Ginástica de Formação",
     description: "A ginástica acrobática combina força, flexibilidade, coordenação e trabalho de equipa. Os atletas trabalham em grupos de 2, 3 ou 4, realizando elementos de equilíbrio e dinâmicos que desafiam os limites do corpo humano.",
     features: [
       "Trabalho em pares, trios ou grupos",
@@ -99,12 +99,9 @@ const Services = () => {
       <section className="pt-32 pb-20 bg-gradient-to-b from-primary/5 to-background">
         <div className="section-container">
           <AnimatedSection className="text-center max-w-3xl mx-auto">
-            <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
-              As Nossas Modalidades
-            </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6 leading-tight">
-              Ginástica Para Cada{" "}
-              <span className="text-primary">Idade e Nível</span>
+              As Nossas{" "}
+              <span className="text-primary">Modalidades</span>
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
               Oferecemos programas completos de ginástica acrobática para crianças e jovens, 
