@@ -51,7 +51,7 @@ const services = [
   },
   {
     icon: Sparkles,
-    title: "Ginástica Recreativa",
+    title: "Treino Personalizado",
     description: "Para quem quer praticar ginástica de forma recreativa, sem compromisso competitivo. Foco no bem-estar, diversão e desenvolvimento pessoal.",
     features: [
       "Sem pressão competitiva",
