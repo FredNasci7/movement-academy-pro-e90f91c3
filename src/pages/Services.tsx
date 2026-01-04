@@ -149,8 +149,8 @@ const Services = () => {
                   </ul>
 
                   <Button asChild size="lg">
-                    <Link to="/contacto">
-                      Inscrever
+                    <Link to="/aula-experimental">
+                      Experimentar
                       <ArrowRight className="ml-2 w-5 h-5" />
                     </Link>
                   </Button>
