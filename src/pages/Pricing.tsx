@@ -17,7 +17,6 @@ const Pricing = () => {
       <section className="pt-32 pb-20 bg-gradient-to-b from-primary/5 to-background">
         <div className="section-container">
           <AnimatedSection className="text-center max-w-3xl mx-auto">
-            <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">Preços</span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6">
               Planos Para Cada <span className="text-primary">Objetivo</span>
             </h1>
