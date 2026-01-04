@@ -57,6 +57,32 @@ export function Footer() {
             </div>
           </div>
 
+          {/* Google Maps */}
+          <div>
+            <h3 className="font-heading font-bold text-lg mb-6">Localização</h3>
+            <div className="rounded-lg overflow-hidden h-48 bg-muted/20">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d-9.4463!3d38.7978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDQ3JzUyLjEiTiA5wrAyNic0Ni43Ilc!5e0!3m2!1spt-PT!2spt&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0, filter: 'grayscale(100%) invert(92%) contrast(83%)' }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Localização IMA - Escola Básica Sarrazola"
+              />
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=38.7978,-9.4463"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 text-sm mt-3 transition-colors"
+            >
+              Ver no Google Maps
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
+
           {/* Contact Info */}
           <div>
             <h3 className="font-heading font-bold text-lg mb-6">Contactos</h3>
@@ -95,32 +121,6 @@ export function Footer() {
                 </span>
               </li>
             </ul>
-          </div>
-
-          {/* Google Maps */}
-          <div>
-            <h3 className="font-heading font-bold text-lg mb-6">Localização</h3>
-            <div className="rounded-lg overflow-hidden h-48 bg-muted/20">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d-9.4463!3d38.7978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDQ3JzUyLjEiTiA5wrAyNic0Ni43Ilc!5e0!3m2!1spt-PT!2spt&output=embed"
-                width="100%"
-                height="100%"
-                style={{ border: 0, filter: 'grayscale(100%) invert(92%) contrast(83%)' }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Localização IMA - Escola Básica Sarrazola"
-              />
-            </div>
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=38.7978,-9.4463"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 text-sm mt-3 transition-colors"
-            >
-              Ver no Google Maps
-              <ExternalLink className="w-4 h-4" />
-            </a>
           </div>
         </div>
       </div>
