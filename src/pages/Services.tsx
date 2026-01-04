@@ -158,7 +158,7 @@ const Services = () => {
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-primary-foreground mb-8">
               Pronto Para Começar?
             </h2>
-            <Button asChild size="lg" variant="secondary" className="text-primary">
+            <Button asChild size="lg" variant="gold">
               <Link to="/precos">
                 Tabela de Preços
                 <ArrowRight className="ml-2 w-5 h-5" />
