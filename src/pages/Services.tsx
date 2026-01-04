@@ -22,7 +22,7 @@ const services = [
   },
   {
     icon: Star,
-    title: "Iniciação (3-6 anos)",
+    title: "Ginástica de Representação",
     description: "O primeiro contacto com a ginástica de forma lúdica e divertida. Desenvolvemos as capacidades motoras básicas enquanto as crianças se divertem e ganham gosto pelo movimento.",
     features: [
       "Jogos e atividades lúdicas",
@@ -33,6 +33,8 @@ const services = [
     ],
     image: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=600",
     color: "from-accent to-primary",
+    buttonText: "Pedir Informação",
+    buttonLink: "/contacto",
   },
   {
     icon: Target,
@@ -149,8 +151,8 @@ const Services = () => {
                   </ul>
 
                   <Button asChild size="lg">
-                    <Link to="/aula-experimental">
-                      Experimentar
+                    <Link to={service.buttonLink || "/aula-experimental"}>
+                      {service.buttonText || "Experimentar"}
                       <ArrowRight className="ml-2 w-5 h-5" />
                     </Link>
                   </Button>
