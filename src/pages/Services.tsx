@@ -48,6 +48,8 @@ const services = [
     ],
     image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=600",
     color: "from-primary to-accent",
+    buttonText: "Agendar",
+    buttonLink: "/agenda",
   },
   {
     icon: Sparkles,
