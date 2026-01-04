@@ -40,8 +40,9 @@ export function Footer() {
               </div>
             </div>
             <p className="text-primary-foreground/70 leading-relaxed">
-              Clube de ginástica acrobática em Colares, Sintra. Formamos atletas de todas as idades 
-              com paixão pelo movimento e excelência desportiva.
+              Move-te de forma consciente, intuitiva e liberta o teu potencial.
+              <br />
+              <span className="text-primary-foreground/50 text-sm">Movement Academy, 2021</span>
             </p>
             <div className="flex items-center gap-4">
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary transition-colors">
