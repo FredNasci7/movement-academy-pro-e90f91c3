@@ -62,6 +62,8 @@ const services = [
     ],
     image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=600",
     color: "from-accent to-primary",
+    buttonText: "Agendar",
+    buttonLink: "/aula-experimental",
   },
 ];
 
