@@ -15,14 +15,14 @@ import {
 } from "@/components/ui/carousel";
 
 const plans = [
-  { name: "Básico", price: "39", period: "/mês", description: "Ideal para começar", features: ["Acesso à academia", "Aulas de grupo (2x/semana)", "Avaliação física inicial", "App de acompanhamento"] },
-  { name: "Standard", price: "69", period: "/mês", description: "O mais popular", features: ["Tudo do Básico", "Aulas de grupo ilimitadas", "1 sessão personal/mês", "Nutrição básica", "Acesso 7 dias/semana"] },
-  { name: "Premium", price: "119", period: "/mês", description: "Experiência completa", features: ["Tudo do Standard", "4 sessões personal/mês", "Plano nutricional completo", "Acesso área wellness", "Prioridade em marcações"] },
-  { name: "Família", price: "149", period: "/mês", description: "Para toda a família", features: ["2 membros incluídos", "Aulas de grupo ilimitadas", "Descontos em extras", "Acesso 7 dias/semana"] },
-  { name: "Jovem", price: "29", period: "/mês", description: "Até 18 anos", features: ["Acesso à academia", "Aulas de grupo (3x/semana)", "Acompanhamento juvenil", "App de acompanhamento"] },
-  { name: "Sénior", price: "35", period: "/mês", description: "Maiores de 60 anos", features: ["Acesso à academia", "Aulas adaptadas", "Avaliação física", "Horário flexível"] },
-  { name: "Duo", price: "99", period: "/mês", description: "Treina com um amigo", features: ["2 membros incluídos", "Aulas de grupo ilimitadas", "1 sessão personal/mês", "Acesso 7 dias/semana"] },
-  { name: "Anual", price: "549", period: "/ano", description: "Poupança máxima", features: ["Tudo do Standard", "2 meses grátis", "Prioridade em marcações", "Acesso área wellness"] },
+  { name: "BABY'MOVE", price: "39", period: "/mês", description: "Ideal para começar", features: ["Acesso à academia", "Aulas de grupo (2x/semana)", "Avaliação física inicial", "App de acompanhamento"] },
+  { name: "MINI'MOVE", price: "69", period: "/mês", description: "O mais popular", features: ["Tudo do Básico", "Aulas de grupo ilimitadas", "1 sessão personal/mês", "Nutrição básica", "Acesso 7 dias/semana"] },
+  { name: "MOVE'TEAM", price: "119", period: "/mês", description: "Experiência completa", features: ["Tudo do Standard", "4 sessões personal/mês", "Plano nutricional completo", "Acesso área wellness", "Prioridade em marcações"] },
+  { name: "MOVE'KIDS", price: "149", period: "/mês", description: "Para toda a família", features: ["2 membros incluídos", "Aulas de grupo ilimitadas", "Descontos em extras", "Acesso 7 dias/semana"] },
+  { name: "MINI'TEAM", price: "29", period: "/mês", description: "Até 18 anos", features: ["Acesso à academia", "Aulas de grupo (3x/semana)", "Acompanhamento juvenil", "App de acompanhamento"] },
+  { name: "MOVE'TEAM", price: "35", period: "/mês", description: "Maiores de 60 anos", features: ["Acesso à academia", "Aulas adaptadas", "Avaliação física", "Horário flexível"] },
+  { name: "PRÉ'TEAM", price: "99", period: "/mês", description: "Treina com um amigo", features: ["2 membros incluídos", "Aulas de grupo ilimitadas", "1 sessão personal/mês", "Acesso 7 dias/semana"] },
+  { name: "MA'TEAM REP", price: "549", period: "/ano", description: "Poupança máxima", features: ["Tudo do Standard", "2 meses grátis", "Prioridade em marcações", "Acesso área wellness"] },
 ];
 
 const Pricing = () => {
