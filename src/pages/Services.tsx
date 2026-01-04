@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 const services = [
   {
-    icon: Star,
+    icon: Baby,
     title: "Ginástica de Formação",
     description: "A ginástica acrobática combina força, flexibilidade, coordenação e trabalho de equipa. Os atletas trabalham em grupos de 2, 3 ou 4, realizando elementos de equilíbrio e dinâmicos que desafiam os limites do corpo humano.",
     features: [
@@ -21,7 +21,7 @@ const services = [
     color: "from-primary to-accent",
   },
   {
-    icon: Baby,
+    icon: Star,
     title: "Iniciação (3-6 anos)",
     description: "O primeiro contacto com a ginástica de forma lúdica e divertida. Desenvolvemos as capacidades motoras básicas enquanto as crianças se divertem e ganham gosto pelo movimento.",
     features: [
