@@ -31,7 +31,7 @@ const services = [
       "Socialização e trabalho em grupo",
       "Aulas adaptadas à idade",
     ],
-    image: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=600",
+    image: "https://images.unsplash.com/photo-1547347298-4074fc3086f0?q=80&w=600",
     color: "from-accent to-primary",
     buttonText: "Pedir Informação",
     buttonLink: "/contacto",
