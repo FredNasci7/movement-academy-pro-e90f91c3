@@ -35,8 +35,9 @@ export function HeroSection() {
           </h1>
           
           <p className="text-lg sm:text-xl text-primary-foreground/80 mb-10 max-w-xl leading-relaxed animate-fade-in stagger-2">
-            Junta-te à Movement Academy em Colares, Sintra. Formamos atletas de todas 
-            as idades em ginástica acrobática, desenvolvendo força, coordenação e espírito de equipa.
+            Na Movement Academy acreditamos que o movimento transforma vidas.
+            <br /><br />
+            Formamos atletas de todas as idades, promovendo saúde e bem-estar, num ambiente motivador e inclusivo.
           </p>
           
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 animate-fade-in stagger-3">
