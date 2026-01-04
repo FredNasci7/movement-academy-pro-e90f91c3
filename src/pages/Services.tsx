@@ -47,7 +47,7 @@ const services = [
       "Competições regionais e nacionais",
       "Espírito de equipa e cooperação",
     ],
-    image: "https://images.unsplash.com/photo-1599586120429-48281b6f0ece?q=80&w=600",
+    image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=600",
     color: "from-primary to-accent",
   },
   {
