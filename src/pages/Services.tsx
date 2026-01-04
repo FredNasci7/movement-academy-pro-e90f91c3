@@ -17,7 +17,7 @@ const services = [
       "Desenvolvimento de confiança e cooperação",
       "Preparação para competições",
     ],
-    image: "https://images.unsplash.com/photo-1599586120429-48281b6f0ece?q=80&w=600",
+    image: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=600",
     color: "from-primary to-accent",
   },
   {
