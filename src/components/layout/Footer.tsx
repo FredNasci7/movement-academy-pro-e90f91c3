@@ -60,28 +60,31 @@ export function Footer() {
           {/* Google Maps */}
           <div>
             <h3 className="font-heading font-bold text-lg mb-6">Localização</h3>
-            <div className="rounded-lg overflow-hidden h-48 bg-muted/20">
+
+            <div className="relative rounded-lg overflow-hidden h-48 bg-muted/20">
+              {/* Nota: ao clicar dentro do mapa, o Google pode tentar abrir o maps.google.com dentro do iframe e ser bloqueado.
+                  Por isso, deixamos o mapa "preview" sem interação e fornecemos um link claro para abrir em tamanho grande. */}
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3107.5!2d-9.4463!3d38.7978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd1ecf2a3b4c5d6e7%3A0x1234567890abcdef!2sEscola%20B%C3%A1sica%20Sarrazola!5e0!3m2!1spt-PT!2spt!4v1700000000000"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d-9.4463!3d38.7978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDQ3JzUyLjEiTiA5wrAyNic0Ni43Ilc!5e0!3m2!1spt-PT!2spt&output=embed"
                 width="100%"
                 height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
+                style={{ border: 0, filter: 'grayscale(35%) contrast(1.05) saturate(0.9)' }}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Localização IMA - Escola Básica Sarrazola"
-                className="grayscale invert-[0.92] contrast-[0.83]"
+                className="pointer-events-none"
               />
+
+              <a
+                href="https://www.google.com/maps/search/Escola+Básica+Sarrazola+Colares+Sintra"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-md bg-background/80 backdrop-blur px-3 py-2 text-sm text-foreground hover:bg-background transition-colors"
+              >
+                Abrir no Google Maps
+                <ExternalLink className="w-4 h-4" />
+              </a>
             </div>
-            <a
-              href="https://www.google.com/maps/search/Escola+Básica+Sarrazola+Colares+Sintra"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 text-sm mt-3 transition-colors"
-            >
-              Ver no Google Maps
-              <ExternalLink className="w-4 h-4" />
-            </a>
           </div>
 
           {/* Contact Info */}
