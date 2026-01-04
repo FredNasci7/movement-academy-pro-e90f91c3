@@ -120,18 +120,18 @@ const Services = () => {
                 "grid lg:grid-cols-2 gap-12 items-center",
                 index % 2 === 1 && "lg:flex-row-reverse"
               )}>
-                {/* Content */}
                 <div className={cn(index % 2 === 1 && "lg:order-2")}>
-                  <div className={cn(
-                    "w-16 h-16 rounded-2xl flex items-center justify-center mb-6",
-                    `bg-gradient-to-br ${service.color}`
-                  )}>
-                    <service.icon className="w-8 h-8 text-primary-foreground" />
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className={cn(
+                      "w-16 h-16 rounded-2xl flex items-center justify-center",
+                      `bg-gradient-to-br ${service.color}`
+                    )}>
+                      <service.icon className="w-8 h-8 text-primary-foreground" />
+                    </div>
+                    <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground">
+                      {service.title}
+                    </h2>
                   </div>
-                  
-                  <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground mb-4">
-                    {service.title}
-                  </h2>
                   
                   <p className="text-muted-foreground leading-relaxed mb-6">
                     {service.description}
