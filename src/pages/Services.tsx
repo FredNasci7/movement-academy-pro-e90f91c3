@@ -42,7 +42,7 @@ const services = [
     description: "Modalidade de ginástica em equipa que combina elementos de solo, mini-trampolim e tumbling. Ideal para quem gosta de trabalhar em grupo.",
     features: [
       "Pilates",
-      "Três disciplinas: solo, trampolim, tumbling",
+      "Barre",
       "Coreografias sincronizadas",
       "Competições regionais e nacionais",
       "Espírito de equipa e cooperação",
