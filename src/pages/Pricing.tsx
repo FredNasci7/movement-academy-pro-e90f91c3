@@ -75,7 +75,7 @@ const Pricing = () => {
               }}
               className="w-full max-w-6xl mx-auto"
             >
-              <CarouselContent className="-ml-4">
+              <CarouselContent className="-ml-4 py-6">
                 {plans.map((plan, i) => {
                   const isCentered = i === currentIndex;
                   return (
