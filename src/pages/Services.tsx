@@ -43,7 +43,7 @@ const services = [
     features: [
       "Pilates",
       "Barre",
-      "Coreografias sincronizadas",
+      "Full-body",
       "Competições regionais e nacionais",
       "Espírito de equipa e cooperação",
     ],
