@@ -155,15 +155,12 @@ const Services = () => {
       <section className="py-20 bg-primary">
         <div className="section-container">
           <AnimatedSection className="text-center max-w-2xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-heading font-bold text-primary-foreground mb-4">
+            <h2 className="text-3xl sm:text-4xl font-heading font-bold text-primary-foreground mb-8">
               Pronto Para Começar?
             </h2>
-            <p className="text-primary-foreground/80 mb-8">
-              Marca já a aula experimental gratuita do teu filho/a e descobre o mundo da ginástica acrobática.
-            </p>
             <Button asChild size="lg" variant="secondary" className="text-primary">
-              <Link to="/aula-experimental">
-                Aula Experimental Grátis
+              <Link to="/precos">
+                Tabela de Preços
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
