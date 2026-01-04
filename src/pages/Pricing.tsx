@@ -18,7 +18,7 @@ const Pricing = () => {
         <div className="section-container">
           <AnimatedSection className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6">
-              Planos Para Cada <span className="text-primary">Objetivo</span>
+              Preçário <span className="text-primary">Ginástica</span>
             </h1>
             <p className="text-lg text-muted-foreground">Escolhe o plano ideal para ti. Sem compromissos de longa duração.</p>
           </AnimatedSection>
