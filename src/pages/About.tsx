@@ -160,11 +160,8 @@ const About = () => {
       <section className="py-24">
         <div className="section-container">
           <AnimatedSection className="text-center mb-16">
-            <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-4">
-              Os Nossos Valores
-            </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-foreground mb-4">
-              O Que Nos <span className="text-primary">Define</span>
+              Os Nossos <span className="text-primary">Valores</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Os valores que guiam cada decisão, cada treino e cada interação na Movement Academy.
