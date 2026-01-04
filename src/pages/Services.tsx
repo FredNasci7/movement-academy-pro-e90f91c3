@@ -21,7 +21,7 @@ const services = [
     color: "from-primary to-accent",
   },
   {
-    icon: Star,
+    icon: Trophy,
     title: "Ginástica de Representação",
     description: "O primeiro contacto com a ginástica de forma lúdica e divertida. Desenvolvemos as capacidades motoras básicas enquanto as crianças se divertem e ganham gosto pelo movimento.",
     features: [
