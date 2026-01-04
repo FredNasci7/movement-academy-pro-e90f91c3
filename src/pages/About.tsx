@@ -29,8 +29,8 @@ const values = [
 
 const stats = [
   { value: "2021", label: "Ano de Fundação" },
-  { value: "200+", label: "Atletas Ativos" },
-  { value: "7", label: "Equipas" },
+  { value: "200+", label: "Sócios" },
+  { value: "Múltiplos", label: "Serviços" },
   { value: "4+", label: "Anos de Experiência" },
 ];
 
