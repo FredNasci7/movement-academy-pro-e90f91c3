@@ -189,14 +189,22 @@ const About = () => {
       </section>
 
       {/* Mission */}
-      <section className="py-24 bg-muted/50">
-        <div className="section-container">
+      <section className="py-24 relative overflow-hidden">
+        {/* Background image with overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=1920')" }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-foreground/95 via-foreground/90 to-foreground/85" />
+        </div>
+        
+        <div className="section-container relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <AnimatedSection>
-              <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground mb-6">
+              <h2 className="text-3xl sm:text-4xl font-heading font-bold text-primary-foreground mb-6">
                 A Nossa Missão
               </h2>
-              <p className="text-xl text-muted-foreground leading-relaxed mb-8">
+              <p className="text-xl text-primary-foreground/80 leading-relaxed mb-8">
                 "Transformar vidas através do movimento, desenvolvendo atletas completos 
                 que levam os valores do desporto para todas as áreas da vida."
               </p>
