@@ -71,9 +71,9 @@ const Services = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="pt-40 pb-20 bg-gradient-to-b from-primary/5 to-background">
+      <section className="pt-32 pb-12 bg-gradient-to-b from-primary/5 to-background">
         <div className="section-container">
-          <AnimatedSection className="text-center max-w-3xl mx-auto">
+          <AnimatedSection className="text-center max-w-3xl mx-auto px-4">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6 leading-tight">
               As Nossas{" "}
               <span className="text-primary">Modalidades</span>
