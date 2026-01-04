@@ -101,7 +101,7 @@ const Pricing = () => {
                           ))}
                         </ul>
                         <Button asChild className="w-full" variant={isCentered ? "default" : "outline"}>
-                          <Link to="/contacto">Começar Agora</Link>
+                          <Link to="/aula-experimental">Experimentar Agora</Link>
                         </Button>
                       </div>
                     </CarouselItem>
