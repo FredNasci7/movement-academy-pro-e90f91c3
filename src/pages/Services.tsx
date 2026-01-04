@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 const services = [
   {
-    icon: Sparkles,
+    icon: Star,
     title: "Ginástica de Formação",
     description: "A ginástica acrobática combina força, flexibilidade, coordenação e trabalho de equipa. Os atletas trabalham em grupos de 2, 3 ou 4, realizando elementos de equilíbrio e dinâmicos que desafiam os limites do corpo humano.",
     features: [
@@ -77,7 +77,7 @@ const services = [
     color: "from-primary to-accent",
   },
   {
-    icon: Star,
+    icon: Sparkles,
     title: "Ginástica Recreativa",
     description: "Para quem quer praticar ginástica de forma recreativa, sem compromisso competitivo. Foco no bem-estar, diversão e desenvolvimento pessoal.",
     features: [
