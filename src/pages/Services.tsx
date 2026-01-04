@@ -162,7 +162,7 @@ const Services = () => {
               Marca já a aula experimental gratuita do teu filho/a e descobre o mundo da ginástica acrobática.
             </p>
             <Button asChild size="lg" variant="secondary" className="text-primary">
-              <Link to="/contacto">
+              <Link to="/aula-experimental">
                 Aula Experimental Grátis
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
