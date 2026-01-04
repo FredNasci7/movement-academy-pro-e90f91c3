@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, Sparkles, Users, Target, Baby, Trophy, Star } from "lucide-react";
+import { ArrowRight, Check, Sparkles, Users, Baby, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { AnimatedSection } from "@/components/ui/animated-section";
@@ -35,34 +35,6 @@ const services = [
     color: "from-accent to-primary",
     buttonText: "Pedir Informação",
     buttonLink: "/contacto",
-  },
-  {
-    icon: Target,
-    title: "Formação de Base (7-12 anos)",
-    description: "Aprendizagem técnica fundamental para jovens ginastas. Nesta fase desenvolvemos as bases sólidas que permitirão progressão para níveis mais avançados.",
-    features: [
-      "Técnica individual aprofundada",
-      "Introdução ao trabalho de grupo",
-      "Flexibilidade e força específica",
-      "Primeiras participações em eventos",
-      "Acompanhamento do desenvolvimento",
-    ],
-    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=600",
-    color: "from-primary to-accent",
-  },
-  {
-    icon: Trophy,
-    title: "Competição",
-    description: "Treino avançado para atletas que pretendem competir a nível regional e nacional. Formamos equipas competitivas com acompanhamento especializado.",
-    features: [
-      "Treinos intensivos (4-5x/semana)",
-      "Preparação física específica",
-      "Coreografias de competição",
-      "Participação em campeonatos",
-      "Acompanhamento nutricional",
-    ],
-    image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=600",
-    color: "from-accent to-primary",
   },
   {
     icon: Users,
