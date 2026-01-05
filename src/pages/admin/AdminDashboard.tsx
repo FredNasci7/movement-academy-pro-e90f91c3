@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Users, UserCheck, Calendar, TrendingUp, Loader2, Shield, GraduationCap } from "lucide-react";
+import { Users, UserCheck, Calendar, TrendingUp, Loader2, Shield, GraduationCap, UserPlus } from "lucide-react";
 
 import { Layout } from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -247,6 +247,12 @@ const AdminDashboard = () => {
                     <Link to="/admin/permissoes">
                       <Shield className="mr-2 h-4 w-4" />
                       Gerir Permissões
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline">
+                    <Link to="/admin/inscricoes">
+                      <UserPlus className="mr-2 h-4 w-4" />
+                      Gerir Inscrições
                     </Link>
                   </Button>
                   <Button asChild variant="outline">
