@@ -6,6 +6,39 @@ import { Textarea } from "@/components/ui/textarea";
 import { Layout } from "@/components/layout/Layout";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { useToast } from "@/hooks/use-toast";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const faqs = [
+  {
+    question: "A partir de que idade podem começar os treinos?",
+    answer: "Aceitamos crianças a partir dos 3 anos na nossa modalidade de Ginástica de Formação. Cada faixa etária tem um programa adaptado às suas capacidades e desenvolvimento motor."
+  },
+  {
+    question: "É necessário ter experiência prévia?",
+    answer: "Não é necessária qualquer experiência prévia. Os nossos programas são adaptados a todos os níveis, desde iniciantes até atletas avançados."
+  },
+  {
+    question: "Posso fazer uma aula experimental antes de inscrever?",
+    answer: "Sim! Oferecemos uma aula experimental gratuita para que possas conhecer as nossas instalações, treinadores e metodologia antes de te comprometeres."
+  },
+  {
+    question: "Quais são as formas de pagamento disponíveis?",
+    answer: "Aceitamos pagamento por transferência bancária, MBWay e numerário. As mensalidades são pagas até ao dia 8 de cada mês."
+  },
+  {
+    question: "Há descontos para famílias?",
+    answer: "Sim, oferecemos descontos para inscrições de irmãos. Contacta-nos para saber mais sobre as nossas condições especiais para famílias."
+  },
+  {
+    question: "O que devo levar para os treinos?",
+    answer: "Roupa confortável e justa ao corpo (fato de treino ou leggings), meias antiderrapantes ou pés descalços, e uma garrafa de água. O equipamento específico é fornecido pela academia."
+  },
+];
 
 const Contact = () => {
   const { toast } = useToast();
@@ -114,6 +147,42 @@ const Contact = () => {
               </div>
             </AnimatedSection>
           </div>
+        </div>
+      </section>
+
+      {/* FAQs Section */}
+      <section className="py-16 bg-muted/30">
+        <div className="section-container">
+          <AnimatedSection className="text-center max-w-3xl mx-auto mb-12">
+            <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
+              FAQs
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground mb-4">
+              Perguntas <span className="text-primary">Frequentes</span>
+            </h2>
+            <p className="text-muted-foreground">
+              Encontra aqui as respostas às dúvidas mais comuns
+            </p>
+          </AnimatedSection>
+
+          <AnimatedSection delay={100} className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq, index) => (
+                <AccordionItem
+                  key={index}
+                  value={`item-${index}`}
+                  className="bg-card rounded-xl border border-border/50 px-6 shadow-sm"
+                >
+                  <AccordionTrigger className="text-left font-heading font-semibold text-foreground hover:text-primary py-5">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-5">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </AnimatedSection>
         </div>
       </section>
     </Layout>
