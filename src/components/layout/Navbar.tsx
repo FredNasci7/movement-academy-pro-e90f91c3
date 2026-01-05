@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, User, LogOut, ChevronDown } from "lucide-react";
+import { Menu, X, User, LogOut, ChevronDown, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
+import { useAdmin } from "@/hooks/useAdmin";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,6 +28,7 @@ export function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
+  const { isAdmin } = useAdmin();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -137,6 +139,17 @@ export function Navbar() {
                       O Meu Perfil
                     </Link>
                   </DropdownMenuItem>
+                  {isAdmin && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem asChild>
+                        <Link to="/admin" className="cursor-pointer text-primary">
+                          <Shield className="mr-2 h-4 w-4" />
+                          Administração
+                        </Link>
+                      </DropdownMenuItem>
+                    </>
+                  )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-destructive focus:text-destructive">
                     <LogOut className="mr-2 h-4 w-4" />
@@ -181,7 +194,7 @@ export function Navbar() {
         <div
           className={cn(
             "lg:hidden overflow-hidden transition-all duration-300",
-            isOpen ? "max-h-[500px] mt-4" : "max-h-0"
+            isOpen ? "max-h-[600px] mt-4" : "max-h-0"
           )}
         >
           <div className="bg-card rounded-xl p-4 shadow-lg space-y-2">
@@ -210,6 +223,15 @@ export function Navbar() {
                     <User className="inline-block mr-2 h-4 w-4" />
                     O Meu Perfil
                   </Link>
+                  {isAdmin && (
+                    <Link
+                      to="/admin"
+                      className="block py-3 px-4 rounded-lg font-medium text-primary hover:bg-primary/10"
+                    >
+                      <Shield className="inline-block mr-2 h-4 w-4" />
+                      Administração
+                    </Link>
+                  )}
                   <button
                     onClick={handleSignOut}
                     className="w-full text-left py-3 px-4 rounded-lg font-medium text-destructive hover:bg-destructive/10"
