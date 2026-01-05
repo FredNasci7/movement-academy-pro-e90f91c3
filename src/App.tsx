@@ -16,6 +16,7 @@ import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminAthletes from "./pages/admin/AdminAthletes";
+import AdminClasses from "./pages/admin/AdminClasses";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/perfil" element={<Profile />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/atletas" element={<AdminAthletes />} />
+            <Route path="/admin/turmas" element={<AdminClasses />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

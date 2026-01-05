@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Users, UserCheck, Calendar, TrendingUp, Loader2, Shield } from "lucide-react";
+import { Users, UserCheck, Calendar, TrendingUp, Loader2, Shield, GraduationCap } from "lucide-react";
 
 import { Layout } from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,6 +18,7 @@ const AdminDashboard = () => {
   const [stats, setStats] = useState({
     totalAthletes: 0,
     recentSignups: 0,
+    totalClasses: 0,
   });
   const [isLoadingStats, setIsLoadingStats] = useState(true);
 
@@ -52,9 +53,15 @@ const AdminDashboard = () => {
           .select("*", { count: "exact", head: true })
           .gte("created_at", sevenDaysAgo.toISOString());
 
+        // Get total classes count
+        const { count: classesCount } = await supabase
+          .from("classes")
+          .select("*", { count: "exact", head: true });
+
         setStats({
           totalAthletes: totalCount || 0,
           recentSignups: recentCount || 0,
+          totalClasses: classesCount || 0,
         });
       } catch (error) {
         console.error("Error fetching stats:", error);
@@ -193,14 +200,21 @@ const AdminDashboard = () => {
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium text-muted-foreground">
-                      Gestão
+                      Turmas Ativas
                     </CardTitle>
-                    <Calendar className="h-4 w-4 text-primary" />
+                    <GraduationCap className="h-4 w-4 text-primary" />
                   </CardHeader>
                   <CardContent>
-                    <Button asChild variant="gold" className="w-full">
-                      <Link to="/admin/atletas">Ver Atletas</Link>
-                    </Button>
+                    <div className="text-3xl font-bold text-foreground">
+                      {isLoadingStats ? (
+                        <Loader2 className="h-6 w-6 animate-spin" />
+                      ) : (
+                        stats.totalClasses
+                      )}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Turmas criadas
+                    </p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -221,6 +235,12 @@ const AdminDashboard = () => {
                     <Link to="/admin/atletas">
                       <Users className="mr-2 h-4 w-4" />
                       Gerir Atletas
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline">
+                    <Link to="/admin/turmas">
+                      <GraduationCap className="mr-2 h-4 w-4" />
+                      Gerir Turmas
                     </Link>
                   </Button>
                   <Button asChild variant="outline">
