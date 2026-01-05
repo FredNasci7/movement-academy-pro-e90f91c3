@@ -234,7 +234,7 @@ const Auth = () => {
 
   return (
     <Layout>
-      <section className="min-h-[80vh] flex items-center justify-center py-16">
+      <section className="min-h-[80vh] flex items-center justify-center py-16 pt-32">
         <div className="section-container">
           <div className="max-w-md mx-auto">
             <motion.div
