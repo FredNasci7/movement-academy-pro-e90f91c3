@@ -12,6 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Calendar } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Início" },
@@ -139,6 +140,12 @@ export function Navbar() {
                       O Meu Perfil
                     </Link>
                   </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/agenda" className="cursor-pointer">
+                      <Calendar className="mr-2 h-4 w-4" />
+                      A Minha Agenda
+                    </Link>
+                  </DropdownMenuItem>
                   {isAdmin && (
                     <>
                       <DropdownMenuSeparator />
@@ -222,6 +229,13 @@ export function Navbar() {
                   >
                     <User className="inline-block mr-2 h-4 w-4" />
                     O Meu Perfil
+                  </Link>
+                  <Link
+                    to="/agenda"
+                    className="block py-3 px-4 rounded-lg font-medium text-foreground hover:bg-muted"
+                  >
+                    <Calendar className="inline-block mr-2 h-4 w-4" />
+                    A Minha Agenda
                   </Link>
                   {isAdmin && (
                     <Link
