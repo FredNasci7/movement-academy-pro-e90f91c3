@@ -64,6 +64,64 @@ export type Database = {
           },
         ]
       }
+      class_attendance: {
+        Row: {
+          created_at: string
+          enrollment_id: string
+          id: string
+          marked_at: string | null
+          marked_by: string | null
+          notes: string | null
+          session_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          enrollment_id: string
+          id?: string
+          marked_at?: string | null
+          marked_by?: string | null
+          notes?: string | null
+          session_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          enrollment_id?: string
+          id?: string
+          marked_at?: string | null
+          marked_by?: string | null
+          notes?: string | null
+          session_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "class_attendance_enrollment_id_fkey"
+            columns: ["enrollment_id"]
+            isOneToOne: false
+            referencedRelation: "class_enrollments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "class_attendance_marked_by_fkey"
+            columns: ["marked_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "class_attendance_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "class_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       class_enrollments: {
         Row: {
           athlete_id: string | null
