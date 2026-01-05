@@ -1,54 +1,48 @@
 import { useState } from "react";
-import { format, startOfWeek, addDays, isSameDay } from "date-fns";
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isSameMonth, addMonths, subMonths, getDay } from "date-fns";
 import { pt } from "date-fns/locale";
 import { Calendar, ChevronLeft, ChevronRight, Clock, MapPin, User } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEnrollments } from "@/hooks/useEnrollments";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Navigate } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
-const DAYS_OF_WEEK = [
-  "Domingo",
-  "Segunda-feira",
-  "Terça-feira",
-  "Quarta-feira",
-  "Quinta-feira",
-  "Sexta-feira",
-  "Sábado",
-];
-
-const DAYS_SHORT = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+const DAYS_SHORT = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
 
 const Agenda = () => {
   const { user, loading: authLoading } = useAuth();
   const { enrollments, isLoading } = useEnrollments();
-  const [currentWeekStart, setCurrentWeekStart] = useState(() =>
-    startOfWeek(new Date(), { weekStartsOn: 1 })
-  );
+  const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  // Generate week days
-  const weekDays = Array.from({ length: 7 }, (_, i) => addDays(currentWeekStart, i));
+  const monthStart = startOfMonth(currentMonth);
+  const monthEnd = endOfMonth(currentMonth);
+  const monthDays = eachDayOfInterval({ start: monthStart, end: monthEnd });
 
-  const goToPreviousWeek = () => {
-    setCurrentWeekStart((prev) => addDays(prev, -7));
+  // Get day of week for the first day (0 = Sunday, we want Monday = 0)
+  const startDayOfWeek = getDay(monthStart);
+  // Convert to Monday-based (Monday = 0, Sunday = 6)
+  const startOffset = startDayOfWeek === 0 ? 6 : startDayOfWeek - 1;
+
+  const goToPreviousMonth = () => {
+    setCurrentMonth((prev) => subMonths(prev, 1));
   };
 
-  const goToNextWeek = () => {
-    setCurrentWeekStart((prev) => addDays(prev, 7));
+  const goToNextMonth = () => {
+    setCurrentMonth((prev) => addMonths(prev, 1));
   };
 
-  const goToCurrentWeek = () => {
-    setCurrentWeekStart(startOfWeek(new Date(), { weekStartsOn: 1 }));
+  const goToCurrentMonth = () => {
+    setCurrentMonth(new Date());
   };
 
-  // Get classes for a specific day of week
-  const getClassesForDay = (dayIndex: number) => {
-    // Convert from our week (Monday=0) to database (Sunday=0)
-    const dbDayIndex = dayIndex === 6 ? 0 : dayIndex + 1;
+  // Get classes for a specific day of week (database uses Sunday=0)
+  const getClassesForDay = (date: Date) => {
+    const dbDayIndex = getDay(date); // Sunday = 0
     
     return enrollments.flatMap((enrollment) =>
       enrollment.class.schedules
@@ -68,7 +62,7 @@ const Agenda = () => {
       <Layout>
         <div className="container mx-auto px-4 py-8">
           <Skeleton className="h-8 w-48 mb-6" />
-          <Skeleton className="h-96 w-full" />
+          <Skeleton className="h-[600px] w-full" />
         </div>
       </Layout>
     );
@@ -88,36 +82,31 @@ const Agenda = () => {
               A Minha Agenda
             </h1>
             <p className="text-muted-foreground">
-              Visualize as suas aulas semanais
+              Visualize as suas aulas mensais
             </p>
           </div>
 
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="icon" onClick={goToPreviousWeek}>
+            <Button variant="outline" size="icon" onClick={goToPreviousMonth}>
               <ChevronLeft className="h-4 w-4" />
             </Button>
-            <Button variant="outline" onClick={goToCurrentWeek}>
+            <Button variant="outline" onClick={goToCurrentMonth} className="min-w-[100px]">
               Hoje
             </Button>
-            <Button variant="outline" size="icon" onClick={goToNextWeek}>
+            <Button variant="outline" size="icon" onClick={goToNextMonth}>
               <ChevronRight className="h-4 w-4" />
             </Button>
           </div>
         </div>
 
-        <div className="text-center mb-4">
-          <p className="text-lg font-medium">
-            {format(currentWeekStart, "d 'de' MMMM", { locale: pt })} -{" "}
-            {format(addDays(currentWeekStart, 6), "d 'de' MMMM, yyyy", { locale: pt })}
-          </p>
+        <div className="text-center mb-6">
+          <h2 className="text-xl font-semibold capitalize">
+            {format(currentMonth, "MMMM yyyy", { locale: pt })}
+          </h2>
         </div>
 
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
-            {Array.from({ length: 7 }).map((_, i) => (
-              <Skeleton key={i} className="h-48" />
-            ))}
-          </div>
+          <Skeleton className="h-[600px] w-full" />
         ) : enrollments.length === 0 ? (
           <Card>
             <CardContent className="py-12 text-center">
@@ -129,76 +118,105 @@ const Agenda = () => {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-7 gap-2">
-            {weekDays.map((day, index) => {
-              const dayClasses = getClassesForDay(index);
-              const isToday = isSameDay(day, new Date());
-
-              return (
-                <Card
-                  key={index}
-                  className={`min-h-[200px] ${
-                    isToday ? "ring-2 ring-primary" : ""
-                  }`}
+          <div className="border rounded-lg overflow-hidden bg-card">
+            {/* Header with day names */}
+            <div className="grid grid-cols-7 bg-muted">
+              {DAYS_SHORT.map((day) => (
+                <div
+                  key={day}
+                  className="py-3 text-center text-sm font-medium text-muted-foreground border-b"
                 >
-                  <CardHeader className="py-3 px-3">
-                    <CardTitle
-                      className={`text-sm text-center ${
-                        isToday ? "text-primary" : ""
-                      }`}
+                  {day}
+                </div>
+              ))}
+            </div>
+
+            {/* Calendar grid */}
+            <div className="grid grid-cols-7">
+              {/* Empty cells for days before month start */}
+              {Array.from({ length: startOffset }).map((_, i) => (
+                <div
+                  key={`empty-${i}`}
+                  className="min-h-[120px] p-2 border-b border-r bg-muted/30"
+                />
+              ))}
+
+              {/* Month days */}
+              {monthDays.map((day) => {
+                const dayClasses = getClassesForDay(day);
+                const isToday = isSameDay(day, new Date());
+                const isCurrentMonth = isSameMonth(day, currentMonth);
+
+                return (
+                  <div
+                    key={day.toISOString()}
+                    className={cn(
+                      "min-h-[120px] p-2 border-b border-r transition-colors",
+                      !isCurrentMonth && "bg-muted/30",
+                      isToday && "bg-primary/5"
+                    )}
+                  >
+                    <div
+                      className={cn(
+                        "text-sm font-medium mb-1 w-7 h-7 flex items-center justify-center rounded-full",
+                        isToday && "bg-primary text-primary-foreground"
+                      )}
                     >
-                      {DAYS_SHORT[index === 6 ? 0 : index + 1]}
-                    </CardTitle>
-                    <CardDescription className="text-center text-lg font-medium">
                       {format(day, "d")}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="px-2 pb-3 space-y-2">
-                    {dayClasses.length === 0 ? (
-                      <p className="text-xs text-muted-foreground text-center">
-                        Sem aulas
-                      </p>
-                    ) : (
-                      dayClasses.map((classItem, classIndex) => (
+                    </div>
+
+                    <div className="space-y-1 max-h-[80px] overflow-y-auto">
+                      {dayClasses.map((classItem, classIndex) => (
                         <div
                           key={classIndex}
-                          className="bg-primary/10 rounded-lg p-2 space-y-1"
+                          className="bg-primary/10 rounded p-1.5 hover:bg-primary/20 transition-colors cursor-pointer group"
+                          title={`${classItem.className} - ${classItem.start_time.slice(0, 5)} às ${classItem.end_time.slice(0, 5)}`}
                         >
-                          <p className="font-medium text-xs truncate">
+                          <p className="font-medium text-[10px] truncate">
                             {classItem.className}
                           </p>
-                          <Badge variant="secondary" className="text-[10px]">
-                            {classItem.modalidade}
-                          </Badge>
-                          <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
-                            <Clock className="h-3 w-3" />
-                            {classItem.start_time.slice(0, 5)} -{" "}
-                            {classItem.end_time.slice(0, 5)}
+                          <div className="flex items-center gap-1 text-[9px] text-muted-foreground">
+                            <Clock className="h-2.5 w-2.5" />
+                            {classItem.start_time.slice(0, 5)}
                           </div>
-                          {classItem.location && (
-                            <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
-                              <MapPin className="h-3 w-3" />
-                              {classItem.location}
-                            </div>
-                          )}
-                          {classItem.trainer && (
-                            <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
-                              <User className="h-3 w-3" />
-                              {classItem.trainer}
-                            </div>
-                          )}
                           {classItem.athleteName && (
-                            <Badge variant="outline" className="text-[10px]">
+                            <Badge variant="outline" className="text-[8px] px-1 py-0 mt-0.5">
                               {classItem.athleteName}
                             </Badge>
                           )}
                         </div>
-                      ))
-                    )}
-                  </CardContent>
-                </Card>
-              );
-            })}
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+
+              {/* Empty cells for days after month end */}
+              {Array.from({
+                length: (7 - ((startOffset + monthDays.length) % 7)) % 7,
+              }).map((_, i) => (
+                <div
+                  key={`empty-end-${i}`}
+                  className="min-h-[120px] p-2 border-b border-r bg-muted/30"
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Legend */}
+        {enrollments.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded bg-primary/10 border" />
+              <span>Aula agendada</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs">
+                {format(new Date(), "d")}
+              </div>
+              <span>Hoje</span>
+            </div>
           </div>
         )}
       </div>
