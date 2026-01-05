@@ -244,6 +244,12 @@ const AdminDashboard = () => {
                     </Link>
                   </Button>
                   <Button asChild variant="outline">
+                    <Link to="/admin/permissoes">
+                      <Shield className="mr-2 h-4 w-4" />
+                      Gerir Permissões
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline">
                     <Link to="/noticias">
                       <Calendar className="mr-2 h-4 w-4" />
                       Ver Notícias
