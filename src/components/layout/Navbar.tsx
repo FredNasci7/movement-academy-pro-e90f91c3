@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, User, LogOut, ChevronDown, Shield } from "lucide-react";
+import { Menu, X, User, LogOut, ChevronDown, Shield, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
@@ -135,6 +135,12 @@ export function Navbar() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
                   <DropdownMenuItem asChild>
+                    <Link to="/dashboard" className="cursor-pointer">
+                      <LayoutDashboard className="mr-2 h-4 w-4" />
+                      Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
                     <Link to="/perfil" className="cursor-pointer">
                       <User className="mr-2 h-4 w-4" />
                       O Meu Perfil
@@ -223,6 +229,13 @@ export function Navbar() {
             <div className="border-t border-border pt-2 mt-2 space-y-2">
               {user ? (
                 <>
+                  <Link
+                    to="/dashboard"
+                    className="block py-3 px-4 rounded-lg font-medium text-foreground hover:bg-muted"
+                  >
+                    <LayoutDashboard className="inline-block mr-2 h-4 w-4" />
+                    Dashboard
+                  </Link>
                   <Link
                     to="/perfil"
                     className="block py-3 px-4 rounded-lg font-medium text-foreground hover:bg-muted"

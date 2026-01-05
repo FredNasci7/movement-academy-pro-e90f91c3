@@ -77,7 +77,7 @@ const Auth = () => {
   // Redirect if already logged in (but not during password reset)
   useEffect(() => {
     if (user && view !== "reset-password" && !searchParams.get("type")) {
-      navigate("/");
+      navigate("/dashboard");
     }
   }, [user, view, searchParams, navigate]);
 
@@ -136,7 +136,7 @@ const Auth = () => {
         title: "Bem-vindo!",
         description: "Sessão iniciada com sucesso",
       });
-      navigate("/");
+      navigate("/dashboard");
     }
   };
 
@@ -162,7 +162,7 @@ const Auth = () => {
         title: "Conta criada!",
         description: "A tua conta foi criada com sucesso. Bem-vindo à IMA!",
       });
-      navigate("/");
+      navigate("/dashboard");
     }
   };
 

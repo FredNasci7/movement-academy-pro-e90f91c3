@@ -14,14 +14,15 @@ import Contact from "./pages/Contact";
 import AulaExperimental from "./pages/AulaExperimental";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
+import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminAthletes from "./pages/admin/AdminAthletes";
 import AdminClasses from "./pages/admin/AdminClasses";
 import AdminRoles from "./pages/admin/AdminRoles";
 import AdminEnrollments from "./pages/admin/AdminEnrollments";
 import Agenda from "./pages/Agenda";
+import ClassAttendance from "./pages/trainer/ClassAttendance";
 import NotFound from "./pages/NotFound";
-
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -42,12 +43,14 @@ const App = () => (
             <Route path="/aula-experimental" element={<AulaExperimental />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/perfil" element={<Profile />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/atletas" element={<AdminAthletes />} />
             <Route path="/admin/turmas" element={<AdminClasses />} />
             <Route path="/admin/permissoes" element={<AdminRoles />} />
             <Route path="/admin/inscricoes" element={<AdminEnrollments />} />
             <Route path="/agenda" element={<Agenda />} />
+            <Route path="/treinador/presencas/:classId" element={<ClassAttendance />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
