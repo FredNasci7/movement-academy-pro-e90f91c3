@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -90,8 +90,26 @@ const Contact = () => {
                     </div>
                   </div>
                 </div>
-                <div className="bg-muted rounded-2xl h-64 flex items-center justify-center">
-                  <span className="text-muted-foreground">Mapa - Colares, Sintra</span>
+                <div className="relative rounded-2xl overflow-hidden h-64 bg-muted/20">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d-9.4463!3d38.7978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDQ3JzUyLjEiTiA5wrAyNic0Ni43Ilc!5e0!3m2!1spt-PT!2spt&output=embed"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Localização IMA - Escola Básica Sarrazola"
+                    className="pointer-events-none"
+                  />
+                  <a
+                    href="https://www.google.com/maps/search/Escola+Básica+Sarrazola+Colares+Sintra"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-md bg-background/80 backdrop-blur px-3 py-2 text-sm text-foreground hover:bg-background transition-colors"
+                  >
+                    Abrir no Google Maps
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
                 </div>
               </div>
             </AnimatedSection>
