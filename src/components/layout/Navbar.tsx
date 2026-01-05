@@ -1,8 +1,16 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, User, LogOut, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navLinks = [
   { href: "/", label: "Início" },
@@ -17,6 +25,8 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +39,11 @@ export function Navbar() {
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
+  };
 
   return (
     <header
@@ -96,8 +111,53 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden lg:block flex-shrink-0">
+          {/* CTA & Auth Buttons */}
+          <div className="hidden lg:flex items-center gap-3 flex-shrink-0">
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className={cn(
+                      "font-medium gap-2",
+                      isScrolled 
+                        ? "border-border" 
+                        : "border-white/30 bg-white/10 text-white hover:bg-white/20 hover:text-white"
+                    )}
+                  >
+                    <User className="h-4 w-4" />
+                    A Minha Conta
+                    <ChevronDown className="h-3 w-3" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem asChild>
+                    <Link to="/perfil" className="cursor-pointer">
+                      <User className="mr-2 h-4 w-4" />
+                      O Meu Perfil
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-destructive focus:text-destructive">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Terminar Sessão
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button 
+                asChild 
+                variant="outline"
+                className={cn(
+                  "font-medium",
+                  isScrolled 
+                    ? "border-border" 
+                    : "border-white/30 bg-white/10 text-white hover:bg-white/20 hover:text-white"
+                )}
+              >
+                <Link to="/auth">Entrar</Link>
+              </Button>
+            )}
             <Button asChild size="default" className="font-semibold shadow-md hover:shadow-lg transition-shadow px-6 bg-accent text-accent-foreground hover:bg-accent/90">
               <Link to="/aula-experimental">Aula Experimental</Link>
             </Button>
@@ -121,7 +181,7 @@ export function Navbar() {
         <div
           className={cn(
             "lg:hidden overflow-hidden transition-all duration-300",
-            isOpen ? "max-h-96 mt-4" : "max-h-0"
+            isOpen ? "max-h-[500px] mt-4" : "max-h-0"
           )}
         >
           <div className="bg-card rounded-xl p-4 shadow-lg space-y-2">
@@ -139,6 +199,36 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+            
+            <div className="border-t border-border pt-2 mt-2 space-y-2">
+              {user ? (
+                <>
+                  <Link
+                    to="/perfil"
+                    className="block py-3 px-4 rounded-lg font-medium text-foreground hover:bg-muted"
+                  >
+                    <User className="inline-block mr-2 h-4 w-4" />
+                    O Meu Perfil
+                  </Link>
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full text-left py-3 px-4 rounded-lg font-medium text-destructive hover:bg-destructive/10"
+                  >
+                    <LogOut className="inline-block mr-2 h-4 w-4" />
+                    Terminar Sessão
+                  </button>
+                </>
+              ) : (
+                <Link
+                  to="/auth"
+                  className="block py-3 px-4 rounded-lg font-medium text-foreground hover:bg-muted"
+                >
+                  <User className="inline-block mr-2 h-4 w-4" />
+                  Entrar / Registar
+                </Link>
+              )}
+            </div>
+            
             <Button asChild className="w-full mt-4" size="lg">
               <Link to="/aula-experimental">Aula Experimental</Link>
             </Button>
