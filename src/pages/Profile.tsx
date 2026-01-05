@@ -4,7 +4,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { User, Phone, Calendar, AlertCircle, Loader2, Save } from "lucide-react";
+import { User, Phone, Calendar, Loader2, Save } from "lucide-react";
 
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -28,8 +28,6 @@ const profileSchema = z.object({
   full_name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres").max(100, "O nome é demasiado longo"),
   phone: z.string().max(20, "Número de telefone inválido").optional().or(z.literal("")),
   birth_date: z.string().optional().or(z.literal("")),
-  emergency_contact: z.string().max(100, "Nome demasiado longo").optional().or(z.literal("")),
-  emergency_phone: z.string().max(20, "Número de telefone inválido").optional().or(z.literal("")),
   notes: z.string().max(500, "Máximo de 500 caracteres").optional().or(z.literal("")),
 });
 
@@ -48,8 +46,6 @@ const Profile = () => {
       full_name: "",
       phone: "",
       birth_date: "",
-      emergency_contact: "",
-      emergency_phone: "",
       notes: "",
     },
   });
@@ -80,8 +76,6 @@ const Profile = () => {
             full_name: data.full_name || "",
             phone: data.phone || "",
             birth_date: data.birth_date || "",
-            emergency_contact: data.emergency_contact || "",
-            emergency_phone: data.emergency_phone || "",
             notes: data.notes || "",
           });
         }
@@ -111,8 +105,6 @@ const Profile = () => {
           full_name: data.full_name,
           phone: data.phone || null,
           birth_date: data.birth_date || null,
-          emergency_contact: data.emergency_contact || null,
-          emergency_phone: data.emergency_phone || null,
           notes: data.notes || null,
         })
         .eq("id", user.id);
@@ -185,9 +177,9 @@ const Profile = () => {
                       name="full_name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Nome Completo *</FormLabel>
+                          <FormLabel>Nome *</FormLabel>
                           <FormControl>
-                            <Input {...field} placeholder="O teu nome completo" />
+                            <Input {...field} placeholder="O teu nome" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -231,43 +223,6 @@ const Profile = () => {
                     </div>
                   </div>
 
-                  {/* Emergency Contact Section */}
-                  <div className="space-y-4 pt-4 border-t border-border">
-                    <h2 className="text-lg font-heading font-semibold text-foreground flex items-center gap-2">
-                      <AlertCircle className="h-5 w-5 text-primary" />
-                      Contacto de Emergência
-                    </h2>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <FormField
-                        control={form.control}
-                        name="emergency_contact"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Nome</FormLabel>
-                            <FormControl>
-                              <Input {...field} placeholder="Nome do contacto" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
-                        name="emergency_phone"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Telefone</FormLabel>
-                            <FormControl>
-                              <Input {...field} placeholder="912 345 678" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                  </div>
 
                   {/* Notes Section */}
                   <div className="space-y-4 pt-4 border-t border-border">
