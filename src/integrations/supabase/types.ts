@@ -14,6 +14,56 @@ export type Database = {
   }
   public: {
     Tables: {
+      athlete_guardians: {
+        Row: {
+          athlete_birth_date: string | null
+          athlete_name: string
+          athlete_notes: string | null
+          created_at: string
+          guardian_id: string
+          id: string
+          modalidade: string | null
+          relationship: string
+          subscription_end_date: string | null
+          subscription_status: string | null
+          updated_at: string
+        }
+        Insert: {
+          athlete_birth_date?: string | null
+          athlete_name: string
+          athlete_notes?: string | null
+          created_at?: string
+          guardian_id: string
+          id?: string
+          modalidade?: string | null
+          relationship: string
+          subscription_end_date?: string | null
+          subscription_status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          athlete_birth_date?: string | null
+          athlete_name?: string
+          athlete_notes?: string | null
+          created_at?: string
+          guardian_id?: string
+          id?: string
+          modalidade?: string | null
+          relationship?: string
+          subscription_end_date?: string | null
+          subscription_status?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "athlete_guardians_guardian_id_fkey"
+            columns: ["guardian_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       posts: {
         Row: {
           categoria: string
@@ -62,8 +112,11 @@ export type Database = {
           created_at: string
           full_name: string | null
           id: string
+          modalidade: string | null
           notes: string | null
           phone: string | null
+          subscription_end_date: string | null
+          subscription_status: string | null
           updated_at: string
         }
         Insert: {
@@ -71,8 +124,11 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id: string
+          modalidade?: string | null
           notes?: string | null
           phone?: string | null
+          subscription_end_date?: string | null
+          subscription_status?: string | null
           updated_at?: string
         }
         Update: {
@@ -80,8 +136,11 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id?: string
+          modalidade?: string | null
           notes?: string | null
           phone?: string | null
+          subscription_end_date?: string | null
+          subscription_status?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -112,6 +171,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_user_roles: {
+        Args: { _user_id: string }
+        Returns: Database["public"]["Enums"]["app_role"][]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
