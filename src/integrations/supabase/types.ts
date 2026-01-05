@@ -64,6 +64,61 @@ export type Database = {
           },
         ]
       }
+      class_enrollments: {
+        Row: {
+          athlete_id: string | null
+          class_id: string
+          created_at: string
+          enrolled_at: string
+          id: string
+          profile_id: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          athlete_id?: string | null
+          class_id: string
+          created_at?: string
+          enrolled_at?: string
+          id?: string
+          profile_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          athlete_id?: string | null
+          class_id?: string
+          created_at?: string
+          enrolled_at?: string
+          id?: string
+          profile_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "class_enrollments_athlete_id_fkey"
+            columns: ["athlete_id"]
+            isOneToOne: false
+            referencedRelation: "athlete_guardians"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "class_enrollments_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "class_enrollments_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       class_schedules: {
         Row: {
           class_id: string
@@ -101,6 +156,60 @@ export type Database = {
             columns: ["class_id"]
             isOneToOne: false
             referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      class_sessions: {
+        Row: {
+          class_id: string
+          created_at: string
+          end_time: string
+          id: string
+          notes: string | null
+          schedule_id: string | null
+          session_date: string
+          start_time: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          class_id: string
+          created_at?: string
+          end_time: string
+          id?: string
+          notes?: string | null
+          schedule_id?: string | null
+          session_date: string
+          start_time: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          class_id?: string
+          created_at?: string
+          end_time?: string
+          id?: string
+          notes?: string | null
+          schedule_id?: string | null
+          session_date?: string
+          start_time?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "class_sessions_class_id_fkey"
+            columns: ["class_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "class_sessions_schedule_id_fkey"
+            columns: ["schedule_id"]
+            isOneToOne: false
+            referencedRelation: "class_schedules"
             referencedColumns: ["id"]
           },
         ]
