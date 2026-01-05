@@ -14,7 +14,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 
-const plans = [
+const plansGinastica = [
   { name: "BABY'MOVE", price: "39", period: "/mês", description: "Ideal para começar", features: ["Acesso à academia", "Aulas de grupo (2x/semana)", "Avaliação física inicial", "App de acompanhamento"] },
   { name: "MINI'MOVE", price: "69", period: "/mês", description: "O mais popular", features: ["Tudo do Básico", "Aulas de grupo ilimitadas", "1 sessão personal/mês", "Nutrição básica", "Acesso 7 dias/semana"] },
   { name: "MOVE'TEAM", price: "119", period: "/mês", description: "Experiência completa", features: ["Tudo do Standard", "4 sessões personal/mês", "Plano nutricional completo", "Acesso área wellness", "Prioridade em marcações"] },
@@ -23,6 +23,12 @@ const plans = [
   { name: "MOVE'TEAM", price: "35", period: "/mês", description: "Maiores de 60 anos", features: ["Acesso à academia", "Aulas adaptadas", "Avaliação física", "Horário flexível"] },
   { name: "PRÉ'TEAM", price: "99", period: "/mês", description: "Treina com um amigo", features: ["2 membros incluídos", "Aulas de grupo ilimitadas", "1 sessão personal/mês", "Acesso 7 dias/semana"] },
   { name: "MA'TEAM REP", price: "549", period: "/ano", description: "Poupança máxima", features: ["Tudo do Standard", "2 meses grátis", "Prioridade em marcações", "Acesso área wellness"] },
+];
+
+const plansAulas = [
+  { name: "AULA AVULSO", price: "15", period: "/aula", description: "Sem compromisso", features: ["1 aula à escolha", "Acesso pontual", "Sem mensalidade"] },
+  { name: "PACK 10 AULAS", price: "120", period: "", description: "Melhor valor", features: ["10 aulas à escolha", "Válido 3 meses", "Flexibilidade total"] },
+  { name: "AULAS ILIMITADAS", price: "89", period: "/mês", description: "Para os dedicados", features: ["Aulas ilimitadas", "Todas as modalidades", "Acesso 7 dias/semana"] },
 ];
 
 const Pricing = () => {
@@ -76,10 +82,10 @@ const Pricing = () => {
               className="w-full max-w-6xl mx-auto"
             >
               <CarouselContent className="-ml-4 py-6">
-                {plans.map((plan, i) => {
+                {plansGinastica.map((plan, i) => {
                   const isCentered = i === currentIndex;
                   return (
-                    <CarouselItem key={plan.name} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
+                    <CarouselItem key={`ginastica-${i}`} className="pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                       <div className={cn(
                         "relative bg-card rounded-2xl p-8 h-full border transition-all duration-300",
                         isCentered 
@@ -113,6 +119,55 @@ const Pricing = () => {
                 <CarouselNext className="static translate-y-0" />
               </div>
             </Carousel>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      <section className="pt-20 pb-8 bg-gradient-to-b from-primary/5 to-background">
+        <div className="section-container">
+          <AnimatedSection className="text-center max-w-3xl mx-auto">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6">
+              Preçário <span className="text-primary">Aulas</span>
+            </h2>
+            <p className="text-lg text-muted-foreground">Planos flexíveis para as nossas aulas de grupo.</p>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      <section className="py-12 pb-20">
+        <div className="section-container">
+          <AnimatedSection>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              {plansAulas.map((plan, i) => {
+                const isMiddle = i === 1;
+                return (
+                  <div key={`aulas-${i}`} className={cn(
+                    "relative bg-card rounded-2xl p-8 h-full border transition-all duration-300",
+                    isMiddle 
+                      ? "border-primary shadow-lg scale-105" 
+                      : "border-border/50"
+                  )}>
+                    <h3 className="text-xl font-heading font-bold text-foreground">{plan.name}</h3>
+                    <p className="text-muted-foreground text-sm mb-4">{plan.description}</p>
+                    <div className="mb-6">
+                      <span className="text-4xl font-heading font-bold text-foreground">€{plan.price}</span>
+                      <span className="text-muted-foreground">{plan.period}</span>
+                    </div>
+                    <ul className="space-y-3 mb-8">
+                      {plan.features.map(f => (
+                        <li key={f} className="flex items-center gap-2 text-sm">
+                          <Check className="w-4 h-4 text-primary flex-shrink-0" />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                    <Button asChild className="w-full" variant={isMiddle ? "default" : "outline"}>
+                      <Link to="/aula-experimental">Experimentar Agora</Link>
+                    </Button>
+                  </div>
+                );
+              })}
+            </div>
           </AnimatedSection>
         </div>
       </section>
