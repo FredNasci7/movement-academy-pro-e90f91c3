@@ -399,14 +399,14 @@ const Auth = () => {
                           name="fullName"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Nome Completo</FormLabel>
+                              <FormLabel>Nome</FormLabel>
                               <FormControl>
                                 <div className="relative">
                                   <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                                   <Input
                                     {...field}
                                     type="text"
-                                    placeholder="O teu nome completo"
+                                    placeholder="O teu nome"
                                     className="pl-10"
                                   />
                                 </div>
