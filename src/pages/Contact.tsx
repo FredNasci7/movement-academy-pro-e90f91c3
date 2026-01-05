@@ -28,7 +28,7 @@ const Contact = () => {
           <AnimatedSection className="text-center max-w-3xl mx-auto">
             <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">Contacto</span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6">
-              Vamos <span className="text-primary">Conversar</span>
+              Pedido de <span className="text-primary">Informação</span>
             </h1>
             <p className="text-lg text-muted-foreground">Tens dúvidas? Queres inscrever o teu filho/a? Entra em contacto connosco!</p>
           </AnimatedSection>
