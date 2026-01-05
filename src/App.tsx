@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import Gallery from "./pages/Gallery";
+import Noticias from "./pages/Noticias";
 import Pricing from "./pages/Pricing";
 import Contact from "./pages/Contact";
 import AulaExperimental from "./pages/AulaExperimental";
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/quem-somos" element={<About />} />
           <Route path="/servicos" element={<Services />} />
           <Route path="/galeria" element={<Gallery />} />
+          <Route path="/noticias" element={<Noticias />} />
           <Route path="/precos" element={<Pricing />} />
           <Route path="/contacto" element={<Contact />} />
           <Route path="/aula-experimental" element={<AulaExperimental />} />
