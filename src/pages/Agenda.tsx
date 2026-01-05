@@ -1,43 +1,57 @@
 import { useState } from "react";
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isSameMonth, addMonths, subMonths, getDay } from "date-fns";
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isSameMonth, addMonths, subMonths, getDay, startOfWeek, addDays, addWeeks, subWeeks } from "date-fns";
 import { pt } from "date-fns/locale";
-import { Calendar, ChevronLeft, ChevronRight, Clock, MapPin, User } from "lucide-react";
+import { Calendar, CalendarDays, ChevronLeft, ChevronRight, Clock, MapPin, User } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEnrollments } from "@/hooks/useEnrollments";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Navigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const DAYS_SHORT = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
+
+type ViewMode = "month" | "week";
 
 const Agenda = () => {
   const { user, loading: authLoading } = useAuth();
   const { enrollments, isLoading } = useEnrollments();
-  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [viewMode, setViewMode] = useState<ViewMode>("month");
 
-  const monthStart = startOfMonth(currentMonth);
-  const monthEnd = endOfMonth(currentMonth);
+  // Monthly view calculations
+  const monthStart = startOfMonth(currentDate);
+  const monthEnd = endOfMonth(currentDate);
   const monthDays = eachDayOfInterval({ start: monthStart, end: monthEnd });
-
-  // Get day of week for the first day (0 = Sunday, we want Monday = 0)
   const startDayOfWeek = getDay(monthStart);
-  // Convert to Monday-based (Monday = 0, Sunday = 6)
   const startOffset = startDayOfWeek === 0 ? 6 : startDayOfWeek - 1;
 
-  const goToPreviousMonth = () => {
-    setCurrentMonth((prev) => subMonths(prev, 1));
+  // Weekly view calculations
+  const weekStart = startOfWeek(currentDate, { weekStartsOn: 1 });
+  const weekDays = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
+
+  const goToPrevious = () => {
+    if (viewMode === "month") {
+      setCurrentDate((prev) => subMonths(prev, 1));
+    } else {
+      setCurrentDate((prev) => subWeeks(prev, 1));
+    }
   };
 
-  const goToNextMonth = () => {
-    setCurrentMonth((prev) => addMonths(prev, 1));
+  const goToNext = () => {
+    if (viewMode === "month") {
+      setCurrentDate((prev) => addMonths(prev, 1));
+    } else {
+      setCurrentDate((prev) => addWeeks(prev, 1));
+    }
   };
 
-  const goToCurrentMonth = () => {
-    setCurrentMonth(new Date());
+  const goToToday = () => {
+    setCurrentDate(new Date());
   };
 
   // Get classes for a specific day of week (database uses Sunday=0)
@@ -82,26 +96,46 @@ const Agenda = () => {
               A Minha Agenda
             </h1>
             <p className="text-muted-foreground">
-              Visualize as suas aulas mensais
+              Visualize as suas aulas
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="icon" onClick={goToPreviousMonth}>
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <Button variant="outline" onClick={goToCurrentMonth} className="min-w-[100px]">
-              Hoje
-            </Button>
-            <Button variant="outline" size="icon" onClick={goToNextMonth}>
-              <ChevronRight className="h-4 w-4" />
-            </Button>
+          <div className="flex items-center gap-3">
+            <ToggleGroup
+              type="single"
+              value={viewMode}
+              onValueChange={(value) => value && setViewMode(value as ViewMode)}
+              className="bg-muted rounded-lg p-1"
+            >
+              <ToggleGroupItem value="week" aria-label="Vista semanal" className="px-3">
+                <CalendarDays className="h-4 w-4 mr-2" />
+                Semana
+              </ToggleGroupItem>
+              <ToggleGroupItem value="month" aria-label="Vista mensal" className="px-3">
+                <Calendar className="h-4 w-4 mr-2" />
+                Mês
+              </ToggleGroupItem>
+            </ToggleGroup>
+
+            <div className="flex items-center gap-1">
+              <Button variant="outline" size="icon" onClick={goToPrevious}>
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Button variant="outline" onClick={goToToday} className="min-w-[80px]">
+                Hoje
+              </Button>
+              <Button variant="outline" size="icon" onClick={goToNext}>
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
 
         <div className="text-center mb-6">
           <h2 className="text-xl font-semibold capitalize">
-            {format(currentMonth, "MMMM yyyy", { locale: pt })}
+            {viewMode === "month"
+              ? format(currentDate, "MMMM yyyy", { locale: pt })
+              : `${format(weekStart, "d 'de' MMMM", { locale: pt })} - ${format(addDays(weekStart, 6), "d 'de' MMMM, yyyy", { locale: pt })}`}
           </h2>
         </div>
 
@@ -117,9 +151,9 @@ const Agenda = () => {
               </p>
             </CardContent>
           </Card>
-        ) : (
+        ) : viewMode === "month" ? (
+          /* MONTHLY VIEW */
           <div className="border rounded-lg overflow-hidden bg-card">
-            {/* Header with day names */}
             <div className="grid grid-cols-7 bg-muted">
               {DAYS_SHORT.map((day) => (
                 <div
@@ -131,9 +165,7 @@ const Agenda = () => {
               ))}
             </div>
 
-            {/* Calendar grid */}
             <div className="grid grid-cols-7">
-              {/* Empty cells for days before month start */}
               {Array.from({ length: startOffset }).map((_, i) => (
                 <div
                   key={`empty-${i}`}
@@ -141,11 +173,10 @@ const Agenda = () => {
                 />
               ))}
 
-              {/* Month days */}
               {monthDays.map((day) => {
                 const dayClasses = getClassesForDay(day);
                 const isToday = isSameDay(day, new Date());
-                const isCurrentMonth = isSameMonth(day, currentMonth);
+                const isCurrentMonth = isSameMonth(day, currentDate);
 
                 return (
                   <div
@@ -169,7 +200,7 @@ const Agenda = () => {
                       {dayClasses.map((classItem, classIndex) => (
                         <div
                           key={classIndex}
-                          className="bg-primary/10 rounded p-1.5 hover:bg-primary/20 transition-colors cursor-pointer group"
+                          className="bg-primary/10 rounded p-1.5 hover:bg-primary/20 transition-colors cursor-pointer"
                           title={`${classItem.className} - ${classItem.start_time.slice(0, 5)} às ${classItem.end_time.slice(0, 5)}`}
                         >
                           <p className="font-medium text-[10px] truncate">
@@ -191,7 +222,6 @@ const Agenda = () => {
                 );
               })}
 
-              {/* Empty cells for days after month end */}
               {Array.from({
                 length: (7 - ((startOffset + monthDays.length) % 7)) % 7,
               }).map((_, i) => (
@@ -201,6 +231,81 @@ const Agenda = () => {
                 />
               ))}
             </div>
+          </div>
+        ) : (
+          /* WEEKLY VIEW */
+          <div className="grid grid-cols-1 md:grid-cols-7 gap-2">
+            {weekDays.map((day) => {
+              const dayClasses = getClassesForDay(day);
+              const isToday = isSameDay(day, new Date());
+
+              return (
+                <Card
+                  key={day.toISOString()}
+                  className={cn(
+                    "min-h-[200px]",
+                    isToday && "ring-2 ring-primary"
+                  )}
+                >
+                  <CardHeader className="py-3 px-3">
+                    <CardTitle
+                      className={cn(
+                        "text-sm text-center",
+                        isToday && "text-primary"
+                      )}
+                    >
+                      {DAYS_SHORT[getDay(day) === 0 ? 6 : getDay(day) - 1]}
+                    </CardTitle>
+                    <CardDescription className="text-center text-lg font-medium">
+                      {format(day, "d")}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="px-2 pb-3 space-y-2">
+                    {dayClasses.length === 0 ? (
+                      <p className="text-xs text-muted-foreground text-center">
+                        Sem aulas
+                      </p>
+                    ) : (
+                      dayClasses.map((classItem, classIndex) => (
+                        <div
+                          key={classIndex}
+                          className="bg-primary/10 rounded-lg p-2 space-y-1"
+                        >
+                          <p className="font-medium text-xs truncate">
+                            {classItem.className}
+                          </p>
+                          <Badge variant="secondary" className="text-[10px]">
+                            {classItem.modalidade}
+                          </Badge>
+                          <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                            <Clock className="h-3 w-3" />
+                            {classItem.start_time.slice(0, 5)} -{" "}
+                            {classItem.end_time.slice(0, 5)}
+                          </div>
+                          {classItem.location && (
+                            <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                              <MapPin className="h-3 w-3" />
+                              {classItem.location}
+                            </div>
+                          )}
+                          {classItem.trainer && (
+                            <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                              <User className="h-3 w-3" />
+                              {classItem.trainer}
+                            </div>
+                          )}
+                          {classItem.athleteName && (
+                            <Badge variant="outline" className="text-[10px]">
+                              {classItem.athleteName}
+                            </Badge>
+                          )}
+                        </div>
+                      ))
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         )}
 
