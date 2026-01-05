@@ -59,9 +59,10 @@ interface Athlete {
   full_name: string | null;
   phone: string | null;
   birth_date: string | null;
-  emergency_contact: string | null;
-  emergency_phone: string | null;
   notes: string | null;
+  subscription_status: string | null;
+  subscription_end_date: string | null;
+  modalidade: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -140,7 +141,7 @@ const AdminAthletes = () => {
       (athlete) =>
         athlete.full_name?.toLowerCase().includes(query) ||
         athlete.phone?.toLowerCase().includes(query) ||
-        athlete.emergency_contact?.toLowerCase().includes(query)
+        athlete.modalidade?.toLowerCase().includes(query)
     );
     setFilteredAthletes(filtered);
   }, [searchQuery, athletes]);
@@ -151,8 +152,8 @@ const AdminAthletes = () => {
       full_name: athlete.full_name || "",
       phone: athlete.phone || "",
       birth_date: athlete.birth_date || "",
-      emergency_contact: athlete.emergency_contact || "",
-      emergency_phone: athlete.emergency_phone || "",
+      modalidade: athlete.modalidade || "",
+      subscription_status: athlete.subscription_status || "",
       notes: athlete.notes || "",
     });
   };
@@ -168,8 +169,8 @@ const AdminAthletes = () => {
           full_name: editForm.full_name || null,
           phone: editForm.phone || null,
           birth_date: editForm.birth_date || null,
-          emergency_contact: editForm.emergency_contact || null,
-          emergency_phone: editForm.emergency_phone || null,
+          modalidade: editForm.modalidade || null,
+          subscription_status: editForm.subscription_status || null,
           notes: editForm.notes || null,
         })
         .eq("id", editingAthlete.id);
@@ -321,7 +322,8 @@ const AdminAthletes = () => {
                         <TableHead>Nome</TableHead>
                         <TableHead>Telefone</TableHead>
                         <TableHead>Data de Nascimento</TableHead>
-                        <TableHead>Contacto Emergência</TableHead>
+                        <TableHead>Modalidade</TableHead>
+                        <TableHead>Subscrição</TableHead>
                         <TableHead>Inscrito em</TableHead>
                         <TableHead className="text-right">Ações</TableHead>
                       </TableRow>
@@ -357,19 +359,22 @@ const AdminAthletes = () => {
                             )}
                           </TableCell>
                           <TableCell>
-                            {athlete.emergency_contact ? (
-                              <span className="flex items-center gap-1">
-                                <AlertCircle className="h-3 w-3" />
-                                {athlete.emergency_contact}
-                                {athlete.emergency_phone && (
-                                  <span className="text-muted-foreground text-xs">
-                                    ({athlete.emergency_phone})
-                                  </span>
-                                )}
-                              </span>
+                            {athlete.modalidade ? (
+                              <span className="capitalize">{athlete.modalidade.replace("_", " ")}</span>
                             ) : (
                               <span className="text-muted-foreground">-</span>
                             )}
+                          </TableCell>
+                          <TableCell>
+                            <span className={`px-2 py-1 rounded-full text-xs ${
+                              athlete.subscription_status === "ativo" 
+                                ? "bg-green-500/10 text-green-600" 
+                                : athlete.subscription_status === "trial"
+                                ? "bg-yellow-500/10 text-yellow-600"
+                                : "bg-muted text-muted-foreground"
+                            }`}>
+                              {athlete.subscription_status || "inativo"}
+                            </span>
                           </TableCell>
                           <TableCell>
                             {format(new Date(athlete.created_at), "dd MMM yyyy", {
@@ -458,24 +463,36 @@ const AdminAthletes = () => {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="edit-emergency-name">Contacto Emergência</Label>
-                <Input
-                  id="edit-emergency-name"
-                  value={editForm.emergency_contact || ""}
+                <Label htmlFor="edit-modalidade">Modalidade</Label>
+                <select
+                  id="edit-modalidade"
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                  value={editForm.modalidade || ""}
                   onChange={(e) =>
-                    setEditForm({ ...editForm, emergency_contact: e.target.value })
+                    setEditForm({ ...editForm, modalidade: e.target.value })
                   }
-                />
+                >
+                  <option value="">Selecionar</option>
+                  <option value="ginastica">Ginástica</option>
+                  <option value="aulas_grupo">Aulas de Grupo</option>
+                  <option value="treino_personalizado">Treino Personalizado</option>
+                </select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="edit-emergency-phone">Tel. Emergência</Label>
-                <Input
-                  id="edit-emergency-phone"
-                  value={editForm.emergency_phone || ""}
+                <Label htmlFor="edit-subscription">Subscrição</Label>
+                <select
+                  id="edit-subscription"
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                  value={editForm.subscription_status || ""}
                   onChange={(e) =>
-                    setEditForm({ ...editForm, emergency_phone: e.target.value })
+                    setEditForm({ ...editForm, subscription_status: e.target.value })
                   }
-                />
+                >
+                  <option value="inativo">Inativo</option>
+                  <option value="ativo">Ativo</option>
+                  <option value="trial">Trial</option>
+                  <option value="expirado">Expirado</option>
+                </select>
               </div>
             </div>
             <div className="space-y-2">

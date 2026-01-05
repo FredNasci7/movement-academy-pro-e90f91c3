@@ -4,12 +4,13 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { User, Phone, Calendar, Loader2, Save } from "lucide-react";
+import { User, Phone, Calendar, Loader2, Save, Users, CreditCard } from "lucide-react";
 
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
 import {
   Form,
   FormControl,
@@ -19,26 +20,59 @@ import {
   FormMessage,
   FormDescription,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { useRoles } from "@/hooks/useRoles";
+import { useAthleteGuardians } from "@/hooks/useAthleteGuardians";
 import { supabase } from "@/integrations/supabase/client";
 import { AnimatedSection } from "@/components/ui/animated-section";
+import { RoleBadge } from "@/components/profile/RoleBadge";
+import { AthleteCard } from "@/components/profile/AthleteCard";
+import { AddAthleteForm } from "@/components/profile/AddAthleteForm";
 
 const profileSchema = z.object({
   full_name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres").max(100, "O nome é demasiado longo"),
   phone: z.string().max(20, "Número de telefone inválido").optional().or(z.literal("")),
   birth_date: z.string().optional().or(z.literal("")),
   notes: z.string().max(500, "Máximo de 500 caracteres").optional().or(z.literal("")),
+  modalidade: z.string().optional().or(z.literal("")),
 });
 
 type ProfileFormData = z.infer<typeof profileSchema>;
 
+interface ProfileData {
+  full_name: string | null;
+  phone: string | null;
+  birth_date: string | null;
+  notes: string | null;
+  modalidade: string | null;
+  subscription_status: string | null;
+  subscription_end_date: string | null;
+}
+
+const subscriptionLabels: Record<string, { label: string; className: string }> = {
+  ativo: { label: "Subscrição Ativa", className: "bg-green-500/10 text-green-600 border-green-500/30" },
+  inativo: { label: "Sem Subscrição", className: "bg-muted text-muted-foreground border-border" },
+  trial: { label: "Período de Teste", className: "bg-yellow-500/10 text-yellow-600 border-yellow-500/30" },
+  expirado: { label: "Subscrição Expirada", className: "bg-destructive/10 text-destructive border-destructive/30" },
+};
+
 const Profile = () => {
   const { user, loading: authLoading } = useAuth();
+  const { roles, isLoading: rolesLoading, isEncarregado, isAtleta } = useRoles();
+  const { athletes, isLoading: athletesLoading, addAthlete, updateAthlete, deleteAthlete } = useAthleteGuardians();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
 
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
@@ -47,6 +81,7 @@ const Profile = () => {
       phone: "",
       birth_date: "",
       notes: "",
+      modalidade: "",
     },
   });
 
@@ -72,11 +107,13 @@ const Profile = () => {
         if (error) throw error;
 
         if (data) {
+          setProfileData(data);
           form.reset({
             full_name: data.full_name || "",
             phone: data.phone || "",
             birth_date: data.birth_date || "",
             notes: data.notes || "",
+            modalidade: data.modalidade || "",
           });
         }
       } catch (error) {
@@ -106,6 +143,7 @@ const Profile = () => {
           phone: data.phone || null,
           birth_date: data.birth_date || null,
           notes: data.notes || null,
+          modalidade: data.modalidade || null,
         })
         .eq("id", user.id);
 
@@ -137,18 +175,22 @@ const Profile = () => {
     );
   }
 
+  const subscriptionStatus = profileData?.subscription_status || "inativo";
+  const subscriptionConfig = subscriptionLabels[subscriptionStatus] || subscriptionLabels.inativo;
+
   return (
     <Layout>
       <section className="py-16">
         <div className="section-container">
-          <AnimatedSection className="max-w-2xl mx-auto">
+          <AnimatedSection className="max-w-2xl mx-auto space-y-6">
+            {/* Profile Card */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="bg-card rounded-2xl border border-border/50 shadow-xl p-8"
             >
               {/* Header */}
-              <div className="mb-8">
+              <div className="mb-6">
                 <h1 className="text-2xl font-heading font-bold text-foreground mb-2">
                   O Meu Perfil
                 </h1>
@@ -157,10 +199,36 @@ const Profile = () => {
                 </p>
               </div>
 
-              {/* Email Display */}
-              <div className="mb-6 p-4 bg-muted/50 rounded-lg">
-                <p className="text-sm text-muted-foreground">Email da conta</p>
-                <p className="font-medium text-foreground">{user?.email}</p>
+              {/* Roles & Subscription */}
+              <div className="mb-6 p-4 bg-muted/50 rounded-lg space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-muted-foreground">Email da conta</p>
+                    <p className="font-medium text-foreground">{user?.email}</p>
+                  </div>
+                </div>
+
+                {!rolesLoading && roles.length > 0 && (
+                  <div className="flex flex-wrap gap-2 pt-2 border-t border-border">
+                    {roles.map((role) => (
+                      <RoleBadge key={role} role={role} />
+                    ))}
+                  </div>
+                )}
+
+                {(isAtleta || profileData?.subscription_status) && (
+                  <div className="flex items-center gap-2 pt-2 border-t border-border">
+                    <CreditCard className="h-4 w-4 text-muted-foreground" />
+                    <Badge variant="outline" className={subscriptionConfig.className}>
+                      {subscriptionConfig.label}
+                    </Badge>
+                    {profileData?.subscription_end_date && subscriptionStatus === "ativo" && (
+                      <span className="text-xs text-muted-foreground">
+                        até {new Date(profileData.subscription_end_date).toLocaleDateString("pt-PT")}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
 
               <Form {...form}>
@@ -221,8 +289,32 @@ const Profile = () => {
                         )}
                       />
                     </div>
-                  </div>
 
+                    {isAtleta && (
+                      <FormField
+                        control={form.control}
+                        name="modalidade"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Modalidade</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Selecionar modalidade" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="ginastica">Ginástica</SelectItem>
+                                <SelectItem value="aulas_grupo">Aulas de Grupo</SelectItem>
+                                <SelectItem value="treino_personalizado">Treino Personalizado</SelectItem>
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    )}
+                  </div>
 
                   {/* Notes Section */}
                   <div className="space-y-4 pt-4 border-t border-border">
@@ -269,6 +361,45 @@ const Profile = () => {
                 </form>
               </Form>
             </motion.div>
+
+            {/* Athletes Section (for Encarregados) */}
+            {isEncarregado && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="bg-card rounded-2xl border border-border/50 shadow-xl p-8"
+              >
+                <div className="mb-6">
+                  <h2 className="text-xl font-heading font-bold text-foreground flex items-center gap-2">
+                    <Users className="h-5 w-5 text-primary" />
+                    Os Meus Atletas
+                  </h2>
+                  <p className="text-muted-foreground text-sm mt-1">
+                    Gere os atletas que estão ao teu encargo
+                  </p>
+                </div>
+
+                {athletesLoading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {athletes.map((athlete) => (
+                      <AthleteCard
+                        key={athlete.id}
+                        athlete={athlete}
+                        onUpdate={updateAthlete}
+                        onDelete={deleteAthlete}
+                      />
+                    ))}
+
+                    <AddAthleteForm onAdd={addAthlete} />
+                  </div>
+                )}
+              </motion.div>
+            )}
           </AnimatedSection>
         </div>
       </section>
