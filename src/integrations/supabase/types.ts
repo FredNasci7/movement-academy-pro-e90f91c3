@@ -60,8 +60,6 @@ export type Database = {
         Row: {
           birth_date: string | null
           created_at: string
-          emergency_contact: string | null
-          emergency_phone: string | null
           full_name: string | null
           id: string
           notes: string | null
@@ -71,8 +69,6 @@ export type Database = {
         Insert: {
           birth_date?: string | null
           created_at?: string
-          emergency_contact?: string | null
-          emergency_phone?: string | null
           full_name?: string | null
           id: string
           notes?: string | null
@@ -82,8 +78,6 @@ export type Database = {
         Update: {
           birth_date?: string | null
           created_at?: string
-          emergency_contact?: string | null
-          emergency_phone?: string | null
           full_name?: string | null
           id?: string
           notes?: string | null
