@@ -3,24 +3,18 @@ import { AnimatedSection } from "@/components/ui/animated-section";
 
 const testimonials = [
   {
-    name: "Sofia Mendes",
-    role: "Atleta de Ginástica",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop",
-    content: "A Movement Academy transformou completamente a minha técnica. Os treinadores são incríveis e o ambiente é muito motivador!",
+    name: "Catarina Gonçalves",
+    content: "É sem dúvida uma iniciativa excelente para não perdermos o treino físico seja onde for, neste caso, em casa. Já tive oportunidade de ter aulas com a Bia e confesso que, apesar de sair da aula completamente partida, adorei e sentia-me super bem. Vou recomendar muito",
     rating: 5,
   },
   {
-    name: "Pedro Santos",
-    role: "Membro há 2 anos",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop",
-    content: "O treino personalizado mudou a minha vida. Perdi 15kg e ganhei uma confiança que nunca pensei ter. Recomendo a 100%!",
+    name: "Maria Lune",
+    content: "Recomendo muito! As aulas são óptimas e diversificadas, o ambiente é espetacular e têm o cuidado de personalizar os exercícios às necessidades dos alunos quando é necessário.",
     rating: 5,
   },
   {
-    name: "Ana Rodrigues",
-    role: "Aulas de Grupo",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop",
-    content: "As aulas de grupo são fantásticas! A energia é contagiante e os resultados aparecem rapidamente. Adorei o ambiente familiar.",
+    name: "Carolina Gonçalves e Matilde Gonçalves",
+    content: "É um projeto inovador, com aulas diversificadas e modalidades diferentes do tradicional. Além disso, somos acompanhadas por excelentes profissionais que se preocupam com a nossa evolução, Obrigada!",
     rating: 5,
   },
 ];
@@ -63,17 +57,14 @@ export function TestimonialsSection() {
                 
                 {/* Author */}
                 <div className="flex items-center gap-4">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-12 h-12 rounded-full object-cover ring-2 ring-primary/20"
-                  />
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center ring-2 ring-primary/20">
+                    <span className="text-primary font-heading font-bold text-lg">
+                      {testimonial.name.split(' ').map(n => n[0]).slice(0, 2).join('')}
+                    </span>
+                  </div>
                   <div>
                     <p className="font-heading font-semibold text-foreground">
                       {testimonial.name}
-                    </p>
-                    <p className="text-muted-foreground text-sm">
-                      {testimonial.role}
                     </p>
                   </div>
                 </div>
