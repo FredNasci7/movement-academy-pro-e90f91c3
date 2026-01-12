@@ -1,75 +1,64 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Target, Heart, Zap, Award, Instagram, GraduationCap } from "lucide-react";
+import { ArrowRight, Award, Instagram, Users, Heart, BookOpen, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { AnimatedSection } from "@/components/ui/animated-section";
 
 const values = [
   {
-    icon: Target,
+    icon: Sparkles,
     title: "Movimento",
     description: "Acreditamos que o movimento é a base de uma vida saudável e plena. Cada exercício é uma oportunidade de evolução.",
   },
   {
     icon: Heart,
-    title: "Paixão",
-    description: "A nossa equipa vive e respira ginástica. Transmitimos essa paixão a cada atleta que passa pelas nossas portas.",
+    title: "Saúde",
+    description: "Cuidar do corpo e da mente é essencial. Valorizamos hábitos que promovem bem-estar e qualidade de vida.",
   },
   {
-    icon: Zap,
-    title: "Superação",
-    description: "Encorajamos todos a ultrapassar os seus limites, celebrando cada pequena vitória no caminho para o sucesso.",
+    icon: BookOpen,
+    title: "Aprendizagem",
+    description: "Cada experiência é uma chance de crescer. Incentivamos o desenvolvimento contínuo e a descoberta do potencial individual.",
   },
   {
-    icon: Award,
-    title: "Excelência",
-    description: "Procuramos a excelência em tudo o que fazemos, desde o treino técnico até ao acompanhamento personalizado.",
+    icon: Users,
+    title: "Comunidade",
+    description: "Juntos somos mais fortes. Construímos conexões que apoiam, inspiram e fortalecem todos os membros.",
   },
 ];
 
 const stats = [
   { value: "2021", label: "Ano de Fundação" },
-  { value: "200+", label: "Sócios" },
-  { value: "Múltiplos", label: "Serviços" },
+  { value: "170+", label: "Crianças/Atletas" },
+  { value: "65+", label: "Atletas Federadas" },
   { value: "4+", label: "Anos de Experiência" },
 ];
 
 const trainers = [
   {
-    name: "Beatriz Pinto",
-    role: "Fundadora e Diretora Técnica",
+    name: "Bia",
+    role: "Treinadora Grau II Ginástica Acrobática / Personal Trainer / Instrutora de Barre / Fundadora",
     image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=400&h=500&fit=crop",
-    specialties: ["Ginástica Acrobática", "Gestão Desportiva", "Formação de Atletas"],
-    bio: "Fundadora da IMA em 2021, durante a pandemia. Com paixão e dedicação, transformou um sonho em realidade, criando uma referência em ginástica acrobática em Sintra.",
-    certifications: ["Treinadora de Ginástica Acrobática"],
-    instagram: "@ima.academy",
   },
   {
-    name: "Carolina Teixeira",
-    role: "Treinadora",
+    name: "Carol",
+    role: "Treinadora Grau I Ginástica / Personal Trainer / Instrutora de Pilates",
     image: "https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=400&h=500&fit=crop",
-    specialties: ["Ginástica Acrobática", "Trabalho de Base", "Competição"],
-    bio: "Dedicada ao desenvolvimento técnico de cada atleta, acompanha os grupos desde a iniciação até à competição.",
-    certifications: ["Treinadora de Ginástica"],
-    instagram: "@ima.academy",
   },
   {
-    name: "David F.",
-    role: "Treinador",
+    name: "David",
+    role: "Treinador Grau I Ginástica / Personal Trainer",
     image: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=400&h=500&fit=crop",
-    specialties: ["Ginástica Acrobática", "Preparação Física", "Dinâmicos"],
-    bio: "Especialista em preparação física e elementos dinâmicos, ajuda os atletas a superarem os seus limites.",
-    certifications: ["Treinador de Ginástica"],
-    instagram: "@ima.academy",
   },
   {
-    name: "Tiago Correia",
-    role: "Treinador",
+    name: "Tiago",
+    role: "Monitor",
     image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=500&fit=crop",
-    specialties: ["Ginástica Acrobática", "Desenvolvimento Motor", "Iniciação"],
-    bio: "Apaixonado por ensinar os mais novos, especialista em introduzir crianças ao mundo da ginástica acrobática.",
-    certifications: ["Treinador de Ginástica"],
-    instagram: "@ima.academy",
+  },
+  {
+    name: "Bia",
+    role: "Monitora / Marketing",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop",
   },
 ];
 
@@ -79,18 +68,17 @@ const About = () => {
       {/* Hero */}
       <section className="pt-32 pb-20 bg-gradient-to-b from-primary/5 to-background">
         <div className="section-container">
-          <AnimatedSection className="max-w-3xl">
-            <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">
-              Quem Somos
-            </span>
+          <AnimatedSection className="max-w-4xl">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6 leading-tight">
               Uma Academia Dedicada ao{" "}
               <span className="text-primary">Movimento</span>
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Desde 2021, a IMA - Intuitive Movement Academy tem sido referência em ginástica acrobática 
-              em Sintra. Nascida durante a pandemia com muito esforço e dedicação, a nossa missão é 
-              transformar vidas através do movimento.
+              Uma associação sem fins lucrativos dedicada à promoção, divulgação e desenvolvimento da 
+              Ginástica, junto dos seus associados e da comunidade em geral. Atuamos nas vertentes 
+              de formação, representação e competição, bem como no desenvolvimento de outras 
+              práticas desportivas, culturais e recreativas, contribuindo para o crescimento desportivo 
+              da associação e da comunidade.
             </p>
           </AnimatedSection>
         </div>
@@ -99,7 +87,7 @@ const About = () => {
       {/* Story */}
       <section className="py-20">
         <div className="section-container">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
             <AnimatedSection>
               <div className="relative">
                 <div className="absolute -inset-4 bg-primary/10 rounded-3xl transform -rotate-2" />
@@ -115,22 +103,35 @@ const About = () => {
               <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground mb-6">
                 A Nossa História
               </h2>
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
+              <div className="space-y-4 text-muted-foreground leading-relaxed text-sm">
                 <p>
-                  A IMA - Intuitive Movement Academy nasceu em 2021, durante a pandemia, 
-                  graças ao esforço e dedicação da nossa fundadora Beatriz Pinto. Com uma 
-                  paixão inabalável pela ginástica acrobática, transformou um sonho em realidade.
+                  Fundada a 3 de fevereiro de 2021 e em setembro de 2021 iniciámos uma parceria com 
+                  a União Desportiva e Cultural de Nafarros, onde estivemos sediados até Junho de 2025. As 
+                  condições oferecidas por esta parceria, aliadas ao nosso investimento próprio, permitiram-nos 
+                  expandir o projeto e alcançar um dos nossos principais objetivos: a abertura de 
+                  diferentes classes de ginástica para crianças, contando atualmente com 170 crianças/atletas.
                 </p>
                 <p>
-                  Começámos com um pequeno grupo de atletas e hoje contamos com mais de 200 
-                  atletas distribuídos por 7 equipas: BABY'MOVE, MINI'MOVE, MOVE'TEAM, MOVE'KIDS, 
-                  MINI'TEAM, MOVE'TEAM e MA'TEAM. A nossa academia tornou-se referência em 
-                  Sintra, Colares.
+                  A Associação Intuitive Movement Academy foi constituída a 10 de janeiro de 2024 e, 
+                  em setembro de 2024 avançámos com o pedido de filiação à Federação de Ginástica de 
+                  Portugal, contando atualmente com +65 atletas filiadas e com participação ativa em 
+                  representações.
                 </p>
                 <p>
-                  Trabalhamos com atletas dos 3 aos 18 anos, promovendo valores como disciplina, 
-                  respeito, trabalho em equipa e superação pessoal. O nosso compromisso vai 
-                  além do treino físico - acreditamos no desenvolvimento integral de cada atleta.
+                  Com o crescimento do número de atletas e o aumento da carga horária, tornou-se 
+                  necessário encontrar novas instalações. Atualmente, estamos sediados na Escola Básica da 
+                  Sarrazola, com o apoio da Câmara Municipal de Sintra, onde continuamos a desenvolver 
+                  as nossas atividades. Este crescimento gradual e sustentável, embora traga novos desafios, 
+                  reforça o nosso compromisso em levar o desporto a mais pessoas e a mais lugares. Para 
+                  garantir a expansão do projeto, a participação em competições e representações, bem 
+                  como a manutenção da qualidade, segurança e condições adequadas para todos os 
+                  envolvidos, continuamos a procurar parcerias e apoios estratégicos.
+                </p>
+                <p>
+                  Somos uma comunidade de entusiastas do movimento, um espaço de aprendizagem que 
+                  promove o crescimento, o bem-estar e a saúde. Através desta comunidade, as pessoas 
+                  podem explorar os benefícios do exercício para a sua saúde, reivindicando o movimento 
+                  como forma de se sentirem bem.
                 </p>
               </div>
             </AnimatedSection>
@@ -156,16 +157,67 @@ const About = () => {
         </div>
       </section>
 
+      {/* Founder Message */}
+      <section className="py-20">
+        <div className="section-container">
+          <AnimatedSection className="mb-12">
+            <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground text-center">
+              Mensagem da <span className="text-primary">Fundadora</span>
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <AnimatedSection delay={100}>
+              <div className="space-y-4 text-muted-foreground leading-relaxed text-sm">
+                <p>
+                  Vou começar por partilhar com vocês aquilo que é a minha paixão, o Desporto. Fui ginasta durante 8 anos, 
+                  um marco muito importante na minha vida! Durante estes anos fui descobrindo este gosto não só pela prática, 
+                  mas também de proporcionar conhecimento aos outros, o que me levou a definir, desde cedo que esta era a área 
+                  que eu ia seguir.
+                </p>
+                <p>
+                  Estudei na Universidade Europeia, Ciências do Desporto e da Atividade Física e entrei desde muito cedo, 
+                  com os meus 18 anos, para este mercado de trabalho.
+                </p>
+                <p>
+                  Comecei por dedicar-me ao Treino Desportivo, mas rapidamente descobri também um gosto pelo Exercício e Saúde, 
+                  levando-me assim a tirar alguns cursos de especialização na área. Posteriormente a isso, surgiu este projeto 
+                  que tem como objetivo trazer algo de diferente, bom e positivo para a nossa comunidade, fazendo-vos explorar 
+                  aquilo que é o movimento e os benefícios deste na vossa saúde.
+                </p>
+                <p>
+                  Quando penso em movimento tudo o que me vem à cabeça são palavras como beleza, consciência, intuição, dinâmica 
+                  e fluidez. Todos estes conceitos ajudaram-me a cultivar uma relação positiva com o exercício, mostrando-me a 
+                  importância deste na minha vida.
+                </p>
+                <p>
+                  Procuro com este projeto, ajudar-vos a encontrar essa mesma relação, proporcionando-vos experiências únicas, 
+                  distintas e personalizadas.
+                </p>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection delay={200}>
+              <div className="relative">
+                <div className="absolute -inset-4 bg-primary/10 rounded-3xl transform rotate-2" />
+                <img
+                  src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=600&h=700&fit=crop"
+                  alt="Beatriz Pinto - Fundadora"
+                  className="relative rounded-2xl shadow-lg w-full max-w-md mx-auto"
+                />
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
       {/* Values */}
-      <section className="py-24">
+      <section className="py-24 bg-muted/30">
         <div className="section-container">
           <AnimatedSection className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-foreground mb-4">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-foreground">
               Os Nossos <span className="text-primary">Valores</span>
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Os valores que guiam cada decisão, cada treino e cada interação na Movement Academy.
-            </p>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -188,7 +240,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Mission */}
+      {/* Mission/Lema */}
       <section className="py-24 relative overflow-hidden">
         {/* Background image with overlay */}
         <div 
@@ -202,11 +254,10 @@ const About = () => {
           <div className="max-w-3xl mx-auto text-center">
             <AnimatedSection>
               <h2 className="text-3xl sm:text-4xl font-heading font-bold text-primary-foreground mb-6">
-                A Nossa Missão
+                Lema
               </h2>
-              <p className="text-xl text-primary-foreground/80 leading-relaxed mb-8">
-                "Transformar vidas através do movimento, desenvolvendo atletas completos 
-                que levam os valores do desporto para todas as áreas da vida."
+              <p className="text-xl sm:text-2xl text-primary-foreground/90 leading-relaxed italic">
+                "Move-te de forma consciente, intuitiva e liberta o teu potencial."
               </p>
             </AnimatedSection>
           </div>
@@ -229,9 +280,10 @@ const About = () => {
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {trainers.map((trainer, index) => (
-              <AnimatedSection key={trainer.name} delay={index * 100}>
+          {/* First row - 3 trainers */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            {trainers.slice(0, 3).map((trainer, index) => (
+              <AnimatedSection key={`${trainer.name}-${index}`} delay={index * 100}>
                 <div className="bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 card-hover group">
                   {/* Image */}
                   <div className="relative h-64 overflow-hidden">
@@ -244,51 +296,50 @@ const About = () => {
                     
                     {/* Name overlay */}
                     <div className="absolute bottom-4 left-4 right-4">
-                      <h3 className="text-lg font-heading font-bold text-primary-foreground">
+                      <h3 className="text-xl font-heading font-bold text-primary-foreground">
                         {trainer.name}
                       </h3>
-                      <p className="text-primary text-sm font-medium">{trainer.role}</p>
                     </div>
-
-                    {/* Instagram */}
-                    <a
-                      href={`https://instagram.com/${trainer.instagram.replace("@", "")}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="absolute top-4 right-4 w-10 h-10 rounded-full bg-card/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-primary hover:text-primary-foreground"
-                    >
-                      <Instagram className="w-5 h-5" />
-                    </a>
                   </div>
 
                   {/* Content */}
                   <div className="p-5">
-                    {/* Specialties */}
-                    <div className="flex flex-wrap gap-1.5 mb-3">
-                      {trainer.specialties.slice(0, 2).map((specialty) => (
-                        <span
-                          key={specialty}
-                          className="px-2 py-0.5 bg-primary/10 text-primary text-xs font-medium rounded-full"
-                        >
-                          {specialty}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Bio */}
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-3 line-clamp-3">
-                      {trainer.bio}
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {trainer.role}
                     </p>
+                  </div>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
 
-                    {/* Certifications */}
-                    <div className="pt-3 border-t border-border">
-                      {trainer.certifications.map((cert) => (
-                        <div key={cert} className="flex items-center gap-2 text-xs">
-                          <GraduationCap className="w-3.5 h-3.5 text-primary flex-shrink-0" />
-                          <span className="text-muted-foreground">{cert}</span>
-                        </div>
-                      ))}
+          {/* Second row - 2 trainers centered */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+            {trainers.slice(3, 5).map((trainer, index) => (
+              <AnimatedSection key={`${trainer.name}-${index + 3}`} delay={(index + 3) * 100}>
+                <div className="bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 card-hover group">
+                  {/* Image */}
+                  <div className="relative h-64 overflow-hidden">
+                    <img
+                      src={trainer.image}
+                      alt={trainer.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-transparent to-transparent" />
+                    
+                    {/* Name overlay */}
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <h3 className="text-xl font-heading font-bold text-primary-foreground">
+                        {trainer.name}
+                      </h3>
                     </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-5">
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {trainer.role}
+                    </p>
                   </div>
                 </div>
               </AnimatedSection>
