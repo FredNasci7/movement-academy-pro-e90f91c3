@@ -10,19 +10,19 @@ const modalidades = [
     title: "Ginástica",
     description: "Treino de ginástica com foco em técnica, força e flexibilidade para todas as idades.",
     image: ginasticaImg,
-    href: "/servicos",
+    href: "/modalidades#ginastica",
   },
   {
     title: "Aulas de Grupo",
     description: "Sessões dinâmicas em grupo, adaptadas a todos os níveis e idades.",
     image: aulasGrupoImg,
-    href: "/servicos",
+    href: "/modalidades#aulas-de-grupo",
   },
   {
     title: "Treino Personalizado",
     description: "Sessões individuais adaptadas aos teus objetivos.",
     image: treinoImg,
-    href: "/servicos",
+    href: "/modalidades#treino-personalizado",
   },
 ];
 
