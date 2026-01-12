@@ -10,13 +10,13 @@ const services = [
     id: "ginastica",
     icon: Baby,
     title: "Ginástica de Formação",
-    description: "A ginástica acrobática combina força, flexibilidade, coordenação e trabalho de equipa. Os atletas trabalham em grupos de 2, 3 ou 4, realizando elementos de equilíbrio e dinâmicos que desafiam os limites do corpo humano.",
+    description: "Na Ginástica de formação apostamos num programa estruturado, técnico e pedagógico com objetivos, competências e metas definidas por idades, acompanhados por uma avaliação contínua. Visa o desenvolvimento de competências transversais essenciais às disciplinas gímnicas e a outras modalidades desportivas, promovendo capacidades físicas e coordenativas como resistência, força, flexibilidade, equilíbrio, agilidade, ritmo e controlo corporal. Valoriza ainda o «saber estar», incentivando a cooperação, o respeito, a cordialidade e o cumprimento de regras nas atividades.",
     features: [
-      "Trabalho em pares, trios ou grupos",
-      "Elementos de equilíbrio e dinâmicos",
-      "Coreografia com música",
-      "Desenvolvimento de confiança e cooperação",
-      "Preparação para competições",
+      "Jogos e atividades lúdicas",
+      "Desenvolvimento da coordenação",
+      "Primeiros elementos básicos",
+      "Socialização e trabalho em grupo",
+      "Aulas adaptadas à idade",
     ],
     image: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=600",
     color: "from-primary to-accent",
@@ -25,13 +25,12 @@ const services = [
     id: "ginastica-representacao",
     icon: Trophy,
     title: "Ginástica de Representação",
-    description: "O primeiro contacto com a ginástica de forma lúdica e divertida. Desenvolvemos as capacidades motoras básicas enquanto as crianças se divertem e ganham gosto pelo movimento.",
+    description: "Ginástica de Representação é a prática da ginástica como espetáculo ou desempenho coletivo, geralmente ligada a apresentações, exibições e competições. Mantém valores educativos e inclusivos, sendo acessível a todas as idades e capacidades e serve como base para outras modalidades, nomeadamente a Acrobática, o nosso foco.",
     features: [
-      "Jogos e atividades lúdicas",
-      "Desenvolvimento da coordenação",
-      "Primeiros elementos básicos",
-      "Socialização e trabalho em grupo",
-      "Aulas adaptadas à idade",
+      "Trabalho em pares, trios ou grupos",
+      "Coreografia e musicalidade",
+      "Desenvolvimento de confiança e cooperação",
+      "Expressão corporal e criatividade",
     ],
     image: "https://images.unsplash.com/photo-1547347298-4074fc3086f0?q=80&w=600",
     color: "from-accent to-primary",
@@ -42,7 +41,7 @@ const services = [
     id: "aulas-de-grupo",
     icon: Users,
     title: "Aulas de Grupo",
-    description: "Modalidade de ginástica em equipa que combina elementos de solo, mini-trampolim e tumbling. Ideal para quem gosta de trabalhar em grupo.",
+    description: "Aulas de Grupo são sessões de treino em pequenos grupos. São pensadas para todos os níveis de habilidade e combinam exercícios que promovem força, coordenação e resistência, ao mesmo tempo em que fortalecem a conexão entre corpo e mente, incentivando o trabalho em equipa e a socialização.",
     features: [
       "Pilates",
       "Barre",
@@ -56,14 +55,8 @@ const services = [
     id: "treino-personalizado",
     icon: Sparkles,
     title: "Treino Personalizado",
-    description: "Para quem quer praticar ginástica de forma recreativa, sem compromisso competitivo. Foco no bem-estar, diversão e desenvolvimento pessoal.",
-    features: [
-      "Sem pressão competitiva",
-      "Treinos flexíveis",
-      "Para todas as idades",
-      "Desenvolvimento físico geral",
-      "Ambiente descontraído",
-    ],
+    description: "Sessão de treino construída especificamente para ti, procurando equilibrar aquilo que gostas com aquilo que precisas. Através destas sessões irás aprender a executar os exercícios de forma segura e consciente, permitindo que estejas dia-após-dia mais perto de alcançar os teus objetivos.",
+    features: [],
     image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=600",
     color: "from-accent to-primary",
     buttonText: "Agendar",
@@ -83,8 +76,7 @@ const Services = () => {
               <span className="text-primary">Modalidades</span>
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Oferecemos programas completos de ginástica acrobática para crianças e jovens, 
-              desde a iniciação até à competição nacional.
+              Experiências únicas e diferentes formas de moveres o teu corpo.
             </p>
           </AnimatedSection>
         </div>
@@ -116,16 +108,18 @@ const Services = () => {
                     {service.description}
                   </p>
 
-                  <ul className="space-y-3 mb-8">
-                    {service.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-3">
-                        <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                          <Check className="w-3 h-3 text-primary" />
-                        </div>
-                        <span className="text-foreground/80">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {service.features.length > 0 && (
+                    <ul className="space-y-3 mb-8">
+                      {service.features.map((feature) => (
+                        <li key={feature} className="flex items-center gap-3">
+                          <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                            <Check className="w-3 h-3 text-primary" />
+                          </div>
+                          <span className="text-foreground/80">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
 
                   <Button asChild size="lg">
                     <Link to={service.buttonLink || "/aula-experimental"}>
