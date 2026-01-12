@@ -15,28 +15,16 @@ import {
 
 const faqs = [
   {
-    question: "A partir de que idade podem começar os treinos?",
-    answer: "Aceitamos crianças a partir dos 3 anos na nossa modalidade de Ginástica de Formação. Cada faixa etária tem um programa adaptado às suas capacidades e desenvolvimento motor."
-  },
-  {
-    question: "É necessário ter experiência prévia?",
-    answer: "Não é necessária qualquer experiência prévia. Os nossos programas são adaptados a todos os níveis, desde iniciantes até atletas avançados."
-  },
-  {
-    question: "Posso fazer uma aula experimental antes de inscrever?",
-    answer: "Sim! Oferecemos uma aula experimental gratuita para que possas conhecer as nossas instalações, treinadores e metodologia antes de te comprometeres."
-  },
-  {
     question: "Quais são as formas de pagamento disponíveis?",
-    answer: "Aceitamos pagamento por transferência bancária, MBWay e numerário. As mensalidades são pagas até ao dia 8 de cada mês."
+    answer: "Aceitamos pagamento por transferência bancária e em numerário. De momento, não disponibilizamos pagamento por MB WAY."
   },
   {
     question: "Há descontos para famílias?",
-    answer: "Sim, oferecemos descontos para inscrições de irmãos. Contacta-nos para saber mais sobre as nossas condições especiais para famílias."
+    answer: "Sim. Nas mensalidades de ginástica, aplicamos um desconto de 10% para irmãos, sendo este válido apenas a partir do segundo inscrito."
   },
   {
     question: "O que devo levar para os treinos?",
-    answer: "Roupa confortável e justa ao corpo (fato de treino ou leggings), meias antiderrapantes ou pés descalços, e uma garrafa de água. O equipamento específico é fornecido pela academia."
+    answer: "Roupa confortável e, de preferência, justa ao corpo. Poderá treinar de meias ou descalço(a). Recomendamos também trazer uma garrafa de água para hidratação durante a sessão."
   },
 ];
 
@@ -59,7 +47,7 @@ const Contact = () => {
       <section className="pt-32 pb-20 bg-gradient-to-b from-primary/5 to-background">
         <div className="section-container">
           <AnimatedSection className="text-center max-w-3xl mx-auto">
-            <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">Contacto</span>
+            <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">Contato</span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6">
               Pedido de <span className="text-primary">Informação</span>
             </h1>
