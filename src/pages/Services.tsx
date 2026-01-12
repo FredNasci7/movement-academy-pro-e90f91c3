@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 
 const services = [
   {
+    id: "ginastica",
     icon: Baby,
     title: "Ginástica de Formação",
     description: "A ginástica acrobática combina força, flexibilidade, coordenação e trabalho de equipa. Os atletas trabalham em grupos de 2, 3 ou 4, realizando elementos de equilíbrio e dinâmicos que desafiam os limites do corpo humano.",
@@ -21,6 +22,7 @@ const services = [
     color: "from-primary to-accent",
   },
   {
+    id: "ginastica-representacao",
     icon: Trophy,
     title: "Ginástica de Representação",
     description: "O primeiro contacto com a ginástica de forma lúdica e divertida. Desenvolvemos as capacidades motoras básicas enquanto as crianças se divertem e ganham gosto pelo movimento.",
@@ -37,6 +39,7 @@ const services = [
     buttonLink: "/contacto",
   },
   {
+    id: "aulas-de-grupo",
     icon: Users,
     title: "Aulas de Grupo",
     description: "Modalidade de ginástica em equipa que combina elementos de solo, mini-trampolim e tumbling. Ideal para quem gosta de trabalhar em grupo.",
@@ -50,6 +53,7 @@ const services = [
     color: "from-primary to-accent",
   },
   {
+    id: "treino-personalizado",
     icon: Sparkles,
     title: "Treino Personalizado",
     description: "Para quem quer praticar ginástica de forma recreativa, sem compromisso competitivo. Foco no bem-estar, diversão e desenvolvimento pessoal.",
@@ -90,7 +94,7 @@ const Services = () => {
       <section className="py-20">
         <div className="section-container space-y-20">
           {services.map((service, index) => (
-            <AnimatedSection key={service.title}>
+            <AnimatedSection key={service.title} id={service.id}>
               <div className={cn(
                 "grid lg:grid-cols-2 gap-12 items-center",
                 index % 2 === 1 && "lg:flex-row-reverse"

@@ -5,9 +5,10 @@ interface AnimatedSectionProps {
   children: ReactNode;
   className?: string;
   delay?: number;
+  id?: string;
 }
 
-export function AnimatedSection({ children, className, delay = 0 }: AnimatedSectionProps) {
+export function AnimatedSection({ children, className, delay = 0, id }: AnimatedSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export function AnimatedSection({ children, className, delay = 0 }: AnimatedSect
   }, [delay]);
 
   return (
-    <div ref={ref} className={cn("animate-on-scroll", className)}>
+    <div ref={ref} id={id} className={cn("animate-on-scroll", className)}>
       {children}
     </div>
   );
