@@ -8,19 +8,19 @@ import treinoImg from "@/assets/modalidade-treino.jpg";
 const modalidades = [
   {
     title: "Ginástica",
-    description: "Treino de ginástica acrobática com foco em técnica, força e flexibilidade para todas as idades.",
+    description: "Treino de ginástica com foco em técnica, força e flexibilidade para todas as idades.",
     image: ginasticaImg,
     href: "/servicos",
   },
   {
     title: "Aulas de Grupo",
-    description: "Sessões dinâmicas em grupo para desenvolver coordenação, espírito de equipa e diversão.",
+    description: "Sessões dinâmicas em grupo, adaptadas a todos os níveis e idades.",
     image: aulasGrupoImg,
     href: "/servicos",
   },
   {
     title: "Treino Personalizado",
-    description: "Acompanhamento individual adaptado aos teus objetivos e nível de experiência.",
+    description: "Sessões individuais adaptadas aos teus objetivos.",
     image: treinoImg,
     href: "/servicos",
   },
