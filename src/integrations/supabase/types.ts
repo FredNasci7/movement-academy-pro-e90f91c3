@@ -62,6 +62,13 @@ export type Database = {
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "athlete_guardians_guardian_id_fkey"
+            columns: ["guardian_id"]
+            isOneToOne: false
+            referencedRelation: "profiles_trainer_view"
+            referencedColumns: ["id"]
+          },
         ]
       }
       class_attendance: {
@@ -114,6 +121,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "class_attendance_marked_by_fkey"
+            columns: ["marked_by"]
+            isOneToOne: false
+            referencedRelation: "profiles_trainer_view"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "class_attendance_session_id_fkey"
             columns: ["session_id"]
             isOneToOne: false
@@ -162,6 +176,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "class_enrollments_athlete_id_fkey"
+            columns: ["athlete_id"]
+            isOneToOne: false
+            referencedRelation: "athlete_guardians_trainer_view"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "class_enrollments_class_id_fkey"
             columns: ["class_id"]
             isOneToOne: false
@@ -173,6 +194,13 @@ export type Database = {
             columns: ["profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "class_enrollments_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles_trainer_view"
             referencedColumns: ["id"]
           },
         ]
@@ -314,6 +342,13 @@ export type Database = {
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "classes_trainer_id_fkey"
+            columns: ["trainer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles_trainer_view"
+            referencedColumns: ["id"]
+          },
         ]
       }
       posts: {
@@ -420,7 +455,63 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      athlete_guardians_trainer_view: {
+        Row: {
+          athlete_age: number | null
+          athlete_name: string | null
+          created_at: string | null
+          id: string | null
+          modalidade: string | null
+          subscription_status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          athlete_age?: never
+          athlete_name?: string | null
+          created_at?: string | null
+          id?: string | null
+          modalidade?: string | null
+          subscription_status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          athlete_age?: never
+          athlete_name?: string | null
+          created_at?: string | null
+          id?: string | null
+          modalidade?: string | null
+          subscription_status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      profiles_trainer_view: {
+        Row: {
+          created_at: string | null
+          full_name: string | null
+          id: string | null
+          modalidade: string | null
+          subscription_status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          full_name?: string | null
+          id?: string | null
+          modalidade?: string | null
+          subscription_status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          full_name?: string | null
+          id?: string | null
+          modalidade?: string | null
+          subscription_status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       get_user_roles: {
