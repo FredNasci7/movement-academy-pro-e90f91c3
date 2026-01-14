@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MapPin, Phone, Mail, Clock, Send, ExternalLink } from "lucide-react";
+import { MapPin, Phone, Mail, Send, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -101,13 +101,6 @@ const Contact = () => {
                       <a href="mailto:info@movementacademy.pt" className="text-muted-foreground hover:text-primary transition-colors">
                         info@movementacademy.pt
                       </a>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <Clock className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                      <span className="text-muted-foreground">
-                        Seg - Sex: 17:00 - 21:00<br />
-                        Sáb: 09:00 - 13:00
-                      </span>
                     </div>
                   </div>
                 </div>
