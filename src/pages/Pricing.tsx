@@ -110,8 +110,8 @@ const Pricing = () => {
             </h1>
             
             {/* Condições Obrigatórias */}
-            <div className="bg-card border border-border rounded-xl p-6 text-left">
-              <div className="flex items-center gap-2 mb-4">
+            <div className="bg-card border border-border rounded-xl p-6 text-center">
+              <div className="flex items-center justify-center gap-2 mb-4">
                 <Info className="w-5 h-5 text-primary" />
                 <h3 className="font-heading font-semibold text-foreground">Condições Obrigatórias</h3>
               </div>
@@ -266,8 +266,8 @@ const Pricing = () => {
             </p>
             
             {/* Condições Obrigatórias */}
-            <div className="bg-card border border-border rounded-xl p-6 text-left">
-              <div className="flex items-center gap-2 mb-4">
+            <div className="bg-card border border-border rounded-xl p-6 text-center">
+              <div className="flex items-center justify-center gap-2 mb-4">
                 <Info className="w-5 h-5 text-primary" />
                 <h3 className="font-heading font-semibold text-foreground">Condições Obrigatórias</h3>
               </div>
