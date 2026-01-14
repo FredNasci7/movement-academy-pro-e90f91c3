@@ -103,7 +103,7 @@ const About = () => {
               <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground mb-6">
                 A Nossa História
               </h2>
-              <div className="space-y-4 text-muted-foreground leading-relaxed text-sm">
+              <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
                   Fundada a 3 de fevereiro de 2021 e em setembro de 2021 iniciámos uma parceria com 
                   a União Desportiva e Cultural de Nafarros, onde estivemos sediados até Junho de 2025. As 
@@ -168,7 +168,7 @@ const About = () => {
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <AnimatedSection delay={100}>
-              <div className="space-y-4 text-muted-foreground leading-relaxed text-sm">
+              <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
                   Vou começar por partilhar com vocês aquilo que é a minha paixão, o Desporto. Fui ginasta durante 8 anos, 
                   um marco muito importante na minha vida! Durante estes anos fui descobrindo este gosto não só pela prática, 
