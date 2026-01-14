@@ -91,17 +91,7 @@ const plansGinastica: GinasticaPlan[] = [
   },
 ];
 
-const plansAulas = [
-  { name: "AULA AVULSO", price: "15", period: "/aula", description: "Sem compromisso", features: ["1 aula à escolha", "Acesso pontual", "Sem mensalidade"] },
-  { name: "PACK 10 AULAS", price: "120", period: "", description: "Melhor valor", features: ["10 aulas à escolha", "Válido 3 meses", "Flexibilidade total"] },
-  { name: "AULAS ILIMITADAS", price: "89", period: "/mês", description: "Para os dedicados", features: ["Aulas ilimitadas", "Todas as modalidades", "Acesso 7 dias/semana"] },
-];
-
-const plansTreino = [
-  { name: "SESSÃO AVULSO", price: "35", period: "/sessão", description: "Experimenta primeiro", features: ["1 sessão individual", "Plano personalizado", "Acompanhamento dedicado"] },
-  { name: "PACK 4 SESSÕES", price: "120", period: "", description: "Mais popular", features: ["4 sessões individuais", "Válido 2 meses", "Avaliação incluída"] },
-  { name: "PACK 8 SESSÕES", price: "220", period: "", description: "Máximo compromisso", features: ["8 sessões individuais", "Válido 3 meses", "Plano nutricional básico"] },
-];
+// Removed plansAulas and plansTreino arrays - simplified pricing
 
 const Pricing = () => {
   const [selectedPlan, setSelectedPlan] = useState<GinasticaPlan | null>(null);
@@ -127,8 +117,12 @@ const Pricing = () => {
               </div>
               <div className="space-y-2 text-sm text-muted-foreground">
                 <p>
-                  <span className="font-medium text-foreground">Valor de inscrição p/época desportiva:</span>{" "}
-                  25€ + 12€ quota anual de sócio
+                  <span className="font-medium text-foreground">Inscrição p/época desportiva:</span>{" "}
+                  25€
+                </p>
+                <p>
+                  <span className="font-medium text-foreground">Quota anual de sócio:</span>{" "}
+                  12€
                 </p>
               </div>
             </div>
@@ -265,77 +259,10 @@ const Pricing = () => {
         <div className="section-container">
           <AnimatedSection className="text-center max-w-3xl mx-auto">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6">
-              Preçário <span className="text-primary">Aulas de Grupo</span>
+              Preçário <span className="text-primary">Aulas</span>
             </h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Planos flexíveis para as nossas aulas de grupo.
-            </p>
-            
-            {/* Condições Obrigatórias */}
-            <div className="bg-card border border-border rounded-xl p-6 text-left">
-              <div className="flex items-center gap-2 mb-4">
-                <Info className="w-5 h-5 text-primary" />
-                <h3 className="font-heading font-semibold text-foreground">Condições Obrigatórias</h3>
-              </div>
-              <div className="space-y-2 text-sm text-muted-foreground">
-                <p>
-                  <span className="font-medium text-foreground">Valor de inscrição p/época desportiva:</span>{" "}
-                  25€
-                </p>
-              </div>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* Grid Aulas */}
-      <section className="py-12">
-        <div className="section-container">
-          <AnimatedSection>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {plansAulas.map((plan, i) => {
-                const isMiddle = i === 1;
-                return (
-                  <div key={`aulas-${i}`} className={cn(
-                    "relative bg-card rounded-2xl p-8 h-full border transition-all duration-300",
-                    isMiddle 
-                      ? "border-primary shadow-lg scale-105" 
-                      : "border-border/50"
-                  )}>
-                    <h3 className="text-xl font-heading font-bold text-foreground">{plan.name}</h3>
-                    <p className="text-muted-foreground text-sm mb-4">{plan.description}</p>
-                    <div className="mb-6">
-                      <span className="text-4xl font-heading font-bold text-foreground">€{plan.price}</span>
-                      <span className="text-muted-foreground">{plan.period}</span>
-                    </div>
-                    <ul className="space-y-3 mb-8">
-                      {plan.features.map(f => (
-                        <li key={f} className="flex items-center gap-2 text-sm">
-                          <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                          {f}
-                        </li>
-                      ))}
-                    </ul>
-                    <Button asChild className="w-full" variant={isMiddle ? "default" : "outline"}>
-                      <Link to="/aula-experimental">Experimentar Agora</Link>
-                    </Button>
-                  </div>
-                );
-              })}
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* Header Treino Personalizado */}
-      <section className="pt-16 pb-8 bg-gradient-to-b from-primary/5 to-background">
-        <div className="section-container">
-          <AnimatedSection className="text-center max-w-3xl mx-auto">
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6">
-              Preçário <span className="text-primary">Treino Personalizado</span>
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Sessões individuais adaptadas aos teus objetivos.
+              Preços para as nossas aulas de grupo e treino personalizado.
             </p>
             
             {/* Condições Obrigatórias */}
@@ -347,7 +274,7 @@ const Pricing = () => {
               <div className="space-y-2 text-sm text-muted-foreground">
                 <p>
                   <span className="font-medium text-foreground">Valor de inscrição:</span>{" "}
-                  25€ (1ª avaliação + Plano de treino)
+                  25€
                 </p>
               </div>
             </div>
@@ -355,44 +282,47 @@ const Pricing = () => {
         </div>
       </section>
 
-      {/* Grid Treino Personalizado */}
+      {/* Preçário Aulas - Unified */}
       <section className="py-12 pb-20">
         <div className="section-container">
           <AnimatedSection>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {plansTreino.map((plan, i) => {
-                const isMiddle = i === 1;
-                return (
-                  <div key={`treino-${i}`} className={cn(
-                    "relative bg-card rounded-2xl p-8 h-full border transition-all duration-300",
-                    isMiddle 
-                      ? "border-primary shadow-lg scale-105" 
-                      : "border-border/50"
-                  )}>
-                    <h3 className="text-xl font-heading font-bold text-foreground">{plan.name}</h3>
-                    <p className="text-muted-foreground text-sm mb-4">{plan.description}</p>
-                    <div className="mb-6">
-                      <span className="text-4xl font-heading font-bold text-foreground">€{plan.price}</span>
-                      <span className="text-muted-foreground">{plan.period}</span>
-                    </div>
-                    <ul className="space-y-3 mb-8">
-                      {plan.features.map(f => (
-                        <li key={f} className="flex items-center gap-2 text-sm">
-                          <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                          {f}
-                        </li>
-                      ))}
-                    </ul>
-                    <Button asChild className="w-full" variant={isMiddle ? "default" : "outline"}>
-                      <Link to="/aula-experimental">Experimentar Agora</Link>
-                    </Button>
+            <div className="bg-card border border-border rounded-2xl p-8 max-w-2xl mx-auto">
+              <h3 className="text-2xl font-heading font-bold text-foreground mb-6 text-center">
+                Preçário Aulas
+              </h3>
+              
+              <div className="space-y-6">
+                {/* Aulas de Grupo */}
+                <div className="space-y-4">
+                  <h4 className="text-lg font-heading font-semibold text-primary">Aulas de Grupo</h4>
+                  <div className="flex justify-between items-center py-3 border-b border-border/50">
+                    <span className="text-foreground">Aula Avulso</span>
+                    <span className="text-xl font-heading font-bold text-foreground">8€</span>
                   </div>
-                );
-              })}
+                </div>
+
+                {/* Treino Personalizado */}
+                <div className="space-y-4">
+                  <h4 className="text-lg font-heading font-semibold text-primary">Treino Personalizado</h4>
+                  <div className="flex justify-between items-center py-3 border-b border-border/50">
+                    <span className="text-foreground">Online</span>
+                    <span className="text-xl font-heading font-bold text-foreground">15€ <span className="text-sm font-normal text-muted-foreground">/sessão</span></span>
+                  </div>
+                  <div className="flex justify-between items-center py-3 border-b border-border/50">
+                    <span className="text-foreground">Presencial</span>
+                    <span className="text-xl font-heading font-bold text-foreground">25€ <span className="text-sm font-normal text-muted-foreground">/sessão</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <Button asChild className="w-full mt-8">
+                <Link to="/aula-experimental">Experimentar Agora</Link>
+              </Button>
             </div>
           </AnimatedSection>
         </div>
       </section>
+
     </Layout>
   );
 };

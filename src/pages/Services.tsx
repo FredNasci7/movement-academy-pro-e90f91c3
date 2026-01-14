@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ArrowRight, Check, Sparkles, Users, Baby, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 
 const services = [
   {
@@ -45,7 +46,7 @@ const services = [
     features: [
       "Pilates",
       "Barre",
-      "Full-body",
+      "Fullbody",
       "Step",
     ],
     image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=600",
@@ -56,7 +57,13 @@ const services = [
     icon: Sparkles,
     title: "Treino Personalizado",
     description: "Sessão de treino construída especificamente para ti, procurando equilibrar aquilo que gostas com aquilo que precisas. Através destas sessões irás aprender a executar os exercícios de forma segura e consciente, permitindo que estejas dia-após-dia mais perto de alcançar os teus objetivos.",
-    features: [],
+    features: [
+      "🗓️ Sessões Personalizadas Individuais",
+      "🏋️‍♂️ Avaliação inicial",
+      "📝 Criação de metas mensais",
+      "📋 Plano de Treino Semanal",
+      "📈 Controlo Mensal e monitorização de resultados",
+    ],
     image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=600",
     color: "from-accent to-primary",
     buttonText: "Agendar",
@@ -65,6 +72,20 @@ const services = [
 ];
 
 const Services = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      // Small delay to ensure the page has rendered
+      setTimeout(() => {
+        const element = document.getElementById(location.hash.slice(1));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  }, [location.hash]);
+
   return (
     <Layout>
       {/* Hero */}
