@@ -465,24 +465,6 @@ export type Database = {
           subscription_status: string | null
           updated_at: string | null
         }
-        Insert: {
-          athlete_age?: never
-          athlete_name?: string | null
-          created_at?: string | null
-          id?: string | null
-          modalidade?: string | null
-          subscription_status?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          athlete_age?: never
-          athlete_name?: string | null
-          created_at?: string | null
-          id?: string | null
-          modalidade?: string | null
-          subscription_status?: string | null
-          updated_at?: string | null
-        }
         Relationships: []
       }
       profiles_trainer_view: {
@@ -493,22 +475,6 @@ export type Database = {
           modalidade: string | null
           subscription_status: string | null
           updated_at: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          full_name?: string | null
-          id?: string | null
-          modalidade?: string | null
-          subscription_status?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          full_name?: string | null
-          id?: string | null
-          modalidade?: string | null
-          subscription_status?: string | null
-          updated_at?: string | null
         }
         Relationships: []
       }
