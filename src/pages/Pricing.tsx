@@ -118,9 +118,6 @@ const Pricing = () => {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6">
               Preçário <span className="text-primary">Ginástica</span>
             </h1>
-            <p className="text-lg text-muted-foreground mb-8">
-              Escolhe o plano ideal para ti. Sem compromissos de longa duração.
-            </p>
             
             {/* Condições Obrigatórias */}
             <div className="bg-card border border-border rounded-xl p-6 text-left">
