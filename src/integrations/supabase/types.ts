@@ -351,6 +351,54 @@ export type Database = {
           },
         ]
       }
+      events: {
+        Row: {
+          color: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          end_datetime: string | null
+          event_type: Database["public"]["Enums"]["event_type"]
+          id: string
+          location: string | null
+          start_datetime: string
+          target_roles: Database["public"]["Enums"]["app_role"][] | null
+          title: string
+          updated_at: string
+          visibility: Database["public"]["Enums"]["event_visibility"]
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          end_datetime?: string | null
+          event_type?: Database["public"]["Enums"]["event_type"]
+          id?: string
+          location?: string | null
+          start_datetime: string
+          target_roles?: Database["public"]["Enums"]["app_role"][] | null
+          title: string
+          updated_at?: string
+          visibility?: Database["public"]["Enums"]["event_visibility"]
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          end_datetime?: string | null
+          event_type?: Database["public"]["Enums"]["event_type"]
+          id?: string
+          location?: string | null
+          start_datetime?: string
+          target_roles?: Database["public"]["Enums"]["app_role"][] | null
+          title?: string
+          updated_at?: string
+          visibility?: Database["public"]["Enums"]["event_visibility"]
+        }
+        Relationships: []
+      }
       posts: {
         Row: {
           categoria: string
@@ -500,6 +548,13 @@ export type Database = {
         | "atleta"
         | "encarregado"
         | "visitante"
+      event_type: "competition" | "practice" | "schedule" | "meeting" | "other"
+      event_visibility:
+        | "public"
+        | "trainers_only"
+        | "athletes_only"
+        | "members_only"
+        | "private"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -634,6 +689,14 @@ export const Constants = {
         "atleta",
         "encarregado",
         "visitante",
+      ],
+      event_type: ["competition", "practice", "schedule", "meeting", "other"],
+      event_visibility: [
+        "public",
+        "trainers_only",
+        "athletes_only",
+        "members_only",
+        "private",
       ],
     },
   },

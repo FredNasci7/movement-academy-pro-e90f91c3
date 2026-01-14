@@ -1,27 +1,46 @@
 import { useState } from "react";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isSameMonth, addMonths, subMonths, getDay, startOfWeek, addDays, addWeeks, subWeeks } from "date-fns";
 import { pt } from "date-fns/locale";
-import { Calendar, CalendarDays, ChevronLeft, ChevronRight, Clock, MapPin, User } from "lucide-react";
+import { Calendar, CalendarDays, ChevronLeft, ChevronRight, Clock, MapPin, User, Trophy, Dumbbell, CalendarClock, Users, MoreHorizontal, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEnrollments } from "@/hooks/useEnrollments";
+import { useEvents, CalendarEvent, eventTypeLabels, eventTypeColors, visibilityLabels } from "@/hooks/useEvents";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Navigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const DAYS_SHORT = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
 
 type ViewMode = "month" | "week";
 
+const eventTypeIcons: Record<string, React.ReactNode> = {
+  competition: <Trophy className="h-3 w-3" />,
+  practice: <Dumbbell className="h-3 w-3" />,
+  schedule: <CalendarClock className="h-3 w-3" />,
+  meeting: <Users className="h-3 w-3" />,
+  other: <MoreHorizontal className="h-3 w-3" />,
+};
+
 const Agenda = () => {
   const { user, loading: authLoading } = useAuth();
-  const { enrollments, isLoading } = useEnrollments();
+  const { enrollments, isLoading: enrollmentsLoading } = useEnrollments();
+  const { events, isLoading: eventsLoading } = useEvents();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [viewMode, setViewMode] = useState<ViewMode>("month");
+  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
+
+  const isLoading = enrollmentsLoading || eventsLoading;
 
   // Monthly view calculations
   const monthStart = startOfMonth(currentDate);
@@ -56,6 +75,8 @@ const Agenda = () => {
 
   // Get classes for a specific day of week (database uses Sunday=0)
   const getClassesForDay = (date: Date) => {
+    if (!user) return [];
+    
     const dbDayIndex = getDay(date); // Sunday = 0
     
     return enrollments.flatMap((enrollment) =>
@@ -71,6 +92,21 @@ const Agenda = () => {
     ).sort((a, b) => a.start_time.localeCompare(b.start_time));
   };
 
+  // Get events for a specific date
+  const getEventsForDay = (date: Date) => {
+    return events.filter((event) => {
+      const eventDate = new Date(event.start_datetime);
+      return isSameDay(eventDate, date);
+    }).sort((a, b) => 
+      new Date(a.start_datetime).getTime() - new Date(b.start_datetime).getTime()
+    );
+  };
+
+  const getVisibilityIcon = (visibility: string) => {
+    if (visibility === 'public') return null;
+    return <EyeOff className="h-2.5 w-2.5" />;
+  };
+
   if (authLoading) {
     return (
       <Layout>
@@ -82,10 +118,6 @@ const Agenda = () => {
     );
   }
 
-  if (!user) {
-    return <Navigate to="/auth" replace />;
-  }
-
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8">
@@ -93,10 +125,10 @@ const Agenda = () => {
           <div>
             <h1 className="text-2xl font-bold flex items-center gap-2">
               <Calendar className="h-6 w-6" />
-              A Minha Agenda
+              {user ? "A Minha Agenda" : "Calendário de Eventos"}
             </h1>
             <p className="text-muted-foreground">
-              Visualize as suas aulas
+              {user ? "Visualize as suas aulas e eventos" : "Consulte os eventos e competições"}
             </p>
           </div>
 
@@ -141,16 +173,6 @@ const Agenda = () => {
 
         {isLoading ? (
           <Skeleton className="h-[600px] w-full" />
-        ) : enrollments.length === 0 ? (
-          <Card>
-            <CardContent className="py-12 text-center">
-              <Calendar className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-              <h3 className="text-lg font-medium mb-2">Sem inscrições</h3>
-              <p className="text-muted-foreground">
-                Ainda não está inscrito em nenhuma turma.
-              </p>
-            </CardContent>
-          </Card>
         ) : viewMode === "month" ? (
           /* MONTHLY VIEW */
           <div className="border rounded-lg overflow-hidden bg-card">
@@ -175,6 +197,7 @@ const Agenda = () => {
 
               {monthDays.map((day) => {
                 const dayClasses = getClassesForDay(day);
+                const dayEvents = getEventsForDay(day);
                 const isToday = isSameDay(day, new Date());
                 const isCurrentMonth = isSameMonth(day, currentDate);
 
@@ -197,9 +220,36 @@ const Agenda = () => {
                     </div>
 
                     <div className="space-y-1 max-h-[80px] overflow-y-auto">
-                      {dayClasses.map((classItem, classIndex) => (
+                      {/* Events */}
+                      {dayEvents.map((event) => (
                         <div
-                          key={classIndex}
+                          key={event.id}
+                          className="rounded p-1.5 hover:opacity-80 transition-opacity cursor-pointer"
+                          style={{ backgroundColor: `${event.color || eventTypeColors[event.event_type]}20` }}
+                          onClick={() => setSelectedEvent(event)}
+                          title={event.title}
+                        >
+                          <div className="flex items-center gap-1">
+                            <div
+                              className="w-2 h-2 rounded-full flex-shrink-0"
+                              style={{ backgroundColor: event.color || eventTypeColors[event.event_type] }}
+                            />
+                            <p className="font-medium text-[10px] truncate flex-1">
+                              {event.title}
+                            </p>
+                            {getVisibilityIcon(event.visibility)}
+                          </div>
+                          <div className="flex items-center gap-1 text-[9px] text-muted-foreground">
+                            <Clock className="h-2.5 w-2.5" />
+                            {format(new Date(event.start_datetime), "HH:mm")}
+                          </div>
+                        </div>
+                      ))}
+
+                      {/* User's classes (only if logged in) */}
+                      {user && dayClasses.map((classItem, classIndex) => (
+                        <div
+                          key={`class-${classIndex}`}
                           className="bg-primary/10 rounded p-1.5 hover:bg-primary/20 transition-colors cursor-pointer"
                           title={`${classItem.className} - ${classItem.start_time.slice(0, 5)} às ${classItem.end_time.slice(0, 5)}`}
                         >
@@ -237,6 +287,7 @@ const Agenda = () => {
           <div className="grid grid-cols-1 md:grid-cols-7 gap-2">
             {weekDays.map((day) => {
               const dayClasses = getClassesForDay(day);
+              const dayEvents = getEventsForDay(day);
               const isToday = isSameDay(day, new Date());
 
               return (
@@ -261,46 +312,90 @@ const Agenda = () => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="px-2 pb-3 space-y-2">
-                    {dayClasses.length === 0 ? (
+                    {dayEvents.length === 0 && dayClasses.length === 0 ? (
                       <p className="text-xs text-muted-foreground text-center">
-                        Sem aulas
+                        Sem eventos
                       </p>
                     ) : (
-                      dayClasses.map((classItem, classIndex) => (
-                        <div
-                          key={classIndex}
-                          className="bg-primary/10 rounded-lg p-2 space-y-1"
-                        >
-                          <p className="font-medium text-xs truncate">
-                            {classItem.className}
-                          </p>
-                          <Badge variant="secondary" className="text-[10px]">
-                            {classItem.modalidade}
-                          </Badge>
-                          <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
-                            <Clock className="h-3 w-3" />
-                            {classItem.start_time.slice(0, 5)} -{" "}
-                            {classItem.end_time.slice(0, 5)}
-                          </div>
-                          {classItem.location && (
-                            <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
-                              <MapPin className="h-3 w-3" />
-                              {classItem.location}
+                      <>
+                        {/* Events */}
+                        {dayEvents.map((event) => (
+                          <div
+                            key={event.id}
+                            className="rounded-lg p-2 space-y-1 cursor-pointer hover:opacity-80 transition-opacity"
+                            style={{ backgroundColor: `${event.color || eventTypeColors[event.event_type]}20` }}
+                            onClick={() => setSelectedEvent(event)}
+                          >
+                            <div className="flex items-center gap-1">
+                              {eventTypeIcons[event.event_type]}
+                              <p className="font-medium text-xs truncate flex-1">
+                                {event.title}
+                              </p>
+                              {getVisibilityIcon(event.visibility)}
                             </div>
-                          )}
-                          {classItem.trainer && (
-                            <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
-                              <User className="h-3 w-3" />
-                              {classItem.trainer}
-                            </div>
-                          )}
-                          {classItem.athleteName && (
-                            <Badge variant="outline" className="text-[10px]">
-                              {classItem.athleteName}
+                            <Badge 
+                              variant="secondary" 
+                              className="text-[10px]"
+                              style={{ 
+                                backgroundColor: `${event.color || eventTypeColors[event.event_type]}40`,
+                                color: event.color || eventTypeColors[event.event_type]
+                              }}
+                            >
+                              {eventTypeLabels[event.event_type]}
                             </Badge>
-                          )}
-                        </div>
-                      ))
+                            <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                              <Clock className="h-3 w-3" />
+                              {format(new Date(event.start_datetime), "HH:mm")}
+                              {event.end_datetime && (
+                                <> - {format(new Date(event.end_datetime), "HH:mm")}</>
+                              )}
+                            </div>
+                            {event.location && (
+                              <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                                <MapPin className="h-3 w-3" />
+                                {event.location}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+
+                        {/* User's classes */}
+                        {user && dayClasses.map((classItem, classIndex) => (
+                          <div
+                            key={`class-${classIndex}`}
+                            className="bg-primary/10 rounded-lg p-2 space-y-1"
+                          >
+                            <p className="font-medium text-xs truncate">
+                              {classItem.className}
+                            </p>
+                            <Badge variant="secondary" className="text-[10px]">
+                              {classItem.modalidade}
+                            </Badge>
+                            <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                              <Clock className="h-3 w-3" />
+                              {classItem.start_time.slice(0, 5)} -{" "}
+                              {classItem.end_time.slice(0, 5)}
+                            </div>
+                            {classItem.location && (
+                              <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                                <MapPin className="h-3 w-3" />
+                                {classItem.location}
+                              </div>
+                            )}
+                            {classItem.trainer && (
+                              <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                                <User className="h-3 w-3" />
+                                {classItem.trainer}
+                              </div>
+                            )}
+                            {classItem.athleteName && (
+                              <Badge variant="outline" className="text-[10px]">
+                                {classItem.athleteName}
+                              </Badge>
+                            )}
+                          </div>
+                        ))}
+                      </>
                     )}
                   </CardContent>
                 </Card>
@@ -310,20 +405,99 @@ const Agenda = () => {
         )}
 
         {/* Legend */}
-        {enrollments.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-4 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded bg-primary/10 border" />
-              <span>Aula agendada</span>
+        <div className="mt-4 flex flex-wrap gap-4 text-sm text-muted-foreground">
+          {Object.entries(eventTypeLabels).map(([type, label]) => (
+            <div key={type} className="flex items-center gap-2">
+              <div
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: eventTypeColors[type as keyof typeof eventTypeColors] }}
+              />
+              <span>{label}</span>
             </div>
+          ))}
+          {user && (
             <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs">
-                {format(new Date(), "d")}
-              </div>
-              <span>Hoje</span>
+              <div className="w-3 h-3 rounded bg-primary/20 border border-primary/40" />
+              <span>Minhas Aulas</span>
             </div>
+          )}
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs">
+              {format(new Date(), "d")}
+            </div>
+            <span>Hoje</span>
           </div>
-        )}
+        </div>
+
+        {/* Event Details Dialog */}
+        <Dialog open={!!selectedEvent} onOpenChange={() => setSelectedEvent(null)}>
+          <DialogContent className="max-w-md">
+            {selectedEvent && (
+              <>
+                <DialogHeader>
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="w-4 h-4 rounded-full"
+                      style={{ backgroundColor: selectedEvent.color || eventTypeColors[selectedEvent.event_type] }}
+                    />
+                    <DialogTitle>{selectedEvent.title}</DialogTitle>
+                  </div>
+                  <DialogDescription>
+                    <Badge 
+                      className="mt-2"
+                      style={{ 
+                        backgroundColor: `${selectedEvent.color || eventTypeColors[selectedEvent.event_type]}20`,
+                        color: selectedEvent.color || eventTypeColors[selectedEvent.event_type]
+                      }}
+                    >
+                      {eventTypeLabels[selectedEvent.event_type]}
+                    </Badge>
+                    {selectedEvent.visibility !== 'public' && (
+                      <Badge variant="outline" className="ml-2 mt-2">
+                        <EyeOff className="h-3 w-3 mr-1" />
+                        {visibilityLabels[selectedEvent.visibility]}
+                      </Badge>
+                    )}
+                  </DialogDescription>
+                </DialogHeader>
+
+                <div className="space-y-4 pt-4">
+                  <div className="flex items-center gap-3 text-sm">
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <span>
+                      {format(new Date(selectedEvent.start_datetime), "EEEE, d 'de' MMMM 'de' yyyy", { locale: pt })}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-sm">
+                    <Clock className="h-4 w-4 text-muted-foreground" />
+                    <span>
+                      {format(new Date(selectedEvent.start_datetime), "HH:mm")}
+                      {selectedEvent.end_datetime && (
+                        <> - {format(new Date(selectedEvent.end_datetime), "HH:mm")}</>
+                      )}
+                    </span>
+                  </div>
+
+                  {selectedEvent.location && (
+                    <div className="flex items-center gap-3 text-sm">
+                      <MapPin className="h-4 w-4 text-muted-foreground" />
+                      <span>{selectedEvent.location}</span>
+                    </div>
+                  )}
+
+                  {selectedEvent.description && (
+                    <div className="pt-2 border-t">
+                      <p className="text-sm text-muted-foreground">
+                        {selectedEvent.description}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </Layout>
   );
