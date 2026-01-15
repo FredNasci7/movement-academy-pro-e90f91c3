@@ -3,70 +3,61 @@ import { ArrowRight, Award, Instagram, Users, Heart, BookOpen, Sparkles } from "
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { AnimatedSection } from "@/components/ui/animated-section";
-
-const values = [
-  {
-    icon: Sparkles,
-    title: "Movimento",
-    description: "Acreditamos que o movimento é a base de uma vida saudável e plena. Cada exercício é uma oportunidade de evolução.",
-  },
-  {
-    icon: Heart,
-    title: "Saúde",
-    description: "Cuidar do corpo e da mente é essencial. Valorizamos hábitos que promovem bem-estar e qualidade de vida.",
-  },
-  {
-    icon: BookOpen,
-    title: "Aprendizagem",
-    description: "Cada experiência é uma chance de crescer. Incentivamos o desenvolvimento contínuo e a descoberta do potencial individual.",
-  },
-  {
-    icon: Users,
-    title: "Comunidade",
-    description: "Juntos somos mais fortes. Construímos conexões que apoiam, inspiram e fortalecem todos os membros.",
-  },
-];
-
-const stats = [
-  { value: "2021", label: "Ano de Fundação" },
-  { value: "170+", label: "Crianças/Atletas" },
-  { value: "65+", label: "Atletas Federadas" },
-  { value: "4+", label: "Anos de Experiência" },
-];
-
-const trainers = [
-  {
-    name: "Bia",
-    role: "Treinadora Grau II Ginástica Acrobática / Personal Trainer / Instrutora de Barre / Fundadora",
-    image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=400&h=500&fit=crop",
-  },
-  {
-    name: "Carol",
-    role: "Treinadora Grau I Ginástica / Personal Trainer / Instrutora de Pilates",
-    image: "https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=400&h=500&fit=crop",
-  },
-  {
-    name: "David",
-    role: "Treinador Grau I Ginástica / Personal Trainer",
-    image: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=400&h=500&fit=crop",
-  },
-  {
-    name: "Tiago",
-    role: "Monitor",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=500&fit=crop",
-  },
-  {
-    name: "Bia",
-    role: "Monitora / Marketing",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop",
-  },
-];
-
+const values = [{
+  icon: Sparkles,
+  title: "Movimento",
+  description: "Acreditamos que o movimento é a base de uma vida saudável e plena. Cada exercício é uma oportunidade de evolução."
+}, {
+  icon: Heart,
+  title: "Saúde",
+  description: "Cuidar do corpo e da mente é essencial. Valorizamos hábitos que promovem bem-estar e qualidade de vida."
+}, {
+  icon: BookOpen,
+  title: "Aprendizagem",
+  description: "Cada experiência é uma chance de crescer. Incentivamos o desenvolvimento contínuo e a descoberta do potencial individual."
+}, {
+  icon: Users,
+  title: "Comunidade",
+  description: "Juntos somos mais fortes. Construímos conexões que apoiam, inspiram e fortalecem todos os membros."
+}];
+const stats = [{
+  value: "2021",
+  label: "Ano de Fundação"
+}, {
+  value: "170+",
+  label: "Crianças/Atletas"
+}, {
+  value: "65+",
+  label: "Atletas Federadas"
+}, {
+  value: "4+",
+  label: "Anos de Experiência"
+}];
+const trainers = [{
+  name: "Bia",
+  role: "Treinadora Grau II Ginástica Acrobática / Personal Trainer / Instrutora de Barre / Fundadora",
+  image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=400&h=500&fit=crop"
+}, {
+  name: "Carol",
+  role: "Treinadora Grau I Ginástica / Personal Trainer / Instrutora de Pilates",
+  image: "https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=400&h=500&fit=crop"
+}, {
+  name: "David",
+  role: "Treinador Grau I Ginástica / Personal Trainer",
+  image: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=400&h=500&fit=crop"
+}, {
+  name: "Tiago",
+  role: "Monitor",
+  image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=500&fit=crop"
+}, {
+  name: "Bia",
+  role: "Monitora / Marketing",
+  image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop"
+}];
 const About = () => {
-  return (
-    <Layout>
+  return <Layout>
       {/* Hero */}
-      <section className="pt-32 pb-20 bg-gradient-to-b from-primary/5 to-background">
+      <section className="pt-32 pb-20 bg-gradient-to-b from-primary/5 to-background py-[165px]">
         <div className="section-container">
           <AnimatedSection className="max-w-4xl">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6 leading-tight">
@@ -85,17 +76,13 @@ const About = () => {
       </section>
 
       {/* Story */}
-      <section className="py-20">
+      <section className="py-20 pb-0">
         <div className="section-container">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <AnimatedSection>
               <div className="relative">
                 <div className="absolute -inset-4 bg-primary/10 rounded-3xl transform -rotate-2" />
-                <img
-                  src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=800"
-                  alt="Academia Movement Academy"
-                  className="relative rounded-2xl shadow-lg w-full"
-                />
+                <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=800" alt="Academia Movement Academy" className="relative rounded-2xl shadow-lg w-full" />
               </div>
             </AnimatedSection>
 
@@ -143,16 +130,14 @@ const About = () => {
       <section className="py-16 bg-primary">
         <div className="section-container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <AnimatedSection key={stat.label} delay={index * 100}>
+            {stats.map((stat, index) => <AnimatedSection key={stat.label} delay={index * 100}>
                 <div className="text-center">
                   <p className="text-4xl sm:text-5xl font-heading font-bold text-primary-foreground mb-2">
                     {stat.value}
                   </p>
                   <p className="text-primary-foreground/80">{stat.label}</p>
                 </div>
-              </AnimatedSection>
-            ))}
+              </AnimatedSection>)}
           </div>
         </div>
       </section>
@@ -200,11 +185,7 @@ const About = () => {
             <AnimatedSection delay={200}>
               <div className="relative">
                 <div className="absolute -inset-4 bg-primary/10 rounded-3xl transform rotate-2" />
-                <img
-                  src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=600&h=700&fit=crop"
-                  alt="Beatriz Pinto - Fundadora"
-                  className="relative rounded-2xl shadow-lg w-full max-w-md mx-auto"
-                />
+                <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=600&h=700&fit=crop" alt="Beatriz Pinto - Fundadora" className="relative rounded-2xl shadow-lg w-full max-w-md mx-auto" />
               </div>
             </AnimatedSection>
           </div>
@@ -221,8 +202,7 @@ const About = () => {
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => (
-              <AnimatedSection key={value.title} delay={index * 100}>
+            {values.map((value, index) => <AnimatedSection key={value.title} delay={index * 100}>
                 <div className="bg-card rounded-2xl p-6 shadow-sm border border-border/50 h-full card-hover">
                   <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
                     <value.icon className="w-7 h-7 text-primary" />
@@ -234,8 +214,7 @@ const About = () => {
                     {value.description}
                   </p>
                 </div>
-              </AnimatedSection>
-            ))}
+              </AnimatedSection>)}
           </div>
         </div>
       </section>
@@ -243,10 +222,9 @@ const About = () => {
       {/* Mission/Lema */}
       <section className="py-24 relative overflow-hidden">
         {/* Background image with overlay */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=1920')" }}
-        >
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
+        backgroundImage: "url('https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=1920')"
+      }}>
           <div className="absolute inset-0 bg-gradient-to-r from-foreground/95 via-foreground/90 to-foreground/85" />
         </div>
         
@@ -282,16 +260,11 @@ const About = () => {
 
           {/* First row - 3 trainers */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-            {trainers.slice(0, 3).map((trainer, index) => (
-              <AnimatedSection key={`${trainer.name}-${index}`} delay={index * 100}>
+            {trainers.slice(0, 3).map((trainer, index) => <AnimatedSection key={`${trainer.name}-${index}`} delay={index * 100}>
                 <div className="bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 card-hover group">
                   {/* Image */}
                   <div className="relative h-64 overflow-hidden">
-                    <img
-                      src={trainer.image}
-                      alt={trainer.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
+                    <img src={trainer.image} alt={trainer.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-transparent to-transparent" />
                     
                     {/* Name overlay */}
@@ -309,22 +282,16 @@ const About = () => {
                     </p>
                   </div>
                 </div>
-              </AnimatedSection>
-            ))}
+              </AnimatedSection>)}
           </div>
 
           {/* Second row - 2 trainers centered */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
-            {trainers.slice(3, 5).map((trainer, index) => (
-              <AnimatedSection key={`${trainer.name}-${index + 3}`} delay={(index + 3) * 100}>
+            {trainers.slice(3, 5).map((trainer, index) => <AnimatedSection key={`${trainer.name}-${index + 3}`} delay={(index + 3) * 100}>
                 <div className="bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 card-hover group">
                   {/* Image */}
                   <div className="relative h-64 overflow-hidden">
-                    <img
-                      src={trainer.image}
-                      alt={trainer.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
+                    <img src={trainer.image} alt={trainer.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-transparent to-transparent" />
                     
                     {/* Name overlay */}
@@ -342,8 +309,7 @@ const About = () => {
                     </p>
                   </div>
                 </div>
-              </AnimatedSection>
-            ))}
+              </AnimatedSection>)}
           </div>
         </div>
       </section>
@@ -369,8 +335,6 @@ const About = () => {
           </AnimatedSection>
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default About;
