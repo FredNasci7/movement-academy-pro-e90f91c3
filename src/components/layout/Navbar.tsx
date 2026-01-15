@@ -59,7 +59,7 @@ export function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 flex-shrink-0">
             <div className="relative">
-              <img src="/assets/logo-ima.png" alt="IMA - Intuitive Movement Academy" className="w-14 h-14 drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)] transform hover:scale-105 transition-transform duration-300 object-cover" style={{
+              <img src="/assets/logo-ima.png" alt="IMA - Intuitive Movement Academy" className="w-14 h-14 drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)] transform hover:scale-105 transition-transform duration-300 object-contain" style={{
               filter: 'drop-shadow(2px 2px 0px rgba(0,0,0,0.2)) drop-shadow(4px 4px 6px rgba(0,0,0,0.25))'
             }} />
             </div>
