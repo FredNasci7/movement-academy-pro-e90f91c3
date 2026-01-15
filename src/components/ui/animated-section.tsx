@@ -30,7 +30,7 @@ export function AnimatedSection({
     }
     return () => observer.disconnect();
   }, [delay]);
-  return <div ref={ref} id={id} className={cn("animate-on-scroll py-[20px] pt-[40px]", className)}>
+  return <div ref={ref} id={id} className={cn("animate-on-scroll pt-[40px] py-[20px]", className)}>
       {children}
     </div>;
 }
