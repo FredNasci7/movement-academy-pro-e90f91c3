@@ -235,7 +235,7 @@ const About = () => {
       {/* Team Section */}
       <section className="pb-0 pt-[50px] py-[70px]">
         <div className="section-container">
-          <AnimatedSection className="text-center mb-16">
+          <AnimatedSection className="text-center mb-16 pt-0">
             <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-4">
               A Nossa Equipa
             </span>
