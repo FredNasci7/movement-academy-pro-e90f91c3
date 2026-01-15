@@ -226,9 +226,7 @@ const About = () => {
               <h2 className="text-3xl sm:text-4xl font-heading font-bold text-primary-foreground mb-6">
                 Lema
               </h2>
-              <p className="text-xl sm:text-2xl text-primary-foreground/90 leading-relaxed italic">
-                "Move-te de forma consciente, intuitiva e liberta o teu potencial."
-              </p>
+              <p className="text-xl sm:text-2xl text-primary-foreground/90 leading-relaxed italic">"Move-te de forma consciente, intuitiva e liberta o teu potencial."</p>
             </AnimatedSection>
           </div>
         </div>
