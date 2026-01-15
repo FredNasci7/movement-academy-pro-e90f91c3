@@ -57,7 +57,7 @@ const trainers = [{
 const About = () => {
   return <Layout>
       {/* Hero */}
-      <section className="pt-32 pb-20 bg-gradient-to-b from-primary/5 to-background py-[165px]">
+      <section className="bg-gradient-to-b from-primary/5 to-background py-[165px] pb-[10px] pt-[150px]">
         <div className="section-container">
           <AnimatedSection className="max-w-4xl">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6 leading-tight">
