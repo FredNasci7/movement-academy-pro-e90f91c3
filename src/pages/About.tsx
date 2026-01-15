@@ -135,7 +135,7 @@ const About = () => {
       </section>
 
       {/* Founder Message */}
-      <section className="py-20">
+      <section className="py-[40px]">
         <div className="section-container">
           <AnimatedSection className="mb-12">
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground text-center">
@@ -185,7 +185,7 @@ const About = () => {
       </section>
 
       {/* Values */}
-      <section className="py-24 bg-muted/30">
+      <section className="bg-muted/30 py-[60px]">
         <div className="section-container">
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-foreground">
