@@ -98,12 +98,7 @@ const About = () => {
                   expandir o projeto e alcançar um dos nossos principais objetivos: a abertura de 
                   diferentes classes de ginástica para crianças, contando atualmente com 170 crianças/atletas.
                 </p>
-                <p>
-                  A Associação Intuitive Movement Academy foi constituída a 10 de janeiro de 2024 e, 
-                  em setembro de 2024 avançámos com o pedido de filiação à Federação de Ginástica de 
-                  Portugal, contando atualmente com +65 atletas filiadas e com participação ativa em 
-                  representações.
-                </p>
+                <p>A Associação Intuitive Movement Academy foi constituída a 10 de janeiro de 2024 e, em setembro de 2024 avançámos com o pedido de filiação à Federação de Ginástica de Portugal, contando atualmente com +65 atletas filiadas e com participação ativa em representações. Com o crescimento do número de atletas e o aumento da carga horária, tornou-se necessário encontrar novas instalações. Atualmente, estamos sediados na Escola Básica da Sarrazola, com o apoio da Câmara Municipal de Sintra, onde continuamos a desenvolver as nossas atividades.</p>
               </div>
             </AnimatedSection>
           </div>
@@ -111,16 +106,7 @@ const About = () => {
           {/* Full-width paragraphs below the grid */}
           <AnimatedSection delay={200} className="mt-8">
             <div className="space-y-4 text-muted-foreground leading-relaxed">
-              <p>
-                Com o crescimento do número de atletas e o aumento da carga horária, tornou-se 
-                necessário encontrar novas instalações. Atualmente, estamos sediados na Escola Básica da 
-                Sarrazola, com o apoio da Câmara Municipal de Sintra, onde continuamos a desenvolver 
-                as nossas atividades. Este crescimento gradual e sustentável, embora traga novos desafios, 
-                reforça o nosso compromisso em levar o desporto a mais pessoas e a mais lugares. Para 
-                garantir a expansão do projeto, a participação em competições e representações, bem 
-                como a manutenção da qualidade, segurança e condições adequadas para todos os 
-                envolvidos, continuamos a procurar parcerias e apoios estratégicos.
-              </p>
+              <p> Este crescimento gradual e sustentável, embora traga novos desafios, reforça o nosso compromisso em levar o desporto a mais pessoas e a mais lugares. Para garantir a expansão do projeto, a participação em competições e representações, bem como a manutenção da qualidade, segurança e condições adequadas para todos os envolvidos, continuamos a procurar parcerias e apoios estratégicos.</p>
               <p>
                 Somos uma comunidade de entusiastas do movimento, um espaço de aprendizagem que 
                 promove o crescimento, o bem-estar e a saúde. Através desta comunidade, as pessoas 
