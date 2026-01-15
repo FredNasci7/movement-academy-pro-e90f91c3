@@ -233,7 +233,7 @@ const About = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-24 pb-0">
+      <section className="py-24 pb-0 pt-[50px]">
         <div className="section-container">
           <AnimatedSection className="text-center mb-16">
             <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-4">
