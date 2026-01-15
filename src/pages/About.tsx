@@ -135,7 +135,7 @@ const About = () => {
       </section>
 
       {/* Founder Message */}
-      <section className="py-[40px]">
+      <section className="py-[80px]">
         <div className="section-container">
           <AnimatedSection className="mb-12">
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground text-center">
