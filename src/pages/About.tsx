@@ -136,7 +136,7 @@ const About = () => {
 
       {/* Founder Message */}
       <section className="py-[80px] pb-[40px]">
-        <div className="section-container">
+        <div className="section-container py-[20px]">
           <AnimatedSection className="mb-12">
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground text-center">
               Mensagem da <span className="text-primary">Fundadora</span>
