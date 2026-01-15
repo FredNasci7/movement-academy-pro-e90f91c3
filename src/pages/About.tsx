@@ -305,7 +305,7 @@ const About = () => {
       </section>
 
       {/* Join CTA */}
-      <section className="py-20 bg-muted/50">
+      <section className="bg-muted/50 py-[40px]">
         <div className="section-container">
           <AnimatedSection className="text-center max-w-2xl mx-auto">
             <Award className="w-16 h-16 text-primary mx-auto mb-6" />
