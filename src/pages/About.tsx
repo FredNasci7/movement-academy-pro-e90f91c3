@@ -42,23 +42,28 @@ const stats = [{
 const trainers = [{
   name: "Bia",
   role: "Treinadora Grau II Ginástica Acrobática / Personal Trainer / Instrutora de Barre / Fundadora",
-  image: fotoBiaFundadora
+  image: fotoBiaFundadora,
+  objectPosition: "center 20%"
 }, {
   name: "Carol",
   role: "Treinadora Grau I Ginástica / Personal Trainer / Instrutora de Pilates",
-  image: fotoCarol
+  image: fotoCarol,
+  objectPosition: "center 18%"
 }, {
   name: "David",
   role: "Treinador Grau I Ginástica / Personal Trainer",
-  image: fotoDavid
+  image: fotoDavid,
+  objectPosition: "center 15%"
 }, {
   name: "Tiago",
   role: "Monitor",
-  image: fotoTiago
+  image: fotoTiago,
+  objectPosition: "center 22%"
 }, {
   name: "Bia",
   role: "Monitora / Marketing",
-  image: fotoBia
+  image: fotoBia,
+  objectPosition: "center 18%"
 }];
 const About = () => {
   return <Layout>
@@ -259,8 +264,8 @@ const About = () => {
             {trainers.slice(0, 3).map((trainer, index) => <AnimatedSection key={`${trainer.name}-${index}`} delay={index * 100}>
                 <div className="bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 card-hover group">
                   {/* Image */}
-                  <div className="relative h-64 overflow-hidden">
-                    <img src={trainer.image} alt={trainer.name} className="w-full h-full object-cover object-[center_25%] transition-transform duration-500 group-hover:scale-105" />
+                  <div className="relative h-80 overflow-hidden">
+                    <img src={trainer.image} alt={trainer.name} style={{ objectPosition: trainer.objectPosition }} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-transparent to-transparent" />
                     
                     {/* Name overlay */}
@@ -286,8 +291,8 @@ const About = () => {
             {trainers.slice(3, 5).map((trainer, index) => <AnimatedSection key={`${trainer.name}-${index + 3}`} delay={(index + 3) * 100}>
                 <div className="bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 card-hover group">
                   {/* Image */}
-                  <div className="relative h-64 overflow-hidden">
-                    <img src={trainer.image} alt={trainer.name} className="w-full h-full object-cover object-[center_25%] transition-transform duration-500 group-hover:scale-105" />
+                  <div className="relative h-80 overflow-hidden">
+                    <img src={trainer.image} alt={trainer.name} style={{ objectPosition: trainer.objectPosition }} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-transparent to-transparent" />
                     
                     {/* Name overlay */}
