@@ -39,6 +39,10 @@ const stats = [{
   label: "Anos de Experiência"
 }];
 const trainers = [{
+  name: "Bia",
+  role: "Treinadora Grau II Ginástica Acrobática / Personal Trainer / Instrutora de Barre / Fundadora",
+  image: "/lovable-uploads/d181b8e1-0c90-4e0b-b8fa-cfbb6d6241d6.jpg"
+}, {
   name: "Carol",
   role: "Treinadora Grau I Ginástica / Personal Trainer / Instrutora de Pilates",
   image: fotoCarol
@@ -47,13 +51,13 @@ const trainers = [{
   role: "Treinador Grau I Ginástica / Personal Trainer",
   image: fotoDavid
 }, {
-  name: "Bia",
-  role: "Monitora / Marketing",
-  image: fotoBia
-}, {
   name: "Tiago",
   role: "Monitor",
   image: fotoTiago
+}, {
+  name: "Bia",
+  role: "Monitora / Marketing",
+  image: fotoBia
 }];
 const About = () => {
   return <Layout>
@@ -249,9 +253,36 @@ const About = () => {
             </p>
           </AnimatedSection>
 
-          {/* Grid - 4 trainers (2x2 on desktop) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {trainers.map((trainer, index) => <AnimatedSection key={`${trainer.name}-${index}`} delay={index * 100}>
+          {/* First row - 3 trainers */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            {trainers.slice(0, 3).map((trainer, index) => <AnimatedSection key={`${trainer.name}-${index}`} delay={index * 100}>
+                <div className="bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 card-hover group">
+                  {/* Image */}
+                  <div className="relative h-64 overflow-hidden">
+                    <img src={trainer.image} alt={trainer.name} className="w-full h-full object-cover object-[center_25%] transition-transform duration-500 group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-transparent to-transparent" />
+                    
+                    {/* Name overlay */}
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <h3 className="text-xl font-heading font-bold text-primary-foreground">
+                        {trainer.name}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-5">
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {trainer.role}
+                    </p>
+                  </div>
+                </div>
+              </AnimatedSection>)}
+          </div>
+
+          {/* Second row - 2 trainers centered */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+            {trainers.slice(3, 5).map((trainer, index) => <AnimatedSection key={`${trainer.name}-${index + 3}`} delay={(index + 3) * 100}>
                 <div className="bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 card-hover group">
                   {/* Image */}
                   <div className="relative h-64 overflow-hidden">
