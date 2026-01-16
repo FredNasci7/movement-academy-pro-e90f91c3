@@ -36,7 +36,7 @@ const stats = [{
 const trainers = [{
   name: "Bia",
   role: "Treinadora Grau II Ginástica Acrobática / Personal Trainer / Instrutora de Barre / Fundadora",
-  image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=400&h=500&fit=crop"
+  image: "/lovable-uploads/d181b8e1-0c90-4e0b-b8fa-cfbb6d6241d6.jpg"
 }, {
   name: "Carol",
   role: "Treinadora Grau I Ginástica / Personal Trainer / Instrutora de Pilates",
