@@ -27,7 +27,7 @@ const services = [{
   id: "aulas-de-grupo",
   icon: Users,
   title: "Aulas de Grupo",
-  description: "Aulas de Grupo são sessões de treino em pequenos grupos. São pensadas para todos os níveis de habilidade e combinam exercícios que promovem força, coordenação e resistência, ao mesmo tempo em que fortalecem a conexão entre corpo e mente, incentivando o trabalho em equipa e a socialização.",
+  description: "As Aulas de Grupo são sessões de treino em pequenos grupos. São pensadas para todos os níveis de habilidade e combinam exercícios que promovem força, coordenação e resistência, ao mesmo tempo em que fortalecem a conexão entre corpo e mente, incentivando o trabalho em equipa e a socialização.",
   features: ["Pilates", "Barre", "Fullbody", "Step"],
   image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=600",
   color: "from-primary to-accent"
