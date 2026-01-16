@@ -108,6 +108,9 @@ const Pricing = () => {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6">
               Preçário <span className="text-primary">Ginástica</span>
             </h1>
+            <p className="text-lg text-muted-foreground mb-8">
+              Preços para as nossas classes de ginástica.
+            </p>
             
             {/* Condições Obrigatórias */}
             <div className="bg-card border border-border rounded-xl p-6 text-center">
@@ -152,7 +155,7 @@ const Pricing = () => {
                   <h3 className="text-lg font-heading font-bold text-foreground group-hover:text-primary transition-colors">
                     {plan.name}
                   </h3>
-                  <p className="text-sm text-muted-foreground mt-1">{plan.frequency}</p>
+                  <p className="text-sm font-semibold text-primary mt-1">{plan.price}/mês</p>
                   <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
                     <div className="bg-primary/10 rounded-full p-1.5">
                       <Info className="w-4 h-4 text-primary" />
@@ -187,7 +190,7 @@ const Pricing = () => {
                   <h3 className="text-lg font-heading font-bold text-foreground group-hover:text-primary transition-colors">
                     {plan.name}
                   </h3>
-                  <p className="text-sm text-muted-foreground mt-1">{plan.frequency}</p>
+                  <p className="text-sm font-semibold text-primary mt-1">{plan.price}/mês</p>
                   <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
                     <div className="bg-primary/10 rounded-full p-1.5">
                       <Info className="w-4 h-4 text-primary" />
