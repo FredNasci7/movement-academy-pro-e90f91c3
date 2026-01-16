@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Users, Calendar, Settings, FileText, ClipboardList } from "lucide-react";
+import { Users, Calendar, Settings, FileText, ClipboardList, MessageSquareQuote } from "lucide-react";
 
 const AdminDashboard = () => {
   const quickLinks = [
@@ -9,7 +9,8 @@ const AdminDashboard = () => {
     { title: "Gerir Turmas", icon: Calendar, href: "/admin/turmas", description: "Configurar turmas e horários" },
     { title: "Inscrições", icon: ClipboardList, href: "/admin/inscricoes", description: "Gerir inscrições nas turmas" },
     { title: "Permissões", icon: Settings, href: "/admin/permissoes", description: "Gerir roles de utilizadores" },
-    { title: "Notícias", icon: FileText, href: "/noticias", description: "Ver publicações" },
+    { title: "Notícias", icon: FileText, href: "/admin/noticias", description: "Gerir notícias e publicações" },
+    { title: "Testemunhos", icon: MessageSquareQuote, href: "/admin/testemunhos", description: "Gerir testemunhos de atletas" },
   ];
 
   return (

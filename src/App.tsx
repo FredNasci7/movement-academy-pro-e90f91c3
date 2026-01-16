@@ -22,6 +22,8 @@ import AdminClasses from "./pages/admin/AdminClasses";
 import AdminRoles from "./pages/admin/AdminRoles";
 import AdminEnrollments from "./pages/admin/AdminEnrollments";
 import AdminEvents from "./pages/admin/AdminEvents";
+import AdminPosts from "./pages/admin/AdminPosts";
+import AdminTestimonials from "./pages/admin/AdminTestimonials";
 import Agenda from "./pages/Agenda";
 import ClassAttendance from "./pages/trainer/ClassAttendance";
 import NotFound from "./pages/NotFound";
@@ -53,6 +55,8 @@ const App = () => (
             <Route path="/admin/permissoes" element={<AdminRoles />} />
             <Route path="/admin/inscricoes" element={<AdminEnrollments />} />
             <Route path="/admin/eventos" element={<AdminEvents />} />
+            <Route path="/admin/noticias" element={<AdminPosts />} />
+            <Route path="/admin/testemunhos" element={<AdminTestimonials />} />
             <Route path="/agenda" element={<Agenda />} />
             <Route path="/treinador/presencas/:classId" element={<ClassAttendance />} />
             <Route path="*" element={<NotFound />} />
