@@ -177,7 +177,7 @@ const About = () => {
             <AnimatedSection delay={200}>
               <div className="relative">
                 <div className="absolute -inset-4 bg-primary/10 rounded-3xl transform rotate-2" />
-                <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=600&h=700&fit=crop" alt="Beatriz Pinto - Fundadora" className="relative rounded-2xl shadow-lg w-full max-w-md mx-auto" />
+                <img alt="Beatriz Pinto - Fundadora" className="relative rounded-2xl shadow-lg w-full max-w-md mx-auto" src="/lovable-uploads/d181b8e1-0c90-4e0b-b8fa-cfbb6d6241d6.jpg" />
               </div>
             </AnimatedSection>
           </div>
