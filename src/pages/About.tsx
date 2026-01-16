@@ -7,6 +7,7 @@ import fotoCarol from "@/assets/foto-carol.jpg";
 import fotoDavid from "@/assets/foto-david.jpg";
 import fotoBia from "@/assets/foto-bia.jpg";
 import fotoTiago from "@/assets/foto-tiago.jpg";
+import fotoBiaFundadora from "@/assets/foto-bia-fundadora.jpg";
 
 const values = [{
   icon: Sparkles,
@@ -41,7 +42,7 @@ const stats = [{
 const trainers = [{
   name: "Bia",
   role: "Treinadora Grau II Ginástica Acrobática / Personal Trainer / Instrutora de Barre / Fundadora",
-  image: "/lovable-uploads/d181b8e1-0c90-4e0b-b8fa-cfbb6d6241d6.jpg"
+  image: fotoBiaFundadora
 }, {
   name: "Carol",
   role: "Treinadora Grau I Ginástica / Personal Trainer / Instrutora de Pilates",
@@ -182,7 +183,7 @@ const About = () => {
             <AnimatedSection delay={200}>
               <div className="relative">
                 <div className="absolute -inset-4 bg-primary/10 rounded-3xl transform rotate-2" />
-                <img alt="Beatriz Pinto - Fundadora" className="relative rounded-2xl shadow-lg w-full max-w-md mx-auto" src="/lovable-uploads/d181b8e1-0c90-4e0b-b8fa-cfbb6d6241d6.jpg" />
+                <img alt="Beatriz Pinto - Fundadora" className="relative rounded-2xl shadow-lg w-full max-w-md mx-auto" src={fotoBiaFundadora} />
               </div>
             </AnimatedSection>
           </div>
