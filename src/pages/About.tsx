@@ -254,7 +254,7 @@ const About = () => {
                 <div className="bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 card-hover group">
                   {/* Image */}
                   <div className="relative h-64 overflow-hidden">
-                    <img src={trainer.image} alt={trainer.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <img src={trainer.image} alt={trainer.name} className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-transparent to-transparent" />
                     
                     {/* Name overlay */}
