@@ -122,8 +122,9 @@ const About = () => {
                 Somos uma comunidade de entusiastas do movimento, um espaço de aprendizagem que 
                 promove o crescimento, o bem-estar e a saúde. Através desta comunidade, as pessoas 
                 podem explorar os benefícios do exercício para a sua saúde, reivindicando o movimento 
-                como forma de se sentirem bem.
+                como forma de se sentirem bem. teste
               </p>
+              <p></p>
             </div>
           </AnimatedSection>
         </div>
