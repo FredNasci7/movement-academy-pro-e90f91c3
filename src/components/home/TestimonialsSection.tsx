@@ -1,18 +1,32 @@
+import { useState, useEffect } from "react";
 import { Star, Quote } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/animated-section";
+import { supabase } from "@/integrations/supabase/client";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const testimonials = [
+interface Testimonial {
+  id: string;
+  name: string;
+  content: string;
+  rating: number;
+}
+
+// Fallback testimonials for when database is empty
+const fallbackTestimonials: Testimonial[] = [
   {
+    id: "1",
     name: "Catarina Gonçalves",
     content: "É sem dúvida uma iniciativa excelente para não perdermos o treino físico seja onde for, neste caso, em casa. Já tive oportunidade de ter aulas com a Bia e confesso que, apesar de sair da aula completamente partida, adorei e sentia-me super bem. Vou recomendar muito",
     rating: 5,
   },
   {
+    id: "2",
     name: "Maria Lune",
     content: "Recomendo muito! As aulas são óptimas e diversificadas, o ambiente é espetacular e têm o cuidado de personalizar os exercícios às necessidades dos alunos quando é necessário.",
     rating: 5,
   },
   {
+    id: "3",
     name: "Carolina Gonçalves e Matilde Gonçalves",
     content: "É um projeto inovador, com aulas diversificadas e modalidades diferentes do tradicional. Além disso, somos acompanhadas por excelentes profissionais que se preocupam com a nossa evolução, Obrigada!",
     rating: 5,
@@ -20,6 +34,50 @@ const testimonials = [
 ];
 
 export function TestimonialsSection() {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      const { data, error } = await supabase
+        .from("testimonials")
+        .select("id, name, content, rating")
+        .eq("is_active", true)
+        .order("display_order", { ascending: true });
+
+      if (error) {
+        console.error("Error fetching testimonials:", error);
+        setTestimonials(fallbackTestimonials);
+      } else if (data && data.length > 0) {
+        setTestimonials(data);
+      } else {
+        setTestimonials(fallbackTestimonials);
+      }
+      setLoading(false);
+    };
+
+    fetchTestimonials();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-24 bg-primary/90 shadow-[inset_0_4px_30px_rgba(0,0,0,0.3)]">
+        <div className="section-container">
+          <div className="text-center mb-16">
+            <Skeleton className="h-8 w-32 mx-auto mb-4 bg-white/20" />
+            <Skeleton className="h-12 w-80 mx-auto mb-4 bg-white/20" />
+            <Skeleton className="h-6 w-96 mx-auto bg-white/20" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <Skeleton key={i} className="h-64 bg-white/20 rounded-2xl" />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="py-24 bg-primary/90 shadow-[inset_0_4px_30px_rgba(0,0,0,0.3)]">
       <div className="section-container">
@@ -38,7 +96,7 @@ export function TestimonialsSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
-            <AnimatedSection key={testimonial.name} delay={index * 150}>
+            <AnimatedSection key={testimonial.id} delay={index * 150}>
               <div className="bg-white rounded-2xl p-8 shadow-lg h-full relative">
                 {/* Quote icon */}
                 <Quote className="absolute top-6 right-6 w-10 h-10 text-primary/20" />

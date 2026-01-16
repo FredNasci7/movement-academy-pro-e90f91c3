@@ -1,6 +1,7 @@
 import { Instagram, Calendar, Star } from "lucide-react";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
+import { PostCarousel } from "./PostCarousel";
 
 interface Post {
   id: string;
@@ -45,10 +46,10 @@ export function PostCard({ post, onClick }: PostCardProps) {
     >
       {/* Image Container */}
       <div className="relative aspect-square overflow-hidden">
-        <img
-          src={post.imagem_url}
-          alt={post.titulo}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        <PostCarousel
+          postId={post.id}
+          mainImageUrl={post.imagem_url}
+          className="transition-transform duration-500 group-hover:scale-110"
         />
         
         {/* Overlay */}

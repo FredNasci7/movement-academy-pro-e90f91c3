@@ -3,8 +3,11 @@ import { Layout } from "@/components/layout/Layout";
 import { PostCard } from "@/components/noticias/PostCard";
 import { PostLightbox } from "@/components/noticias/PostLightbox";
 import { AnimatedSection } from "@/components/ui/animated-section";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { Loader2 } from "lucide-react";
+import { useAdmin } from "@/hooks/useAdmin";
+import { Link } from "react-router-dom";
+import { Loader2, Plus } from "lucide-react";
 
 interface Post {
   id: string;
@@ -27,6 +30,7 @@ const categories = [
 ];
 
 export default function Noticias() {
+  const { isAdmin } = useAdmin();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("todos");
@@ -86,6 +90,14 @@ export default function Noticias() {
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Acompanhe as conquistas, eventos e novidades da IMA - Intuitive Movement Academy
             </p>
+            {isAdmin && (
+              <Button asChild className="mt-6">
+                <Link to="/admin/noticias">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Gerir Notícias
+                </Link>
+              </Button>
+            )}
           </AnimatedSection>
         </div>
       </section>
