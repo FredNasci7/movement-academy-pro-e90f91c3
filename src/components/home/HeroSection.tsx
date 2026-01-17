@@ -48,7 +48,7 @@ export function HeroSection() {
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="text-lg px-8 py-6 bg-gold/30 border-gold/50 text-primary-foreground hover:bg-white hover:text-foreground hover:border-white transition-colors duration-200">
-              <Link to="/servicos">Ver Modalidades</Link>
+              <Link to="/modalidades">Ver Modalidades</Link>
             </Button>
           </div>
 

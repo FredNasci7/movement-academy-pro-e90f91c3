@@ -8,6 +8,7 @@ import fotoDavid from "@/assets/foto-david.jpg";
 import fotoBia from "@/assets/foto-bia.jpg";
 import fotoTiago from "@/assets/foto-tiago.jpg";
 import fotoBiaFundadora from "@/assets/foto-bia-fundadora.jpg";
+import nossaHistoria from "@/assets/nossa-historia.jpg";
 const values = [{
   icon: Sparkles,
   title: "Movimento",
@@ -96,7 +97,7 @@ const About = () => {
             <AnimatedSection delay={50}>
               <div className="relative">
                 <div className="absolute -inset-4 bg-primary/10 rounded-3xl transform -rotate-2" />
-                <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=800" alt="Academia Movement Academy" className="relative rounded-2xl shadow-lg w-full" />
+                <img src={nossaHistoria} alt="Academia Movement Academy" className="relative rounded-2xl shadow-lg w-full" />
               </div>
             </AnimatedSection>
 
