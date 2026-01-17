@@ -26,6 +26,7 @@ const values = [{
   title: "Comunidade",
   description: "Juntos somos mais fortes. Construímos conexões que apoiam, inspiram e fortalecem todos os membros."
 }];
+
 const stats = [{
   value: "2021",
   label: "Ano de Fundação"
@@ -39,6 +40,7 @@ const stats = [{
   value: "4+",
   label: "Anos de Experiência"
 }];
+
 const trainers = [{
   name: "Bia",
   role: "Treinadora Grau II Ginástica Acrobática / Personal Trainer / Instrutora de Barre / Fundadora",
@@ -60,12 +62,17 @@ const trainers = [{
   image: fotoTiago,
   objectPosition: "center 22%"
 }];
+
 const About = () => {
-  return <Layout>
+  return (
+    <Layout>
       {/* Hero */}
       <section className="bg-gradient-to-b from-primary/5 to-background py-[165px] pb-[20px] pt-[170px]">
         <div className="section-container">
           <AnimatedSection className="max-w-4xl">
+            <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-4">
+              Quem Somos
+            </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6 leading-tight">
               Uma Academia Dedicada ao{" "}
               <span className="text-primary">Movimento</span>
@@ -84,19 +91,22 @@ const About = () => {
       {/* Story */}
       <section className="py-20 pb-0">
         <div className="section-container">
+          <AnimatedSection className="mb-8">
+            <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground">
+              A Nossa História
+            </h2>
+          </AnimatedSection>
+          
           <div className="grid lg:grid-cols-2 gap-12 items-start">
-            <AnimatedSection>
+            <AnimatedSection delay={50}>
               <div className="relative">
                 <div className="absolute -inset-4 bg-primary/10 rounded-3xl transform -rotate-2" />
                 <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=800" alt="Academia Movement Academy" className="relative rounded-2xl shadow-lg w-full" />
               </div>
             </AnimatedSection>
 
-            <AnimatedSection delay={150}>
-              <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground mb-6">
-                A Nossa História
-              </h2>
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
+            <AnimatedSection delay={100}>
+              <div className="space-y-5 text-muted-foreground leading-relaxed text-lg">
                 <p>
                   Fundada a 3 de fevereiro de 2021 e em setembro de 2021 iniciámos uma parceria com 
                   a União Desportiva e Cultural de Nafarros, onde estivemos sediados até Junho de 2025. As 
@@ -104,22 +114,22 @@ const About = () => {
                   expandir o projeto e alcançar um dos nossos principais objetivos: a abertura de 
                   diferentes classes de ginástica para crianças, contando atualmente com 170 crianças/atletas.
                 </p>
-                <p>A Associação Intuitive Movement Academy foi constituída a 10 de janeiro de 2024 e, em setembro de 2024 avançámos com o pedido de filiação à Federação de Ginástica de Portugal, contando atualmente com +65 atletas filiadas e com participação ativa em representações. </p>
+                <p>
+                  A Associação Intuitive Movement Academy foi constituída a 10 de janeiro de 2024 e, em setembro de 2024 avançámos com o pedido de filiação à Federação de Ginástica de Portugal, contando atualmente com +65 atletas filiadas e com participação ativa em representações.
+                </p>
               </div>
             </AnimatedSection>
           </div>
 
           {/* Full-width paragraphs below the grid */}
-          <AnimatedSection delay={200} className="mt-8">
-            <div className="space-y-4 text-muted-foreground leading-relaxed">
-              <p>Com o crescimento do número de atletas e o aumento da carga horária, tornou-se necessário encontrar novas instalações. Atualmente, estamos sediados na Escola Básica da Sarrazola, com o apoio da Câmara Municipal de Sintra, onde continuamos a desenvolver as nossas atividades. Este crescimento gradual e sustentável, embora traga novos desafios, reforça o nosso compromisso em levar o desporto a mais pessoas e a mais lugares. Para garantir a expansão do projeto, a participação em competições e representações, bem como a manutenção da qualidade, segurança e condições adequadas para todos os envolvidos, continuamos a procurar parcerias e apoios estratégicos.</p>
+          <AnimatedSection delay={150} className="mt-10">
+            <div className="space-y-5 text-muted-foreground leading-relaxed text-lg">
               <p>
-                Somos uma comunidade de entusiastas do movimento, um espaço de aprendizagem que 
-                promove o crescimento, o bem-estar e a saúde. Através desta comunidade, as pessoas 
-                podem explorar os benefícios do exercício para a sua saúde, reivindicando o movimento 
-                como forma de se sentirem bem. teste
+                Com o crescimento do número de atletas e o aumento da carga horária, tornou-se necessário encontrar novas instalações. Atualmente, estamos sediados na Escola Básica da Sarrazola, com o apoio da Câmara Municipal de Sintra, onde continuamos a desenvolver as nossas atividades. Este crescimento gradual e sustentável, embora traga novos desafios, reforça o nosso compromisso em levar o desporto a mais pessoas e a mais lugares.
               </p>
-              <p></p>
+              <p>
+                Para garantir a expansão do projeto, a participação em competições e representações, bem como a manutenção da qualidade, segurança e condições adequadas para todos os envolvidos, continuamos a procurar parcerias e apoios estratégicos. Somos uma comunidade de entusiastas do movimento, um espaço de aprendizagem que promove o crescimento, o bem-estar e a saúde.
+              </p>
             </div>
           </AnimatedSection>
         </div>
@@ -129,14 +139,16 @@ const About = () => {
       <section className="py-16 bg-primary">
         <div className="section-container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => <AnimatedSection key={stat.label} delay={index * 100}>
+            {stats.map((stat, index) => (
+              <AnimatedSection key={stat.label} delay={index * 100}>
                 <div className="text-center">
                   <p className="text-4xl sm:text-5xl font-heading font-bold text-primary-foreground mb-2">
                     {stat.value}
                   </p>
                   <p className="text-primary-foreground/80">{stat.label}</p>
                 </div>
-              </AnimatedSection>)}
+              </AnimatedSection>
+            ))}
           </div>
         </div>
       </section>
@@ -144,15 +156,15 @@ const About = () => {
       {/* Founder Message */}
       <section className="py-[80px] pb-[40px]">
         <div className="section-container py-[20px]">
-          <AnimatedSection className="mb-12">
+          <AnimatedSection className="mb-16">
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground text-center">
               Mensagem da <span className="text-primary">Fundadora</span>
             </h2>
           </AnimatedSection>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
             <AnimatedSection delay={100}>
-              <div className="space-y-4 text-muted-foreground leading-relaxed">
+              <div className="space-y-5 text-muted-foreground leading-relaxed text-lg">
                 <p>
                   Vou começar por partilhar com vocês aquilo que é a minha paixão, o Desporto. Fui ginasta durante 8 anos, 
                   um marco muito importante na minha vida! Durante estes anos fui descobrindo este gosto não só pela prática, 
@@ -201,7 +213,8 @@ const About = () => {
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => <AnimatedSection key={value.title} delay={index * 100}>
+            {values.map((value, index) => (
+              <AnimatedSection key={value.title} delay={index * 100}>
                 <div className="bg-card rounded-2xl p-6 shadow-sm border border-border/50 h-full card-hover">
                   <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
                     <value.icon className="w-7 h-7 text-primary" />
@@ -213,7 +226,8 @@ const About = () => {
                     {value.description}
                   </p>
                 </div>
-              </AnimatedSection>)}
+              </AnimatedSection>
+            ))}
           </div>
         </div>
       </section>
@@ -222,8 +236,8 @@ const About = () => {
       <section className="py-24 relative overflow-hidden">
         {/* Background image with overlay */}
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
-        backgroundImage: "url('https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=1920')"
-      }}>
+          backgroundImage: "url('https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=1920')"
+        }}>
           <div className="absolute inset-0 bg-gradient-to-r from-foreground/95 via-foreground/90 to-foreground/85" />
         </div>
         
@@ -274,8 +288,8 @@ const About = () => {
                   </div>
 
                   {/* Content */}
-                  <div className="p-5">
-                    <p className="text-muted-foreground text-sm leading-relaxed">
+                  <div className="p-5 h-28 flex items-start">
+                    <p className="text-muted-foreground text-sm leading-relaxed line-clamp-4">
                       {trainer.role}
                     </p>
                   </div>
@@ -296,7 +310,7 @@ const About = () => {
             </h2>
             <p className="text-muted-foreground mb-8">
               Estamos sempre à procura de profissionais apaixonados pelo movimento. 
-              Se partilhas os nossos valores, entra em contacto connosco.
+              Se partilhas os nossos valores, entra em contato connosco.
             </p>
             <Button asChild size="lg">
               <Link to="/contacto">
@@ -307,6 +321,8 @@ const About = () => {
           </AnimatedSection>
         </div>
       </section>
-    </Layout>;
+    </Layout>
+  );
 };
+
 export default About;

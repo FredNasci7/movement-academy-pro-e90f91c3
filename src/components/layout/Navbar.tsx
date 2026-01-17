@@ -24,7 +24,7 @@ const navLinks = [{
   label: "Notícias"
 }, {
   href: "/contacto",
-  label: "Contacto"
+  label: "Contato"
 }];
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
