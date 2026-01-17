@@ -38,51 +38,63 @@ const GuardianDashboard = () => {
     const fetchAthletes = async () => {
       setIsLoading(true);
       try {
-        // Get athletes under this guardian
-        const { data: athletesData, error: athletesError } = await supabase
+        // Get athletes under this guardian - now using the new structure
+        const { data: guardianRelations, error: relationsError } = await supabase
           .from("athlete_guardians")
-          .select("id, athlete_name, modalidade, subscription_status")
+          .select(`
+            athlete_id,
+            athlete:athletes(
+              id,
+              full_name,
+              modalidade,
+              subscription_status
+            )
+          `)
           .eq("guardian_id", user.id);
 
-        if (athletesError) throw athletesError;
+        if (relationsError) throw relationsError;
 
         // For each athlete, get their class enrollments
         const athletesWithClasses: AthleteWithClasses[] = await Promise.all(
-          (athletesData || []).map(async (athlete) => {
-            const { data: enrollments } = await supabase
-              .from("class_enrollments")
-              .select(`
-                class_id,
-                classes (
-                  id,
-                  name,
-                  class_schedules (
-                    day_of_week,
-                    start_time,
-                    end_time,
-                    location
+          (guardianRelations || [])
+            .filter((rel: any) => rel.athlete)
+            .map(async (relation: any) => {
+              const athlete = relation.athlete;
+              
+              const { data: enrollments } = await supabase
+                .from("class_enrollments")
+                .select(`
+                  class_id,
+                  classes (
+                    id,
+                    name,
+                    class_schedules (
+                      day_of_week,
+                      start_time,
+                      end_time,
+                      location
+                    )
                   )
-                )
-              `)
-              .eq("athlete_id", athlete.id)
-              .eq("status", "active");
+                `)
+                .eq("athlete_id", athlete.id)
+                .eq("status", "active");
 
-            const classes = (enrollments || [])
-              .filter((e) => e.classes)
-              .map((e) => ({
-                id: e.classes!.id,
-                name: e.classes!.name,
-                schedules: e.classes!.class_schedules || [],
-              }));
+              const classes = (enrollments || [])
+                .filter((e: any) => e.classes)
+                .map((e: any) => ({
+                  id: e.classes!.id,
+                  name: e.classes!.name,
+                  schedules: e.classes!.class_schedules || [],
+                }));
 
-            return {
-              id: athlete.id,
-              name: athlete.athlete_name,
-              modalidade: athlete.modalidade,
-              subscriptionStatus: athlete.subscription_status,
-              classes,
-            };
-          })
+              return {
+                id: athlete.id,
+                name: athlete.full_name,
+                modalidade: athlete.modalidade,
+                subscriptionStatus: athlete.subscription_status,
+                classes,
+              };
+            })
         );
 
         setAthletes(athletesWithClasses);
@@ -121,10 +133,9 @@ const GuardianDashboard = () => {
         <Card>
           <CardContent className="py-8 text-center">
             <Users className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <p className="text-muted-foreground mb-4">Ainda não tem atletas registados.</p>
-            <Button asChild>
-              <Link to="/perfil">Adicionar Atleta</Link>
-            </Button>
+            <p className="text-muted-foreground mb-4">
+              Ainda não tem atletas associados. Contacte a administração para associar atletas à sua conta.
+            </p>
           </CardContent>
         </Card>
       ) : (

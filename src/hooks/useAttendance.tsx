@@ -73,16 +73,17 @@ export const useAttendance = (sessionId: string | null) => {
               });
             }
           } else if (enrollment.athlete_id) {
+            // Now fetch from athletes table instead of athlete_guardians
             const { data: athlete } = await supabase
-              .from("athlete_guardians")
-              .select("athlete_name")
+              .from("athletes")
+              .select("full_name")
               .eq("id", enrollment.athlete_id)
               .single();
 
             if (athlete) {
               studentsList.push({
                 enrollmentId: enrollment.id,
-                name: athlete.athlete_name,
+                name: athlete.full_name,
                 type: "athlete",
                 athleteId: enrollment.athlete_id,
               });

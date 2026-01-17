@@ -16,45 +16,44 @@ export type Database = {
     Tables: {
       athlete_guardians: {
         Row: {
-          athlete_birth_date: string | null
-          athlete_name: string
-          athlete_notes: string | null
+          athlete_id: string
           created_at: string
           guardian_id: string
           id: string
-          modalidade: string | null
           relationship: string
-          subscription_end_date: string | null
-          subscription_status: string | null
           updated_at: string
         }
         Insert: {
-          athlete_birth_date?: string | null
-          athlete_name: string
-          athlete_notes?: string | null
+          athlete_id: string
           created_at?: string
           guardian_id: string
           id?: string
-          modalidade?: string | null
           relationship: string
-          subscription_end_date?: string | null
-          subscription_status?: string | null
           updated_at?: string
         }
         Update: {
-          athlete_birth_date?: string | null
-          athlete_name?: string
-          athlete_notes?: string | null
+          athlete_id?: string
           created_at?: string
           guardian_id?: string
           id?: string
-          modalidade?: string | null
           relationship?: string
-          subscription_end_date?: string | null
-          subscription_status?: string | null
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "athlete_guardians_athlete_id_fkey"
+            columns: ["athlete_id"]
+            isOneToOne: false
+            referencedRelation: "athletes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "athlete_guardians_athlete_id_fkey"
+            columns: ["athlete_id"]
+            isOneToOne: false
+            referencedRelation: "athletes_trainer_view"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "athlete_guardians_guardian_id_fkey"
             columns: ["guardian_id"]
@@ -70,27 +69,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      athlete_migration_map: {
-        Row: {
-          guardian_id: string | null
-          new_id: string
-          old_id: string
-          relationship: string | null
-        }
-        Insert: {
-          guardian_id?: string | null
-          new_id: string
-          old_id: string
-          relationship?: string | null
-        }
-        Update: {
-          guardian_id?: string | null
-          new_id?: string
-          old_id?: string
-          relationship?: string | null
-        }
-        Relationships: []
       }
       athletes: {
         Row: {
@@ -253,14 +231,14 @@ export type Database = {
             foreignKeyName: "class_enrollments_athlete_id_fkey"
             columns: ["athlete_id"]
             isOneToOne: false
-            referencedRelation: "athlete_guardians"
+            referencedRelation: "athletes"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "class_enrollments_athlete_id_fkey"
             columns: ["athlete_id"]
             isOneToOne: false
-            referencedRelation: "athlete_guardians_trainer_view"
+            referencedRelation: "athletes_trainer_view"
             referencedColumns: ["id"]
           },
           {
@@ -649,15 +627,33 @@ export type Database = {
       }
     }
     Views: {
-      athlete_guardians_trainer_view: {
+      athletes_trainer_view: {
         Row: {
           athlete_age: number | null
-          athlete_name: string | null
           created_at: string | null
+          full_name: string | null
           id: string | null
           modalidade: string | null
           subscription_status: string | null
           updated_at: string | null
+        }
+        Insert: {
+          athlete_age?: never
+          created_at?: string | null
+          full_name?: string | null
+          id?: string | null
+          modalidade?: string | null
+          subscription_status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          athlete_age?: never
+          created_at?: string | null
+          full_name?: string | null
+          id?: string | null
+          modalidade?: string | null
+          subscription_status?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }

@@ -10,7 +10,6 @@ import {
   Loader2,
   Plus,
   User,
-  Baby,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useAdmin } from "@/hooks/useAdmin";
@@ -86,7 +85,7 @@ const AdminEnrollments = () => {
     { id: string; full_name: string | null }[]
   >([]);
   const [athletes, setAthletes] = useState<
-    { id: string; athlete_name: string }[]
+    { id: string; full_name: string }[]
   >([]);
   const [selectedEntityId, setSelectedEntityId] = useState("");
   const [isLoadingEntities, setIsLoadingEntities] = useState(false);
@@ -106,10 +105,11 @@ const AdminEnrollments = () => {
         setProfiles(data || []);
         setAthletes([]);
       } else {
+        // Now fetch from athletes table
         const { data, error } = await supabase
-          .from("athlete_guardians")
-          .select("id, athlete_name")
-          .order("athlete_name");
+          .from("athletes")
+          .select("id, full_name")
+          .order("full_name");
         if (error) throw error;
         setAthletes(data || []);
         setProfiles([]);
@@ -168,7 +168,7 @@ const AdminEnrollments = () => {
       enrollment.class?.name
         ?.toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
-      enrollment.athlete?.athlete_name
+      enrollment.athlete?.full_name
         ?.toLowerCase()
         .includes(searchTerm.toLowerCase()) ||
       enrollment.profile?.full_name
@@ -259,14 +259,14 @@ const AdminEnrollments = () => {
                     <SelectContent>
                       <SelectItem value="athlete">
                         <div className="flex items-center gap-2">
-                          <Baby className="h-4 w-4" />
-                          Atleta (menor)
+                          <Users className="h-4 w-4" />
+                          Atleta
                         </div>
                       </SelectItem>
                       <SelectItem value="profile">
                         <div className="flex items-center gap-2">
                           <User className="h-4 w-4" />
-                          Utilizador (adulto)
+                          Utilizador (com conta)
                         </div>
                       </SelectItem>
                     </SelectContent>
@@ -299,7 +299,7 @@ const AdminEnrollments = () => {
                       {enrollmentType === "athlete"
                         ? athletes.map((a) => (
                             <SelectItem key={a.id} value={a.id}>
-                              {a.athlete_name}
+                              {a.full_name}
                             </SelectItem>
                           ))
                         : profiles.map((p) => (
@@ -424,8 +424,8 @@ const AdminEnrollments = () => {
                       <div className="flex items-center gap-2">
                         {enrollment.athlete ? (
                           <>
-                            <Baby className="h-4 w-4 text-muted-foreground" />
-                            {enrollment.athlete.athlete_name}
+                            <Users className="h-4 w-4 text-muted-foreground" />
+                            {enrollment.athlete.full_name}
                           </>
                         ) : (
                           <>
