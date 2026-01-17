@@ -24,7 +24,7 @@ const faqs = [
   },
   {
     question: "O que devo levar para os treinos?",
-    answer: "Roupa confortável e, de preferência, justa ao corpo. Poderá treinar de meias ou descalço(a). Recomendamos também trazer uma garrafa de água para hidratação durante a sessão."
+    answer: "Roupa confortável e, de preferência, justa ao corpo e rabo de cavalo. Poderá treinar de meias ou descalço(a). Recomendamos que traga uma garrafa de água."
   },
 ];
 
