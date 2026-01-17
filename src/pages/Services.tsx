@@ -28,7 +28,7 @@ const services = [{
   icon: Users,
   title: "Aulas de Grupo",
   description: "As Aulas de Grupo são sessões de treino em pequenos grupos. São pensadas para todos os níveis de habilidade e combinam exercícios que promovem força, coordenação e resistência, ao mesmo tempo em que fortalecem a conexão entre corpo e mente, incentivando o trabalho em equipa e a socialização.",
-  features: ["Pilates", "Barre", "Fullbody", "Step"],
+  features: ["🧘‍♀️ Pilates", "🩰 Barre", "🏋️ Full Body", "🏃‍♀️‍➡️ Step"],
   image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=600",
   color: "from-primary to-accent"
 }, {
@@ -63,6 +63,9 @@ const Services = () => {
       <section className="pt-40 bg-gradient-to-b from-primary/5 to-background pb-[40px]">
         <div className="section-container">
           <AnimatedSection className="text-center max-w-3xl mx-auto">
+            <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-4">
+              Modalidades
+            </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6 leading-tight">
               As Nossas{" "}
               <span className="text-primary">Modalidades</span>
