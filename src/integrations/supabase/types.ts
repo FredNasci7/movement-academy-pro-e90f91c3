@@ -71,6 +71,27 @@ export type Database = {
           },
         ]
       }
+      athlete_migration_map: {
+        Row: {
+          guardian_id: string | null
+          new_id: string
+          old_id: string
+          relationship: string | null
+        }
+        Insert: {
+          guardian_id?: string | null
+          new_id: string
+          old_id: string
+          relationship?: string | null
+        }
+        Update: {
+          guardian_id?: string | null
+          new_id?: string
+          old_id?: string
+          relationship?: string | null
+        }
+        Relationships: []
+      }
       athletes: {
         Row: {
           birth_date: string | null
