@@ -64,7 +64,7 @@ const About = () => {
       {/* Hero */}
       <section className="bg-gradient-to-b from-primary/5 to-background py-[165px] pb-[20px] pt-[125px]">
         <div className="section-container">
-          <AnimatedSection className="max-w-4xl">
+          <AnimatedSection className="max-w-4xl mx-auto text-center">
             <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-4">
               Quem Somos
             </span>
