@@ -10,12 +10,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { Database } from "@/integrations/supabase/types";
-
-type AthleteGuardianInsert = Database["public"]["Tables"]["athlete_guardians"]["Insert"];
+import type { AddAthleteData, GuardianAthlete } from "@/hooks/useAthleteGuardians";
 
 interface AddAthleteFormProps {
-  onAdd: (athlete: Omit<AthleteGuardianInsert, "guardian_id">) => Promise<unknown>;
+  onAdd: (athlete: AddAthleteData) => Promise<GuardianAthlete | null>;
 }
 
 type Relationship = "pai" | "mae" | "tutor" | "outro";
@@ -24,22 +22,22 @@ export const AddAthleteForm = ({ onAdd }: AddAthleteFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    athlete_name: "",
-    athlete_birth_date: "",
-    athlete_notes: "",
+    full_name: "",
+    birth_date: "",
+    notes: "",
     relationship: "pai" as Relationship,
     modalidade: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.athlete_name.trim()) return;
+    if (!formData.full_name.trim()) return;
 
     setIsLoading(true);
     const result = await onAdd({
-      athlete_name: formData.athlete_name,
-      athlete_birth_date: formData.athlete_birth_date || null,
-      athlete_notes: formData.athlete_notes || null,
+      full_name: formData.full_name,
+      birth_date: formData.birth_date || null,
+      notes: formData.notes || null,
       relationship: formData.relationship,
       modalidade: formData.modalidade || null,
     });
@@ -47,9 +45,9 @@ export const AddAthleteForm = ({ onAdd }: AddAthleteFormProps) => {
 
     if (result) {
       setFormData({
-        athlete_name: "",
-        athlete_birth_date: "",
-        athlete_notes: "",
+        full_name: "",
+        birth_date: "",
+        notes: "",
         relationship: "pai",
         modalidade: "",
       });
@@ -80,8 +78,8 @@ export const AddAthleteForm = ({ onAdd }: AddAthleteFormProps) => {
       </div>
 
       <Input
-        value={formData.athlete_name}
-        onChange={(e) => setFormData({ ...formData, athlete_name: e.target.value })}
+        value={formData.full_name}
+        onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
         placeholder="Nome do atleta *"
         required
       />
@@ -109,8 +107,8 @@ export const AddAthleteForm = ({ onAdd }: AddAthleteFormProps) => {
           <label className="text-xs text-muted-foreground mb-1 block">Data de Nascimento</label>
           <Input
             type="date"
-            value={formData.athlete_birth_date}
-            onChange={(e) => setFormData({ ...formData, athlete_birth_date: e.target.value })}
+            value={formData.birth_date}
+            onChange={(e) => setFormData({ ...formData, birth_date: e.target.value })}
           />
         </div>
       </div>
@@ -133,14 +131,14 @@ export const AddAthleteForm = ({ onAdd }: AddAthleteFormProps) => {
       </div>
 
       <Textarea
-        value={formData.athlete_notes}
-        onChange={(e) => setFormData({ ...formData, athlete_notes: e.target.value })}
+        value={formData.notes}
+        onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
         placeholder="Observações (alergias, condições médicas...)"
         rows={2}
       />
 
       <div className="flex gap-2">
-        <Button type="submit" disabled={isLoading || !formData.athlete_name.trim()}>
+        <Button type="submit" disabled={isLoading || !formData.full_name.trim()}>
           <Plus className="h-4 w-4 mr-1" />
           Adicionar
         </Button>
