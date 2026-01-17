@@ -78,7 +78,7 @@ const Services = () => {
       </section>
 
       {/* Services List */}
-      <section className="py-20">
+      <section className="py-20 pt-[40px] pb-[50px]">
         <div className="section-container space-y-20">
           {services.map((service, index) => <AnimatedSection key={service.title} id={service.id}>
               <div className={cn("grid lg:grid-cols-2 gap-12 items-center", index % 2 === 1 && "lg:flex-row-reverse")}>
