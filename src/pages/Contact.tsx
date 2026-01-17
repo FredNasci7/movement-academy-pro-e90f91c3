@@ -6,45 +6,36 @@ import { Textarea } from "@/components/ui/textarea";
 import { Layout } from "@/components/layout/Layout";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { useToast } from "@/hooks/use-toast";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
-const faqs = [
-  {
-    question: "Quais são as formas de pagamento disponíveis?",
-    answer: "Aceitamos pagamento por transferência bancária e em numerário. De momento, não disponibilizamos pagamento por MB WAY."
-  },
-  {
-    question: "Há descontos para famílias?",
-    answer: "Sim. Nas mensalidades de ginástica, aplicamos um desconto de 10% para irmãos, sendo este válido apenas a partir do segundo inscrito."
-  },
-  {
-    question: "O que devo levar para os treinos?",
-    answer: "Roupa confortável e, de preferência, justa ao corpo e rabo de cavalo. Poderá treinar de meias ou descalço(a). Recomendamos que traga uma garrafa de água."
-  },
-];
-
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+const faqs = [{
+  question: "Quais são as formas de pagamento disponíveis?",
+  answer: "Aceitamos pagamento por transferência bancária e em numerário. De momento, não disponibilizamos pagamento por MB WAY."
+}, {
+  question: "Há descontos para famílias?",
+  answer: "Sim. Nas mensalidades de ginástica, aplicamos um desconto de 10% para irmãos, sendo este válido apenas a partir do segundo inscrito."
+}, {
+  question: "O que devo levar para os treinos?",
+  answer: "Roupa confortável e, de preferência, justa ao corpo e rabo de cavalo. Poderá treinar de meias ou descalço(a). Recomendamos que traga uma garrafa de água."
+}];
 const Contact = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [loading, setLoading] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     // Simulate form submission
     await new Promise(r => setTimeout(r, 1000));
-    toast({ title: "Mensagem enviada!", description: "Entraremos em contacto em breve." });
+    toast({
+      title: "Mensagem enviada!",
+      description: "Entraremos em contacto em breve."
+    });
     setLoading(false);
     (e.target as HTMLFormElement).reset();
   };
-
-  return (
-    <Layout>
-      <section className="pt-32 pb-20 bg-gradient-to-b from-primary/5 to-background">
+  return <Layout>
+      <section className="pt-32 bg-gradient-to-b from-primary/5 to-background pb-0">
         <div className="section-container">
           <AnimatedSection className="text-center max-w-3xl mx-auto">
             <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-6">Contato</span>
@@ -105,22 +96,10 @@ const Contact = () => {
                   </div>
                 </div>
                 <div className="relative rounded-2xl overflow-hidden h-64 bg-muted/20">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d-9.4463!3d38.7978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDQ3JzUyLjEiTiA5wrAyNic0Ni43Ilc!5e0!3m2!1spt-PT!2spt&output=embed"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="Localização IMA - Escola Básica Sarrazola"
-                    className="pointer-events-none"
-                  />
-                  <a
-                    href="https://www.google.com/maps/search/Escola+Básica+Sarrazola+Colares+Sintra"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-md bg-background/80 backdrop-blur px-3 py-2 text-sm text-foreground hover:bg-background transition-colors"
-                  >
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d-9.4463!3d38.7978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDQ3JzUyLjEiTiA5wrAyNic0Ni43Ilc!5e0!3m2!1spt-PT!2spt&output=embed" width="100%" height="100%" style={{
+                  border: 0
+                }} loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Localização IMA - Escola Básica Sarrazola" className="pointer-events-none" />
+                  <a href="https://www.google.com/maps/search/Escola+Básica+Sarrazola+Colares+Sintra" target="_blank" rel="noopener noreferrer" className="absolute bottom-3 right-3 inline-flex items-center gap-2 rounded-md bg-background/80 backdrop-blur px-3 py-2 text-sm text-foreground hover:bg-background transition-colors">
                     Abrir no Google Maps
                     <ExternalLink className="w-4 h-4" />
                   </a>
@@ -148,26 +127,18 @@ const Contact = () => {
 
           <AnimatedSection delay={100} className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="space-y-4">
-              {faqs.map((faq, index) => (
-                <AccordionItem
-                  key={index}
-                  value={`item-${index}`}
-                  className="bg-card rounded-xl border border-border/50 px-6 shadow-sm"
-                >
+              {faqs.map((faq, index) => <AccordionItem key={index} value={`item-${index}`} className="bg-card rounded-xl border border-border/50 px-6 shadow-sm">
                   <AccordionTrigger className="text-left font-heading font-semibold text-foreground hover:text-primary py-5">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground pb-5">
                     {faq.answer}
                   </AccordionContent>
-                </AccordionItem>
-              ))}
+                </AccordionItem>)}
             </Accordion>
           </AnimatedSection>
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default Contact;
