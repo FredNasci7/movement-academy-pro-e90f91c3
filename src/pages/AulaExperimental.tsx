@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Sparkles, Send, Phone, Mail, User, Users } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const countryCodes = [
   { code: "+351", country: "Portugal", flag: "🇵🇹" },
@@ -29,7 +30,6 @@ const interestOptions = [
   { value: "aulas-grupo", label: "Aulas de grupo" },
   { value: "treino-personalizado", label: "Treino personalizado" },
 ];
-
 
 const AulaExperimental = () => {
   const { toast } = useToast();
@@ -87,26 +87,49 @@ const AulaExperimental = () => {
 
     setIsSubmitting(true);
 
-    // Simular envio
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const emailData = {
+        nomeAtleta: formData.nomeAtleta,
+        idadeAtleta: formData.idadeAtleta,
+        email: formData.email,
+        telefone: formData.telefone ? `${formData.countryCode} ${formData.telefone}` : "",
+        interesse: formData.interesse,
+        nomeEncarregado: isMinor ? formData.nomeEncarregado : undefined,
+      };
 
-    toast({
-      title: "Sucesso!",
-      description: "Obrigado! O teu pedido foi enviado com sucesso. Entraremos em contacto em breve.",
-    });
+      const { data: result, error } = await supabase.functions.invoke("send-email-smtp", {
+        body: { type: "trial-class", data: emailData },
+      });
 
-    // Reset form
-    setFormData({
-      nomeAtleta: "",
-      idadeAtleta: "",
-      email: "",
-      countryCode: "+351",
-      telefone: "",
-      interesse: "",
-      nomeEncarregado: "",
-    });
+      if (error) {
+        throw new Error(error.message || "Erro ao enviar pedido");
+      }
 
-    setIsSubmitting(false);
+      toast({
+        title: "Sucesso!",
+        description: "Obrigado! O teu pedido foi enviado com sucesso. Entraremos em contacto em breve.",
+      });
+
+      // Reset form
+      setFormData({
+        nomeAtleta: "",
+        idadeAtleta: "",
+        email: "",
+        countryCode: "+351",
+        telefone: "",
+        interesse: "",
+        nomeEncarregado: "",
+      });
+    } catch (error: any) {
+      console.error("Error sending trial class request:", error);
+      toast({
+        title: "Erro ao enviar",
+        description: error.message || "Ocorreu um erro ao enviar o pedido. Por favor, tenta novamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
