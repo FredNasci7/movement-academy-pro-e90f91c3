@@ -8,7 +8,6 @@ import fotoDavid from "@/assets/foto-david.jpg";
 import fotoBia from "@/assets/foto-bia.jpg";
 import fotoTiago from "@/assets/foto-tiago.jpg";
 import fotoBiaFundadora from "@/assets/foto-bia-fundadora.jpg";
-
 const values = [{
   icon: Sparkles,
   title: "Movimento",
@@ -26,7 +25,6 @@ const values = [{
   title: "Comunidade",
   description: "Juntos somos mais fortes. Construímos conexões que apoiam, inspiram e fortalecem todos os membros."
 }];
-
 const stats = [{
   value: "2021",
   label: "Ano de Fundação"
@@ -40,7 +38,6 @@ const stats = [{
   value: "4+",
   label: "Anos de Experiência"
 }];
-
 const trainers = [{
   name: "Bia",
   role: "Treinadora Grau II Ginástica Acrobática / Personal Trainer / Instrutora de Barre / Fundadora",
@@ -62,12 +59,10 @@ const trainers = [{
   image: fotoTiago,
   objectPosition: "center 22%"
 }];
-
 const About = () => {
-  return (
-    <Layout>
+  return <Layout>
       {/* Hero */}
-      <section className="bg-gradient-to-b from-primary/5 to-background py-[165px] pb-[20px] pt-[170px]">
+      <section className="bg-gradient-to-b from-primary/5 to-background py-[165px] pb-[20px] pt-[125px]">
         <div className="section-container">
           <AnimatedSection className="max-w-4xl">
             <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-4">
@@ -89,7 +84,7 @@ const About = () => {
       </section>
 
       {/* Story */}
-      <section className="py-20 pb-0">
+      <section className="py-20 pb-[20px] pt-[60px]">
         <div className="section-container">
           <AnimatedSection className="mb-8">
             <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground">
@@ -139,16 +134,14 @@ const About = () => {
       <section className="py-16 bg-primary">
         <div className="section-container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <AnimatedSection key={stat.label} delay={index * 100}>
+            {stats.map((stat, index) => <AnimatedSection key={stat.label} delay={index * 100}>
                 <div className="text-center">
                   <p className="text-4xl sm:text-5xl font-heading font-bold text-primary-foreground mb-2">
                     {stat.value}
                   </p>
                   <p className="text-primary-foreground/80">{stat.label}</p>
                 </div>
-              </AnimatedSection>
-            ))}
+              </AnimatedSection>)}
           </div>
         </div>
       </section>
@@ -213,8 +206,7 @@ const About = () => {
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => (
-              <AnimatedSection key={value.title} delay={index * 100}>
+            {values.map((value, index) => <AnimatedSection key={value.title} delay={index * 100}>
                 <div className="bg-card rounded-2xl p-6 shadow-sm border border-border/50 h-full card-hover">
                   <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
                     <value.icon className="w-7 h-7 text-primary" />
@@ -226,8 +218,7 @@ const About = () => {
                     {value.description}
                   </p>
                 </div>
-              </AnimatedSection>
-            ))}
+              </AnimatedSection>)}
           </div>
         </div>
       </section>
@@ -236,8 +227,8 @@ const About = () => {
       <section className="py-24 relative overflow-hidden">
         {/* Background image with overlay */}
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=1920')"
-        }}>
+        backgroundImage: "url('https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=1920')"
+      }}>
           <div className="absolute inset-0 bg-gradient-to-r from-foreground/95 via-foreground/90 to-foreground/85" />
         </div>
         
@@ -271,12 +262,13 @@ const About = () => {
 
           {/* Team grid - 4 trainers */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {trainers.map((trainer, index) => (
-              <AnimatedSection key={`${trainer.name}-${index}`} delay={index * 100}>
+            {trainers.map((trainer, index) => <AnimatedSection key={`${trainer.name}-${index}`} delay={index * 100}>
                 <div className="bg-card rounded-2xl overflow-hidden shadow-sm border border-border/50 card-hover group">
                   {/* Image */}
                   <div className="relative h-80 overflow-hidden">
-                    <img src={trainer.image} alt={trainer.name} style={{ objectPosition: trainer.objectPosition }} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <img src={trainer.image} alt={trainer.name} style={{
+                  objectPosition: trainer.objectPosition
+                }} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-transparent to-transparent" />
                     
                     {/* Name overlay */}
@@ -294,8 +286,7 @@ const About = () => {
                     </p>
                   </div>
                 </div>
-              </AnimatedSection>
-            ))}
+              </AnimatedSection>)}
           </div>
         </div>
       </section>
@@ -321,8 +312,6 @@ const About = () => {
           </AnimatedSection>
         </div>
       </section>
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default About;
