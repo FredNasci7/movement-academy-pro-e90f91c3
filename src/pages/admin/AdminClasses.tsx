@@ -437,14 +437,14 @@ const AdminClasses = () => {
             <div className="space-y-2">
               <Label>Treinador</Label>
               <Select
-                value={formData.trainer_id}
-                onValueChange={(v) => setFormData({ ...formData, trainer_id: v })}
+                value={formData.trainer_id || "none"}
+                onValueChange={(v) => setFormData({ ...formData, trainer_id: v === "none" ? "" : v })}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Selecionar treinador" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Sem treinador</SelectItem>
+                  <SelectItem value="none">Sem treinador</SelectItem>
                   {trainers.map((t) => (
                     <SelectItem key={t.id} value={t.id}>
                       {t.full_name || "Sem nome"}
@@ -529,14 +529,14 @@ const AdminClasses = () => {
             <div className="space-y-2">
               <Label>Treinador</Label>
               <Select
-                value={formData.trainer_id}
-                onValueChange={(v) => setFormData({ ...formData, trainer_id: v })}
+                value={formData.trainer_id || "none"}
+                onValueChange={(v) => setFormData({ ...formData, trainer_id: v === "none" ? "" : v })}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Selecionar treinador" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Sem treinador</SelectItem>
+                  <SelectItem value="none">Sem treinador</SelectItem>
                   {trainers.map((t) => (
                     <SelectItem key={t.id} value={t.id}>
                       {t.full_name || "Sem nome"}
