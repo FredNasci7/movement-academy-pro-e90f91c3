@@ -10,7 +10,7 @@ export interface AdminEnrollment {
   status: string;
   enrolled_at: string;
   class: { id: string; name: string; modalidade: string } | null;
-  athlete: { id: string; athlete_name: string } | null;
+  athlete: { id: string; full_name: string } | null;
   profile: { id: string; full_name: string | null } | null;
 }
 
@@ -31,7 +31,7 @@ export const useAdminEnrollments = () => {
           status,
           enrolled_at,
           class:classes(id, name, modalidade),
-          athlete:athlete_guardians(id, athlete_name),
+          athlete:athletes(id, full_name),
           profile:profiles(id, full_name)
         `)
         .order("enrolled_at", { ascending: false });

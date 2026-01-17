@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { 
-  Users, 
-  Search, 
-  Loader2, 
-  ArrowLeft, 
-  Phone, 
-  Calendar, 
-  AlertCircle,
+import {
+  Users,
+  Search,
+  Loader2,
+  ArrowLeft,
+  Phone,
+  Calendar,
   Trash2,
   Edit,
+  Save,
+  Plus,
+  Mail,
+  UserPlus,
   X,
-  Save
 } from "lucide-react";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
@@ -21,6 +23,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -47,47 +50,65 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { useAuth } from "@/contexts/AuthContext";
 import { useAdmin } from "@/hooks/useAdmin";
-import { useToast } from "@/hooks/use-toast";
+import { useAdminAthletes, Athlete, AthleteInsert } from "@/hooks/useAdminAthletes";
 import { supabase } from "@/integrations/supabase/client";
-
-interface Athlete {
-  id: string;
-  full_name: string | null;
-  phone: string | null;
-  birth_date: string | null;
-  notes: string | null;
-  subscription_status: string | null;
-  subscription_end_date: string | null;
-  modalidade: string | null;
-  created_at: string;
-  updated_at: string;
-}
+import { useToast } from "@/hooks/use-toast";
 
 const AdminAthletes = () => {
   const { user, loading: authLoading } = useAuth();
   const { isAdmin, isLoading: adminLoading } = useAdmin();
   const navigate = useNavigate();
   const { toast } = useToast();
-  
-  const [athletes, setAthletes] = useState<Athlete[]>([]);
-  const [filteredAthletes, setFilteredAthletes] = useState<Athlete[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const {
+    athletes,
+    isLoading,
+    addAthlete,
+    updateAthlete,
+    deleteAthlete,
+    addGuardian,
+    removeGuardian,
+  } = useAdminAthletes();
+
   const [searchQuery, setSearchQuery] = useState("");
-  
-  // Edit modal state
+  const [filteredAthletes, setFilteredAthletes] = useState<Athlete[]>([]);
+
+  // Add/Edit modal state
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editingAthlete, setEditingAthlete] = useState<Athlete | null>(null);
-  const [editForm, setEditForm] = useState<Partial<Athlete>>({});
+  const [formData, setFormData] = useState<AthleteInsert>({
+    full_name: "",
+    birth_date: null,
+    phone: null,
+    email: null,
+    modalidade: null,
+    subscription_status: "inativo",
+    subscription_end_date: null,
+    notes: null,
+  });
   const [isSaving, setIsSaving] = useState(false);
-  
+
   // Delete dialog state
   const [deletingAthlete, setDeletingAthlete] = useState<Athlete | null>(null);
-  const [isDeleting, setIsDeleting] = useState(false);
 
-  // Redirect if not logged in or not admin
+  // Guardian dialog state
+  const [guardianDialogAthlete, setGuardianDialogAthlete] = useState<Athlete | null>(null);
+  const [availableGuardians, setAvailableGuardians] = useState<{ id: string; full_name: string | null }[]>([]);
+  const [selectedGuardianId, setSelectedGuardianId] = useState("");
+  const [guardianRelationship, setGuardianRelationship] = useState("Encarregado");
+
+  // Redirect if not admin
   useEffect(() => {
     if (!authLoading && !adminLoading) {
       if (!user) {
@@ -98,38 +119,7 @@ const AdminAthletes = () => {
     }
   }, [user, isAdmin, authLoading, adminLoading, navigate]);
 
-  // Fetch athletes
-  useEffect(() => {
-    const fetchAthletes = async () => {
-      if (!isAdmin) return;
-
-      try {
-        const { data, error } = await supabase
-          .from("profiles")
-          .select("*")
-          .order("created_at", { ascending: false });
-
-        if (error) throw error;
-        setAthletes(data || []);
-        setFilteredAthletes(data || []);
-      } catch (error) {
-        console.error("Error fetching athletes:", error);
-        toast({
-          variant: "destructive",
-          title: "Erro",
-          description: "Não foi possível carregar os atletas",
-        });
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (isAdmin) {
-      fetchAthletes();
-    }
-  }, [isAdmin, toast]);
-
-  // Filter athletes based on search
+  // Filter athletes
   useEffect(() => {
     if (!searchQuery.trim()) {
       setFilteredAthletes(athletes);
@@ -141,64 +131,80 @@ const AdminAthletes = () => {
       (athlete) =>
         athlete.full_name?.toLowerCase().includes(query) ||
         athlete.phone?.toLowerCase().includes(query) ||
+        athlete.email?.toLowerCase().includes(query) ||
         athlete.modalidade?.toLowerCase().includes(query)
     );
     setFilteredAthletes(filtered);
   }, [searchQuery, athletes]);
 
-  const handleEdit = (athlete: Athlete) => {
-    setEditingAthlete(athlete);
-    setEditForm({
-      full_name: athlete.full_name || "",
-      phone: athlete.phone || "",
-      birth_date: athlete.birth_date || "",
-      modalidade: athlete.modalidade || "",
-      subscription_status: athlete.subscription_status || "",
-      notes: athlete.notes || "",
+  // Load guardians when opening guardian dialog
+  useEffect(() => {
+    if (guardianDialogAthlete) {
+      const fetchGuardians = async () => {
+        const { data } = await supabase
+          .from("profiles")
+          .select("id, full_name")
+          .order("full_name");
+        setAvailableGuardians(data || []);
+      };
+      fetchGuardians();
+    }
+  }, [guardianDialogAthlete]);
+
+  const resetForm = () => {
+    setFormData({
+      full_name: "",
+      birth_date: null,
+      phone: null,
+      email: null,
+      modalidade: null,
+      subscription_status: "inativo",
+      subscription_end_date: null,
+      notes: null,
     });
   };
 
-  const handleSaveEdit = async () => {
-    if (!editingAthlete) return;
+  const handleOpenAdd = () => {
+    resetForm();
+    setEditingAthlete(null);
+    setIsAddDialogOpen(true);
+  };
 
-    setIsSaving(true);
-    try {
-      const { error } = await supabase
-        .from("profiles")
-        .update({
-          full_name: editForm.full_name || null,
-          phone: editForm.phone || null,
-          birth_date: editForm.birth_date || null,
-          modalidade: editForm.modalidade || null,
-          subscription_status: editForm.subscription_status || null,
-          notes: editForm.notes || null,
-        })
-        .eq("id", editingAthlete.id);
+  const handleOpenEdit = (athlete: Athlete) => {
+    setEditingAthlete(athlete);
+    setFormData({
+      full_name: athlete.full_name,
+      birth_date: athlete.birth_date,
+      phone: athlete.phone,
+      email: athlete.email,
+      modalidade: athlete.modalidade,
+      subscription_status: athlete.subscription_status || "inativo",
+      subscription_end_date: athlete.subscription_end_date,
+      notes: athlete.notes,
+    });
+    setIsAddDialogOpen(true);
+  };
 
-      if (error) throw error;
-
-      // Update local state
-      setAthletes((prev) =>
-        prev.map((a) =>
-          a.id === editingAthlete.id
-            ? { ...a, ...editForm, updated_at: new Date().toISOString() }
-            : a
-        )
-      );
-
-      toast({
-        title: "Guardado!",
-        description: "Os dados do atleta foram atualizados",
-      });
-
-      setEditingAthlete(null);
-    } catch (error) {
-      console.error("Error updating athlete:", error);
+  const handleSave = async () => {
+    if (!formData.full_name.trim()) {
       toast({
         variant: "destructive",
         title: "Erro",
-        description: "Não foi possível guardar as alterações",
+        description: "O nome é obrigatório",
       });
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      if (editingAthlete) {
+        await updateAthlete(editingAthlete.id, formData);
+      } else {
+        await addAthlete(formData);
+      }
+      setIsAddDialogOpen(false);
+      resetForm();
+      setEditingAthlete(null);
     } finally {
       setIsSaving(false);
     }
@@ -206,34 +212,31 @@ const AdminAthletes = () => {
 
   const handleDelete = async () => {
     if (!deletingAthlete) return;
+    await deleteAthlete(deletingAthlete.id);
+    setDeletingAthlete(null);
+  };
 
-    setIsDeleting(true);
-    try {
-      const { error } = await supabase
-        .from("profiles")
-        .delete()
-        .eq("id", deletingAthlete.id);
+  const handleAddGuardian = async () => {
+    if (!guardianDialogAthlete || !selectedGuardianId) return;
+    await addGuardian(guardianDialogAthlete.id, selectedGuardianId, guardianRelationship);
+    setSelectedGuardianId("");
+    setGuardianRelationship("Encarregado");
+  };
 
-      if (error) throw error;
+  const handleRemoveGuardian = async (relationshipId: string) => {
+    await removeGuardian(relationshipId);
+  };
 
-      // Update local state
-      setAthletes((prev) => prev.filter((a) => a.id !== deletingAthlete.id));
-
-      toast({
-        title: "Eliminado",
-        description: "O perfil do atleta foi eliminado",
-      });
-
-      setDeletingAthlete(null);
-    } catch (error) {
-      console.error("Error deleting athlete:", error);
-      toast({
-        variant: "destructive",
-        title: "Erro",
-        description: "Não foi possível eliminar o perfil",
-      });
-    } finally {
-      setIsDeleting(false);
+  const getSubscriptionBadge = (status: string | null) => {
+    switch (status) {
+      case "ativo":
+        return <Badge className="bg-green-500">Ativo</Badge>;
+      case "trial":
+        return <Badge className="bg-yellow-500">Trial</Badge>;
+      case "expirado":
+        return <Badge variant="destructive">Expirado</Badge>;
+      default:
+        return <Badge variant="secondary">Inativo</Badge>;
     }
   };
 
@@ -266,15 +269,61 @@ const AdminAthletes = () => {
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Voltar ao painel
               </Button>
-              <div className="flex items-center gap-3 mb-2">
-                <Users className="h-8 w-8 text-primary" />
-                <h1 className="text-3xl font-heading font-bold text-foreground">
-                  Gestão de Atletas
-                </h1>
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <Users className="h-8 w-8 text-primary" />
+                    <h1 className="text-3xl font-heading font-bold text-foreground">
+                      Gestão de Atletas
+                    </h1>
+                  </div>
+                  <p className="text-muted-foreground">
+                    Criar e gerir atletas independentemente de terem conta
+                  </p>
+                </div>
+                <Button onClick={handleOpenAdd}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Novo Atleta
+                </Button>
               </div>
-              <p className="text-muted-foreground">
-                Visualiza e gere os perfis de todos os atletas inscritos
-              </p>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    Total de Atletas
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-2xl font-bold">{athletes.length}</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    Ativos
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-2xl font-bold text-green-600">
+                    {athletes.filter((a) => a.subscription_status === "ativo").length}
+                  </p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    Inativos/Trial
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-2xl font-bold text-orange-600">
+                    {athletes.filter((a) => a.subscription_status !== "ativo").length}
+                  </p>
+                </CardContent>
+              </Card>
             </div>
 
             {/* Search */}
@@ -286,7 +335,7 @@ const AdminAthletes = () => {
               <div className="relative max-w-md">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                  placeholder="Pesquisar por nome ou telefone..."
+                  placeholder="Pesquisar por nome, telefone ou email..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
@@ -310,9 +359,15 @@ const AdminAthletes = () => {
                   <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <p className="text-muted-foreground">
                     {searchQuery
-                      ? "Nenhum atleta encontrado com essa pesquisa"
+                      ? "Nenhum atleta encontrado"
                       : "Ainda não existem atletas registados"}
                   </p>
+                  {!searchQuery && (
+                    <Button onClick={handleOpenAdd} className="mt-4">
+                      <Plus className="h-4 w-4 mr-2" />
+                      Adicionar Primeiro Atleta
+                    </Button>
+                  )}
                 </div>
               ) : (
                 <div className="overflow-x-auto">
@@ -320,11 +375,11 @@ const AdminAthletes = () => {
                     <TableHeader>
                       <TableRow>
                         <TableHead>Nome</TableHead>
-                        <TableHead>Telefone</TableHead>
-                        <TableHead>Data de Nascimento</TableHead>
+                        <TableHead>Contacto</TableHead>
+                        <TableHead>Nascimento</TableHead>
                         <TableHead>Modalidade</TableHead>
                         <TableHead>Subscrição</TableHead>
-                        <TableHead>Inscrito em</TableHead>
+                        <TableHead>Encarregados</TableHead>
                         <TableHead className="text-right">Ações</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -332,21 +387,26 @@ const AdminAthletes = () => {
                       {filteredAthletes.map((athlete) => (
                         <TableRow key={athlete.id}>
                           <TableCell className="font-medium">
-                            {athlete.full_name || (
-                              <span className="text-muted-foreground italic">
-                                Sem nome
-                              </span>
-                            )}
+                            {athlete.full_name}
                           </TableCell>
                           <TableCell>
-                            {athlete.phone ? (
-                              <span className="flex items-center gap-1">
-                                <Phone className="h-3 w-3" />
-                                {athlete.phone}
-                              </span>
-                            ) : (
-                              <span className="text-muted-foreground">-</span>
-                            )}
+                            <div className="space-y-1">
+                              {athlete.phone && (
+                                <span className="flex items-center gap-1 text-sm">
+                                  <Phone className="h-3 w-3" />
+                                  {athlete.phone}
+                                </span>
+                              )}
+                              {athlete.email && (
+                                <span className="flex items-center gap-1 text-sm">
+                                  <Mail className="h-3 w-3" />
+                                  {athlete.email}
+                                </span>
+                              )}
+                              {!athlete.phone && !athlete.email && (
+                                <span className="text-muted-foreground">-</span>
+                              )}
+                            </div>
                           </TableCell>
                           <TableCell>
                             {athlete.birth_date ? (
@@ -360,33 +420,46 @@ const AdminAthletes = () => {
                           </TableCell>
                           <TableCell>
                             {athlete.modalidade ? (
-                              <span className="capitalize">{athlete.modalidade.replace("_", " ")}</span>
+                              <span className="capitalize">
+                                {athlete.modalidade.replace("_", " ")}
+                              </span>
                             ) : (
                               <span className="text-muted-foreground">-</span>
                             )}
                           </TableCell>
                           <TableCell>
-                            <span className={`px-2 py-1 rounded-full text-xs ${
-                              athlete.subscription_status === "ativo" 
-                                ? "bg-green-500/10 text-green-600" 
-                                : athlete.subscription_status === "trial"
-                                ? "bg-yellow-500/10 text-yellow-600"
-                                : "bg-muted text-muted-foreground"
-                            }`}>
-                              {athlete.subscription_status || "inativo"}
-                            </span>
+                            {getSubscriptionBadge(athlete.subscription_status)}
                           </TableCell>
                           <TableCell>
-                            {format(new Date(athlete.created_at), "dd MMM yyyy", {
-                              locale: pt,
-                            })}
+                            {athlete.guardians && athlete.guardians.length > 0 ? (
+                              <div className="space-y-1">
+                                {athlete.guardians.map((g) => (
+                                  <div key={g.id} className="text-sm">
+                                    {g.guardian_name || "Sem nome"}{" "}
+                                    <span className="text-muted-foreground">
+                                      ({g.relationship})
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <span className="text-muted-foreground">-</span>
+                            )}
                           </TableCell>
                           <TableCell className="text-right">
-                            <div className="flex items-center justify-end gap-2">
+                            <div className="flex items-center justify-end gap-1">
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                onClick={() => handleEdit(athlete)}
+                                onClick={() => setGuardianDialogAthlete(athlete)}
+                                title="Gerir encarregados"
+                              >
+                                <UserPlus className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => handleOpenEdit(athlete)}
                               >
                                 <Edit className="h-4 w-4" />
                               </Button>
@@ -418,109 +491,153 @@ const AdminAthletes = () => {
         </div>
       </section>
 
-      {/* Edit Dialog */}
-      <Dialog open={!!editingAthlete} onOpenChange={() => setEditingAthlete(null)}>
-        <DialogContent className="max-w-lg">
+      {/* Add/Edit Dialog */}
+      <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Editar Atleta</DialogTitle>
+            <DialogTitle>
+              {editingAthlete ? "Editar Atleta" : "Novo Atleta"}
+            </DialogTitle>
             <DialogDescription>
-              Atualiza os dados do perfil do atleta
+              {editingAthlete
+                ? "Atualiza os dados do atleta"
+                : "Adiciona um novo atleta ao sistema"}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="edit-name">Nome Completo</Label>
+              <Label htmlFor="full_name">Nome Completo *</Label>
               <Input
-                id="edit-name"
-                value={editForm.full_name || ""}
+                id="full_name"
+                value={formData.full_name}
                 onChange={(e) =>
-                  setEditForm({ ...editForm, full_name: e.target.value })
+                  setFormData({ ...formData, full_name: e.target.value })
                 }
+                placeholder="Nome do atleta"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="edit-phone">Telefone</Label>
+                <Label htmlFor="birth_date">Data de Nascimento</Label>
                 <Input
-                  id="edit-phone"
-                  value={editForm.phone || ""}
+                  id="birth_date"
+                  type="date"
+                  value={formData.birth_date || ""}
                   onChange={(e) =>
-                    setEditForm({ ...editForm, phone: e.target.value })
+                    setFormData({
+                      ...formData,
+                      birth_date: e.target.value || null,
+                    })
                   }
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="edit-birth">Data de Nascimento</Label>
-                <Input
-                  id="edit-birth"
-                  type="date"
-                  value={editForm.birth_date || ""}
-                  onChange={(e) =>
-                    setEditForm({ ...editForm, birth_date: e.target.value })
+                <Label htmlFor="modalidade">Modalidade</Label>
+                <Select
+                  value={formData.modalidade || ""}
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, modalidade: value || null })
                   }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecionar" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="ginastica">Ginástica</SelectItem>
+                    <SelectItem value="aulas_grupo">Aulas de Grupo</SelectItem>
+                    <SelectItem value="treino_personalizado">
+                      Treino Personalizado
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="phone">Telefone</Label>
+                <Input
+                  id="phone"
+                  value={formData.phone || ""}
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value || null })
+                  }
+                  placeholder="912345678"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={formData.email || ""}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value || null })
+                  }
+                  placeholder="email@exemplo.com"
                 />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="edit-modalidade">Modalidade</Label>
-                <select
-                  id="edit-modalidade"
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  value={editForm.modalidade || ""}
-                  onChange={(e) =>
-                    setEditForm({ ...editForm, modalidade: e.target.value })
+                <Label htmlFor="subscription_status">Estado Subscrição</Label>
+                <Select
+                  value={formData.subscription_status || "inativo"}
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, subscription_status: value })
                   }
                 >
-                  <option value="">Selecionar</option>
-                  <option value="ginastica">Ginástica</option>
-                  <option value="aulas_grupo">Aulas de Grupo</option>
-                  <option value="treino_personalizado">Treino Personalizado</option>
-                </select>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="inativo">Inativo</SelectItem>
+                    <SelectItem value="ativo">Ativo</SelectItem>
+                    <SelectItem value="trial">Trial</SelectItem>
+                    <SelectItem value="expirado">Expirado</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="edit-subscription">Subscrição</Label>
-                <select
-                  id="edit-subscription"
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  value={editForm.subscription_status || ""}
+                <Label htmlFor="subscription_end_date">Fim Subscrição</Label>
+                <Input
+                  id="subscription_end_date"
+                  type="date"
+                  value={formData.subscription_end_date || ""}
                   onChange={(e) =>
-                    setEditForm({ ...editForm, subscription_status: e.target.value })
+                    setFormData({
+                      ...formData,
+                      subscription_end_date: e.target.value || null,
+                    })
                   }
-                >
-                  <option value="inativo">Inativo</option>
-                  <option value="ativo">Ativo</option>
-                  <option value="trial">Trial</option>
-                  <option value="expirado">Expirado</option>
-                </select>
+                />
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="edit-notes">Observações</Label>
+              <Label htmlFor="notes">Observações</Label>
               <Textarea
-                id="edit-notes"
-                value={editForm.notes || ""}
+                id="notes"
+                value={formData.notes || ""}
                 onChange={(e) =>
-                  setEditForm({ ...editForm, notes: e.target.value })
+                  setFormData({ ...formData, notes: e.target.value || null })
                 }
+                placeholder="Notas sobre o atleta..."
                 rows={3}
               />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setEditingAthlete(null)}>
-              <X className="mr-2 h-4 w-4" />
+            <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>
               Cancelar
             </Button>
-            <Button variant="gold" onClick={handleSaveEdit} disabled={isSaving}>
+            <Button onClick={handleSave} disabled={isSaving}>
               {isSaving ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                   A guardar...
                 </>
               ) : (
                 <>
-                  <Save className="mr-2 h-4 w-4" />
+                  <Save className="h-4 w-4 mr-2" />
                   Guardar
                 </>
               )}
@@ -538,9 +655,8 @@ const AdminAthletes = () => {
           <AlertDialogHeader>
             <AlertDialogTitle>Eliminar Atleta?</AlertDialogTitle>
             <AlertDialogDescription>
-              Tens a certeza que queres eliminar o perfil de{" "}
-              <strong>{deletingAthlete?.full_name || "este atleta"}</strong>?
-              Esta ação não pode ser revertida.
+              Esta ação não pode ser revertida. O atleta "{deletingAthlete?.full_name}"
+              será permanentemente eliminado, incluindo todas as suas inscrições.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -548,20 +664,109 @@ const AdminAthletes = () => {
             <AlertDialogAction
               onClick={handleDelete}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-              disabled={isDeleting}
             >
-              {isDeleting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  A eliminar...
-                </>
-              ) : (
-                "Eliminar"
-              )}
+              Eliminar
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Guardian Management Dialog */}
+      <Dialog
+        open={!!guardianDialogAthlete}
+        onOpenChange={() => setGuardianDialogAthlete(null)}
+      >
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Gerir Encarregados</DialogTitle>
+            <DialogDescription>
+              Associar encarregados ao atleta: {guardianDialogAthlete?.full_name}
+            </DialogDescription>
+          </DialogHeader>
+
+          {/* Current guardians */}
+          <div className="space-y-4">
+            <div>
+              <Label className="text-sm font-medium">Encarregados Atuais</Label>
+              {guardianDialogAthlete?.guardians &&
+              guardianDialogAthlete.guardians.length > 0 ? (
+                <div className="mt-2 space-y-2">
+                  {guardianDialogAthlete.guardians.map((g) => (
+                    <div
+                      key={g.id}
+                      className="flex items-center justify-between p-2 bg-muted rounded-lg"
+                    >
+                      <div>
+                        <span className="font-medium">
+                          {g.guardian_name || "Sem nome"}
+                        </span>
+                        <span className="text-muted-foreground ml-2">
+                          ({g.relationship})
+                        </span>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleRemoveGuardian(g.id)}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-muted-foreground mt-2">
+                  Nenhum encarregado associado
+                </p>
+              )}
+            </div>
+
+            <div className="border-t pt-4">
+              <Label className="text-sm font-medium">Adicionar Encarregado</Label>
+              <div className="grid grid-cols-2 gap-2 mt-2">
+                <Select
+                  value={selectedGuardianId}
+                  onValueChange={setSelectedGuardianId}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecionar pessoa" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {availableGuardians.map((g) => (
+                      <SelectItem key={g.id} value={g.id}>
+                        {g.full_name || "Sem nome"}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Input
+                  placeholder="Relação (ex: Mãe)"
+                  value={guardianRelationship}
+                  onChange={(e) => setGuardianRelationship(e.target.value)}
+                />
+              </div>
+              <Button
+                onClick={handleAddGuardian}
+                disabled={!selectedGuardianId}
+                className="mt-2"
+                size="sm"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Adicionar
+              </Button>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setGuardianDialogAthlete(null)}
+            >
+              Fechar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 };
