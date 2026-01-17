@@ -71,6 +71,66 @@ export type Database = {
           },
         ]
       }
+      athletes: {
+        Row: {
+          birth_date: string | null
+          created_at: string
+          email: string | null
+          full_name: string
+          id: string
+          modalidade: string | null
+          notes: string | null
+          phone: string | null
+          profile_id: string | null
+          subscription_end_date: string | null
+          subscription_status: string | null
+          updated_at: string
+        }
+        Insert: {
+          birth_date?: string | null
+          created_at?: string
+          email?: string | null
+          full_name: string
+          id?: string
+          modalidade?: string | null
+          notes?: string | null
+          phone?: string | null
+          profile_id?: string | null
+          subscription_end_date?: string | null
+          subscription_status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          birth_date?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id?: string
+          modalidade?: string | null
+          notes?: string | null
+          phone?: string | null
+          profile_id?: string | null
+          subscription_end_date?: string | null
+          subscription_status?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "athletes_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "athletes_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles_trainer_view"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       class_attendance: {
         Row: {
           created_at: string
