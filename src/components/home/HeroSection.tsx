@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroBg from "@/assets/hero-acrobatics.jpg";
+import heroBg from "@/assets/hero-acrobatics-new.webp";
 export function HeroSection() {
   const scrollToServices = () => {
     document.getElementById("services")?.scrollIntoView({
