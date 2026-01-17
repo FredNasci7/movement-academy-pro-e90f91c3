@@ -22,13 +22,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { Database } from "@/integrations/supabase/types";
-
-type AthleteGuardian = Database["public"]["Tables"]["athlete_guardians"]["Row"];
+import type { GuardianAthlete, UpdateAthleteData } from "@/hooks/useAthleteGuardians";
 
 interface AthleteCardProps {
-  athlete: AthleteGuardian;
-  onUpdate: (id: string, updates: Partial<AthleteGuardian>) => Promise<AthleteGuardian | null>;
+  athlete: GuardianAthlete;
+  onUpdate: (id: string, updates: UpdateAthleteData) => Promise<GuardianAthlete | null>;
   onDelete: (id: string) => Promise<boolean>;
 }
 
@@ -49,18 +47,18 @@ export const AthleteCard = ({ athlete, onUpdate, onDelete }: AthleteCardProps) =
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [editData, setEditData] = useState({
-    athlete_name: athlete.athlete_name,
-    athlete_birth_date: athlete.athlete_birth_date || "",
-    athlete_notes: athlete.athlete_notes || "",
-    modalidade: athlete.modalidade || "",
+    full_name: athlete.athlete.full_name,
+    birth_date: athlete.athlete.birth_date || "",
+    notes: athlete.athlete.notes || "",
+    modalidade: athlete.athlete.modalidade || "",
   });
 
   const handleSave = async () => {
     setIsLoading(true);
     const result = await onUpdate(athlete.id, {
-      athlete_name: editData.athlete_name,
-      athlete_birth_date: editData.athlete_birth_date || null,
-      athlete_notes: editData.athlete_notes || null,
+      full_name: editData.full_name,
+      birth_date: editData.birth_date || null,
+      notes: editData.notes || null,
       modalidade: editData.modalidade || null,
     });
     setIsLoading(false);
@@ -75,15 +73,15 @@ export const AthleteCard = ({ athlete, onUpdate, onDelete }: AthleteCardProps) =
     setIsLoading(false);
   };
 
-  const subscriptionStatus = athlete.subscription_status || "inativo";
+  const subscriptionStatus = athlete.athlete.subscription_status || "inativo";
   const subscriptionConfig = subscriptionLabels[subscriptionStatus];
 
   if (isEditing) {
     return (
       <div className="p-4 bg-muted/30 rounded-lg border border-border space-y-3">
         <Input
-          value={editData.athlete_name}
-          onChange={(e) => setEditData({ ...editData, athlete_name: e.target.value })}
+          value={editData.full_name}
+          onChange={(e) => setEditData({ ...editData, full_name: e.target.value })}
           placeholder="Nome do atleta"
         />
         <div className="grid grid-cols-2 gap-3">
@@ -91,8 +89,8 @@ export const AthleteCard = ({ athlete, onUpdate, onDelete }: AthleteCardProps) =
             <label className="text-xs text-muted-foreground mb-1 block">Data de Nascimento</label>
             <Input
               type="date"
-              value={editData.athlete_birth_date}
-              onChange={(e) => setEditData({ ...editData, athlete_birth_date: e.target.value })}
+              value={editData.birth_date}
+              onChange={(e) => setEditData({ ...editData, birth_date: e.target.value })}
             />
           </div>
           <div>
@@ -113,8 +111,8 @@ export const AthleteCard = ({ athlete, onUpdate, onDelete }: AthleteCardProps) =
           </div>
         </div>
         <Textarea
-          value={editData.athlete_notes}
-          onChange={(e) => setEditData({ ...editData, athlete_notes: e.target.value })}
+          value={editData.notes}
+          onChange={(e) => setEditData({ ...editData, notes: e.target.value })}
           placeholder="Observações (alergias, condições médicas...)"
           rows={2}
         />
@@ -137,29 +135,29 @@ export const AthleteCard = ({ athlete, onUpdate, onDelete }: AthleteCardProps) =
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <h4 className="font-medium text-foreground">{athlete.athlete_name}</h4>
+            <h4 className="font-medium text-foreground">{athlete.athlete.full_name}</h4>
             <Badge variant="outline" className={subscriptionConfig.className}>
               {subscriptionConfig.label}
             </Badge>
           </div>
           
           <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
-            {athlete.athlete_birth_date && (
+            {athlete.athlete.birth_date && (
               <span className="flex items-center gap-1">
                 <Calendar className="h-3 w-3" />
-                {new Date(athlete.athlete_birth_date).toLocaleDateString("pt-PT")}
+                {new Date(athlete.athlete.birth_date).toLocaleDateString("pt-PT")}
               </span>
             )}
-            {athlete.modalidade && (
+            {athlete.athlete.modalidade && (
               <Badge variant="secondary" className="text-xs">
-                {modalidadeLabels[athlete.modalidade] || athlete.modalidade}
+                {modalidadeLabels[athlete.athlete.modalidade] || athlete.athlete.modalidade}
               </Badge>
             )}
           </div>
 
-          {athlete.athlete_notes && (
+          {athlete.athlete.notes && (
             <p className="text-sm text-muted-foreground mt-2 italic">
-              {athlete.athlete_notes}
+              {athlete.athlete.notes}
             </p>
           )}
         </div>
@@ -179,7 +177,7 @@ export const AthleteCard = ({ athlete, onUpdate, onDelete }: AthleteCardProps) =
               <AlertDialogHeader>
                 <AlertDialogTitle>Remover atleta?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Esta ação irá remover "{athlete.athlete_name}" da lista. Esta ação não pode ser desfeita.
+                  Esta ação irá remover "{athlete.athlete.full_name}" da lista. Esta ação não pode ser desfeita.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
