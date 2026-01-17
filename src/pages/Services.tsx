@@ -60,7 +60,7 @@ const Services = () => {
   }, [location.hash]);
   return <Layout>
       {/* Hero */}
-      <section className="pt-40 bg-gradient-to-b from-primary/5 to-background pb-[40px]">
+      <section className="bg-gradient-to-b from-primary/5 to-background pb-[40px] pt-[125px]">
         <div className="section-container">
           <AnimatedSection className="text-center max-w-3xl mx-auto">
             <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-4">
