@@ -5,13 +5,7 @@ import { Layout } from "@/components/layout/Layout";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 interface GinasticaPlan {
   name: string;
   price: string;
@@ -21,88 +15,75 @@ interface GinasticaPlan {
   schedule: string;
   category: "formacao" | "representacao";
 }
-
-const plansGinastica: GinasticaPlan[] = [
-  { 
-    name: "MINI'KIDS", 
-    price: "20€", 
-    frequency: "1x por semana", 
-    duration: "45min",
-    schedule: "Quintas-feiras 18h00-18h45",
-    category: "formacao"
-  },
-  { 
-    name: "BABY'MOVE", 
-    price: "24€", 
-    frequency: "2x por semana", 
-    duration: "30min",
-    schedule: "Segundas e Quartas 18h00-18h30",
-    category: "formacao"
-  },
-  { 
-    name: "MINI'MOVE", 
-    price: "27€", 
-    frequency: "2x por semana", 
-    duration: "45min",
-    schedule: "Terças e Sextas 18h00-18h45",
-    category: "formacao"
-  },
-  { 
-    name: "MOVE'KIDS", 
-    price: "30€", 
-    frequency: "2x por semana", 
-    duration: "60min",
-    schedule: "Segundas e Quartas 18h30-19h30",
-    category: "formacao"
-  },
-  { 
-    name: "MINI'TEAM", 
-    price: "30€", 
-    frequency: "2x por semana", 
-    duration: "60min",
-    schedule: "Segundas e Sextas 18h30-19h30",
-    category: "formacao"
-  },
-  { 
-    name: "MOVE'TEAM", 
-    price: "35€", 
-    frequency: "2x por semana", 
-    duration: "105min",
-    schedule: "Terças e Quintas 18h45-20h30",
-    category: "formacao"
-  },
-  { 
-    name: "PRÉ'TEAM", 
-    price: "35€", 
-    priceNote: "+ Valor de Filiação + Valor de Exame médico desportivo",
-    frequency: "2x por semana", 
-    duration: "120min",
-    schedule: "Segundas e Quintas 19h00-21h00 + pontualmente Sextas",
-    category: "representacao"
-  },
-  { 
-    name: "MA'TEAM", 
-    price: "35€", 
-    priceNote: "+ Valor de Filiação + Valor de Exame médico desportivo",
-    frequency: "3x por semana", 
-    duration: "120min",
-    schedule: "Terças, Quartas e Sextas 19h00-21h00",
-    category: "representacao"
-  },
-];
+const plansGinastica: GinasticaPlan[] = [{
+  name: "MINI'KIDS",
+  price: "20€",
+  frequency: "1x por semana",
+  duration: "45min",
+  schedule: "Quintas-feiras 18h00-18h45",
+  category: "formacao"
+}, {
+  name: "BABY'MOVE",
+  price: "24€",
+  frequency: "2x por semana",
+  duration: "30min",
+  schedule: "Segundas e Quartas 18h00-18h30",
+  category: "formacao"
+}, {
+  name: "MINI'MOVE",
+  price: "27€",
+  frequency: "2x por semana",
+  duration: "45min",
+  schedule: "Terças e Sextas 18h00-18h45",
+  category: "formacao"
+}, {
+  name: "MOVE'KIDS",
+  price: "30€",
+  frequency: "2x por semana",
+  duration: "60min",
+  schedule: "Segundas e Quartas 18h30-19h30",
+  category: "formacao"
+}, {
+  name: "MINI'TEAM",
+  price: "30€",
+  frequency: "2x por semana",
+  duration: "60min",
+  schedule: "Segundas e Sextas 18h30-19h30",
+  category: "formacao"
+}, {
+  name: "MOVE'TEAM",
+  price: "35€",
+  frequency: "2x por semana",
+  duration: "105min",
+  schedule: "Terças e Quintas 18h45-20h30",
+  category: "formacao"
+}, {
+  name: "PRÉ'TEAM",
+  price: "35€",
+  priceNote: "+ Valor de Filiação + Valor de Exame médico desportivo",
+  frequency: "2x por semana",
+  duration: "120min",
+  schedule: "Segundas e Quintas 19h00-21h00 + pontualmente Sextas",
+  category: "representacao"
+}, {
+  name: "MA'TEAM",
+  price: "35€",
+  priceNote: "+ Valor de Filiação + Valor de Exame médico desportivo",
+  frequency: "3x por semana",
+  duration: "120min",
+  schedule: "Terças, Quartas e Sextas 19h00-21h00",
+  category: "representacao"
+}];
 
 // Removed plansAulas and plansTreino arrays - simplified pricing
 
 const Pricing = () => {
   const [selectedPlan, setSelectedPlan] = useState<GinasticaPlan | null>(null);
-
   const formacaoPlans = plansGinastica.filter(p => p.category === "formacao");
   const representacaoPlans = plansGinastica.filter(p => p.category === "representacao");
-
-  return (
-    <Layout>
+  return <Layout>
       {/* Header Ginástica */}
-      <section className="pt-32 pb-12 bg-gradient-to-b from-primary/5 to-background">
+      <section className="pt-32 bg-gradient-to-b from-primary/5 to-background pb-[20px]">
         <div className="section-container">
           <AnimatedSection className="text-center max-w-3xl mx-auto">
             <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-4">
@@ -144,17 +125,7 @@ const Pricing = () => {
               Mensalidade Ginástica <span className="text-primary">Formação</span>
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
-              {formacaoPlans.map((plan, i) => (
-                <button
-                  key={`formacao-${i}`}
-                  onClick={() => setSelectedPlan(plan)}
-                  className={cn(
-                    "relative bg-card rounded-xl p-6 border border-border/50 transition-all duration-300",
-                    "hover:border-primary hover:shadow-lg hover:scale-105",
-                    "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
-                    "group cursor-pointer text-left"
-                  )}
-                >
+              {formacaoPlans.map((plan, i) => <button key={`formacao-${i}`} onClick={() => setSelectedPlan(plan)} className={cn("relative bg-card rounded-xl p-6 border border-border/50 transition-all duration-300", "hover:border-primary hover:shadow-lg hover:scale-105", "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2", "group cursor-pointer text-left")}>
                   <h3 className="text-lg font-heading font-bold text-foreground group-hover:text-primary transition-colors">
                     {plan.name}
                   </h3>
@@ -164,8 +135,7 @@ const Pricing = () => {
                       <Info className="w-4 h-4 text-primary" />
                     </div>
                   </div>
-                </button>
-              ))}
+                </button>)}
             </div>
           </AnimatedSection>
         </div>
@@ -179,17 +149,7 @@ const Pricing = () => {
               Mensalidade Ginástica <span className="text-primary">Representação</span>
             </h2>
             <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
-              {representacaoPlans.map((plan, i) => (
-                <button
-                  key={`representacao-${i}`}
-                  onClick={() => setSelectedPlan(plan)}
-                  className={cn(
-                    "relative bg-card rounded-xl p-6 border border-border/50 transition-all duration-300",
-                    "hover:border-primary hover:shadow-lg hover:scale-105",
-                    "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
-                    "group cursor-pointer text-left"
-                  )}
-                >
+              {representacaoPlans.map((plan, i) => <button key={`representacao-${i}`} onClick={() => setSelectedPlan(plan)} className={cn("relative bg-card rounded-xl p-6 border border-border/50 transition-all duration-300", "hover:border-primary hover:shadow-lg hover:scale-105", "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2", "group cursor-pointer text-left")}>
                   <h3 className="text-lg font-heading font-bold text-foreground group-hover:text-primary transition-colors">
                     {plan.name}
                   </h3>
@@ -199,15 +159,14 @@ const Pricing = () => {
                       <Info className="w-4 h-4 text-primary" />
                     </div>
                   </div>
-                </button>
-              ))}
+                </button>)}
             </div>
           </AnimatedSection>
         </div>
       </section>
 
       {/* Pop-up Dialog */}
-      <Dialog open={!!selectedPlan} onOpenChange={(open) => !open && setSelectedPlan(null)}>
+      <Dialog open={!!selectedPlan} onOpenChange={open => !open && setSelectedPlan(null)}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="text-2xl font-heading font-bold text-primary">
@@ -215,8 +174,7 @@ const Pricing = () => {
             </DialogTitle>
           </DialogHeader>
           
-          {selectedPlan && (
-            <div className="space-y-6 pt-4">
+          {selectedPlan && <div className="space-y-6 pt-4">
               {/* Preço */}
               <div className="flex items-baseline gap-2">
                 <Euro className="w-5 h-5 text-primary" />
@@ -226,11 +184,9 @@ const Pricing = () => {
                 <span className="text-muted-foreground">/mês</span>
               </div>
               
-              {selectedPlan.priceNote && (
-                <p className="text-sm text-amber-600 bg-amber-50 dark:bg-amber-950/30 dark:text-amber-400 rounded-lg p-3">
+              {selectedPlan.priceNote && <p className="text-sm text-amber-600 bg-amber-50 dark:bg-amber-950/30 dark:text-amber-400 rounded-lg p-3">
                   {selectedPlan.priceNote}
-                </p>
-              )}
+                </p>}
 
               {/* Detalhes */}
               <div className="space-y-4">
@@ -257,8 +213,7 @@ const Pricing = () => {
                   {selectedPlan?.category === "representacao" ? "Pedido de Informação" : "Experimentar Agora"}
                 </Link>
               </Button>
-            </div>
-          )}
+            </div>}
         </DialogContent>
       </Dialog>
 
@@ -331,8 +286,6 @@ const Pricing = () => {
         </div>
       </section>
 
-    </Layout>
-  );
+    </Layout>;
 };
-
 export default Pricing;
